@@ -58,25 +58,6 @@ DFlash 后续工作已经分成六条主线：
 
 ---
 
-## 仓库结构
-
-| 路径 | 说明 |
-|---|---|
-| [`DFlash_deep_research_report_merged_20260616.md`](DFlash_deep_research_report_merged_20260616.md) | 主调研报告，系统分析 DFlash / DDTree 及后续方法。 |
-| [`PROJECT_BACKGROUND.md`](PROJECT_BACKGROUND.md) | 项目背景、研究判断、工作区说明与推荐开发顺序。 |
-| [`ddtree-master/`](ddtree-master/) | 干净的 DDTree baseline，包括 DFlash draft model、tree construction、verification 与 benchmark 脚本。 |
-| [`ddtree_0602_修改/`](ddtree_0602_%E4%BF%AE%E6%94%B9/) | 本地实验分支，包含 scorer hooks、learned tree policy、score search 与 matrix calibration。 |
-| [`code/dflash-main/`](code/dflash-main/) | DFlash 参考实现。 |
-| [`code/CaDDTree-main/`](code/CaDDTree-main/) | Cost-aware adaptive tree budget 参考实现。 |
-| [`code/TAPS-EMNLP2026-53DD/`](code/TAPS-EMNLP2026-53DD/) | Target-aware prefix tree selection 参考实现。 |
-| [`code/BASTION-main/`](code/BASTION-main/) | 结合硬件校准 latency model 的 budget-aware tree drafting 参考实现。 |
-| [`code/D-PACE-main/`](code/D-PACE-main/) | Position-aware training objective 参考实现。 |
-| [`code/D2-SD-main/`](code/D2-SD-main/) | 二阶段恢复 / 边界补偿方向参考实现。 |
-| [`code/Domino-main/`](code/Domino-main/) | 并行草稿中的 causal correction 参考实现。 |
-| [`code/PARD-master/`](code/PARD-master/) | Acceptance-aligned parallel drafter training 参考实现。 |
-
----
-
 ## 论文列表
 
 ### 并行 drafter 底座
