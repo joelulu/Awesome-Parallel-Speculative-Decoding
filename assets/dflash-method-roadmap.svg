@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+<defs>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.12"/></filter>
+  <style>
+    .title{font:700 44px Arial,'Noto Sans SC',sans-serif;fill:#163a63}
+    .sub{font:400 22px Arial,'Noto Sans SC',sans-serif;fill:#506b86}
+    .branch{font:700 22px Arial,'Noto Sans SC',sans-serif;fill:#17324d}
+    .leaf{font:700 16px Arial,'Noto Sans SC',sans-serif;fill:#17324d}
+    .kw{font:400 14px Arial,'Noto Sans SC',sans-serif;fill:#506070}
+    .small{font:400 15px Arial,'Noto Sans SC',sans-serif;fill:#4d5f73}
+    .center{font:700 30px Arial,'Noto Sans SC',sans-serif;fill:#15365a}
+  </style>
+</defs>
+<rect width="1600" height="1100" fill="#ffffff"/>
+<text x="800" y="60" text-anchor="middle" class="title">DFlash 后续方法脉络树</text>
+<text x="800" y="94" text-anchor="middle" class="sub">从 Block Diffusion Drafting 到树结构、因果补偿与高并发验证</text>
+<path d="M170 930 C190 760 215 570 250 390 C270 300 315 215 380 165" stroke="#8a6444" stroke-width="46" fill="none" stroke-linecap="round"/>
+<path d="M170 930 C150 975 120 1015 85 1055 M170 930 C195 980 220 1020 260 1060 M170 930 C165 995 160 1040 150 1080" stroke="#8a6444" stroke-width="8" fill="none" stroke-linecap="round"/>
+<ellipse cx="235" cy="360" rx="20" ry="11" fill="#5aa65a" transform="rotate(-25 235 360)"/>
+<ellipse cx="285" cy="290" rx="20" ry="11" fill="#5aa65a" transform="rotate(20 285 290)"/>
+<ellipse cx="330" cy="230" rx="20" ry="11" fill="#5aa65a" transform="rotate(-15 330 230)"/>
+<ellipse cx="205" cy="470" rx="20" ry="11" fill="#5aa65a" transform="rotate(25 205 470)"/>
+<rect x="60" y="575" width="300" height="175" rx="24" fill="#f8f2e8" stroke="#6d523a" stroke-width="3" filter="url(#shadow)"/>
+<text x="210" y="625" text-anchor="middle" class="center">DFlash (2026.02)</text>
+<text x="85" y="665" class="small">block diffusion drafter 并行生成整块 draft</text>
+<text x="85" y="695" class="small">核心优势：降低串行 drafting 开销</text>
+<text x="85" y="725" class="small">后续研究围绕 6 条主线展开</text>
+<path d="M360 655 C420 655 420 150 500 150" stroke="#3d8edb" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/>
+<rect x="500" y="118" width="360" height="64" rx="18" fill="#3d8edb22" stroke="#3d8edb" stroke-width="2"/>
+<text x="524" y="158" class="branch">1. 并行 drafter 本体增强</text>
+<path d="M860 150 C890 150 885 116 930 116" stroke="#3d8edb" stroke-width="3" fill="none"/><circle cx="930" cy="116" r="5" fill="#3d8edb"/><rect x="940" y="101" width="600" height="30" rx="12" fill="#3d8edb12" stroke="#3d8edb88"/><text x="958" y="121" class="leaf">DFlare</text><text x="1130" y="121" class="kw">capacity scaling / layer-wise fusion</text>
+<path d="M860 150 C890 150 885 150 930 150" stroke="#3d8edb" stroke-width="3" fill="none"/><circle cx="930" cy="150" r="5" fill="#3d8edb"/><rect x="940" y="135" width="600" height="30" rx="12" fill="#3d8edb12" stroke="#3d8edb88"/><text x="958" y="155" class="leaf">HyperDFlash</text><text x="1130" y="155" class="kw">hyper-connection adaptation</text>
+<path d="M860 150 C890 150 885 184 930 184" stroke="#3d8edb" stroke-width="3" fill="none"/><circle cx="930" cy="184" r="5" fill="#3d8edb"/><rect x="940" y="169" width="600" height="30" rx="12" fill="#3d8edb12" stroke="#3d8edb88"/><text x="958" y="189" class="leaf">DBloom</text><text x="1130" y="189" class="kw">block size ceiling</text>
+<path d="M360 655 C420 655 420 300 500 300" stroke="#f39b21" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/>
+<rect x="500" y="268" width="360" height="64" rx="18" fill="#f39b2122" stroke="#f39b21" stroke-width="2"/><text x="524" y="308" class="branch">2. 训练目标对齐</text>
+<path d="M860 300 C890 300 885 232 930 232" stroke="#f39b21" stroke-width="3" fill="none"/><circle cx="930" cy="232" r="5" fill="#f39b21"/><rect x="940" y="217" width="600" height="30" rx="12" fill="#f39b2112" stroke="#f39b2188"/><text x="958" y="237" class="leaf">D-PACE</text><text x="1130" y="237" class="kw">position-aware loss</text>
+<path d="M860 300 C890 300 885 266 930 266" stroke="#f39b21" stroke-width="3" fill="none"/><circle cx="930" cy="266" r="5" fill="#f39b21"/><rect x="940" y="251" width="600" height="30" rx="12" fill="#f39b2112" stroke="#f39b2188"/><text x="958" y="271" class="leaf">Teaching L2R</text><text x="1130" y="271" class="kw">acceptance-aware objective</text>
+<path d="M860 300 C890 300 885 300 930 300" stroke="#f39b21" stroke-width="3" fill="none"/><circle cx="930" cy="300" r="5" fill="#f39b21"/><rect x="940" y="285" width="600" height="30" rx="12" fill="#f39b2112" stroke="#f39b2188"/><text x="958" y="305" class="leaf">Spec-AUF</text><text x="1130" y="305" class="kw">accept-until-fail</text>
+<path d="M860 300 C890 300 885 334 930 334" stroke="#f39b21" stroke-width="3" fill="none"/><circle cx="930" cy="334" r="5" fill="#f39b21"/><rect x="940" y="319" width="600" height="30" rx="12" fill="#f39b2112" stroke="#f39b2188"/><text x="958" y="339" class="leaf">Draft-OPD</text><text x="1130" y="339" class="kw">on-policy distillation</text>
+<path d="M860 300 C890 300 885 368 930 368" stroke="#f39b21" stroke-width="3" fill="none"/><circle cx="930" cy="368" r="5" fill="#f39b21"/><rect x="940" y="353" width="600" height="30" rx="12" fill="#f39b2112" stroke="#f39b2188"/><text x="958" y="373" class="leaf">VAT</text><text x="1130" y="373" class="kw">verification-aware training</text>
+<path d="M360 655 C420 655 420 490 500 490" stroke="#3aa65a" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/><rect x="500" y="458" width="360" height="64" rx="18" fill="#3aa65a22" stroke="#3aa65a" stroke-width="2"/><text x="524" y="498" class="branch">3. 块内因果性 / 相关性补偿</text>
+<path d="M860 490 C890 490 885 405 930 405" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="405" r="5" fill="#3aa65a"/><rect x="940" y="390" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="410" class="leaf">Domino</text><text x="1130" y="410" class="kw">causal correction</text>
+<path d="M860 490 C890 490 885 439 930 439" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="439" r="5" fill="#3aa65a"/><rect x="940" y="424" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="444" class="leaf">DSpark</text><text x="1130" y="444" class="kw">Markov head</text>
+<path d="M860 490 C890 490 885 473 930 473" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="473" r="5" fill="#3aa65a"/><rect x="940" y="458" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="478" class="leaf">xPress</text><text x="1130" y="478" class="kw">parallel refinement</text>
+<path d="M860 490 C890 490 885 507 930 507" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="507" r="5" fill="#3aa65a"/><rect x="940" y="492" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="512" class="leaf">LiLiCorr</text><text x="1130" y="512" class="kw">local likelihood correlation</text>
+<path d="M860 490 C890 490 885 541 930 541" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="541" r="5" fill="#3aa65a"/><rect x="940" y="526" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="546" class="leaf">DBLAST</text><text x="1130" y="546" class="kw">dependent block drafting</text>
+<path d="M860 490 C890 490 885 575 930 575" stroke="#3aa65a" stroke-width="3" fill="none"/><circle cx="930" cy="575" r="5" fill="#3aa65a"/><rect x="940" y="560" width="600" height="30" rx="12" fill="#3aa65a12" stroke="#3aa65a88"/><text x="958" y="580" class="leaf">DFlash2</text><text x="1130" y="580" class="kw">path selection + local conv</text>
+<path d="M360 655 C420 655 420 705 500 705" stroke="#e64b55" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/><rect x="500" y="673" width="360" height="64" rx="18" fill="#e64b5522" stroke="#e64b55" stroke-width="2"/><text x="524" y="713" class="branch">4. 单路径 → 树结构 / 多路径</text>
+<path d="M860 705 C890 705 885 620 930 620" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="620" r="5" fill="#e64b55"/><rect x="940" y="605" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="625" class="leaf">DDTree</text><text x="1130" y="625" class="kw">draft tree</text>
+<path d="M860 705 C890 705 885 654 930 654" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="654" r="5" fill="#e64b55"/><rect x="940" y="639" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="659" class="leaf">CaDDTree</text><text x="1130" y="659" class="kw">cost-aware tree</text>
+<path d="M860 705 C890 705 885 688 930 688" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="688" r="5" fill="#e64b55"/><rect x="940" y="673" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="693" class="leaf">D²SD</text><text x="1130" y="693" class="kw">dual diffusion drafting</text>
+<path d="M860 705 C890 705 885 722 930 722" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="722" r="5" fill="#e64b55"/><rect x="940" y="707" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="727" class="leaf">DominoTree</text><text x="1130" y="727" class="kw">conditional tree</text>
+<path d="M860 705 C890 705 885 756 930 756" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="756" r="5" fill="#e64b55"/><rect x="940" y="741" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="761" class="leaf">JetSpec</text><text x="1130" y="761" class="kw">parallel tree drafting</text>
+<path d="M860 705 C890 705 885 790 930 790" stroke="#e64b55" stroke-width="3" fill="none"/><circle cx="930" cy="790" r="5" fill="#e64b55"/><rect x="940" y="775" width="600" height="30" rx="12" fill="#e64b5512" stroke="#e64b5588"/><text x="958" y="795" class="leaf">DARTree</text><text x="1130" y="795" class="kw">AR draft trees</text>
+<path d="M360 655 C420 655 420 930 500 930" stroke="#7c62d6" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/><rect x="500" y="898" width="360" height="64" rx="18" fill="#7c62d622" stroke="#7c62d6" stroke-width="2"/><text x="524" y="938" class="branch">5. 验证成本 / 高并发 / 自适应长度</text>
+<path d="M860 930 C890 930 885 896 930 896" stroke="#7c62d6" stroke-width="3" fill="none"/><circle cx="930" cy="896" r="5" fill="#7c62d6"/><rect x="940" y="881" width="600" height="30" rx="12" fill="#7c62d612" stroke="#7c62d688"/><text x="958" y="901" class="leaf">DSpark</text><text x="1130" y="901" class="kw">adaptive verification</text>
+<path d="M860 930 C890 930 885 930 930 930" stroke="#7c62d6" stroke-width="3" fill="none"/><circle cx="930" cy="930" r="5" fill="#7c62d6"/><rect x="940" y="915" width="600" height="30" rx="12" fill="#7c62d612" stroke="#7c62d688"/><text x="958" y="935" class="leaf">D-CUT</text><text x="1130" y="935" class="kw">verification pruning</text>
+<path d="M860 930 C890 930 885 964 930 964" stroke="#7c62d6" stroke-width="3" fill="none"/><circle cx="930" cy="964" r="5" fill="#7c62d6"/><rect x="940" y="949" width="600" height="30" rx="12" fill="#7c62d612" stroke="#7c62d688"/><text x="958" y="969" class="leaf">AdaFlash</text><text x="1130" y="969" class="kw">adaptive draft length</text>
+<path d="M360 655 C420 655 420 1040 500 1040" stroke="#24a7ad" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9"/><rect x="500" y="1008" width="360" height="64" rx="18" fill="#24a7ad22" stroke="#24a7ad" stroke-width="2"/><text x="524" y="1048" class="branch">6. 多模态扩展</text>
+<path d="M860 1040 C890 1040 885 1040 930 1040" stroke="#24a7ad" stroke-width="3" fill="none"/><circle cx="930" cy="1040" r="5" fill="#24a7ad"/><rect x="940" y="1025" width="600" height="30" rx="12" fill="#24a7ad12" stroke="#24a7ad88"/><text x="958" y="1045" class="leaf">GLANCE</text><text x="1130" y="1045" class="kw">VLM block drafting</text>
+<rect x="430" y="1060" width="1090" height="30" rx="12" fill="#f3f7fb" stroke="#b8c8d8"/><text x="975" y="1081" text-anchor="middle" class="small">主线：drafter 能力 · 训练目标 · 块内依赖 · 树结构 · 验证成本 · 多模态扩展</text>
+</svg>
