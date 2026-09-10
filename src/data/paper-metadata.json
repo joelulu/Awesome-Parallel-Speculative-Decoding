@@ -1,0 +1,512 @@
+{
+  "dflash": {
+    "sourceUrl": "https://arxiv.org/abs/2602.06036",
+    "status": "fetched",
+    "title": "DFlash: Block Diffusion for Flash Speculative Decoding",
+    "authors": [
+      "Chen, Jian",
+      "Liang, Yesheng",
+      "Liu, Zhijian"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2602.06036",
+    "fetchedAt": "2026-09-09T07:39:16.435858+00:00",
+    "thumbnail": "papers/dflash.jpg"
+  },
+  "ddtree": {
+    "sourceUrl": "https://arxiv.org/abs/2604.12989",
+    "status": "fetched",
+    "title": "Accelerating Speculative Decoding with Block Diffusion Draft Trees",
+    "authors": [
+      "Ringel, Liran",
+      "Romano, Yaniv"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2604.12989",
+    "fetchedAt": "2026-09-09T07:39:16.026239+00:00",
+    "thumbnail": "papers/ddtree.jpg"
+  },
+  "d-pace": {
+    "sourceUrl": "https://arxiv.org/abs/2605.18810",
+    "status": "fetched",
+    "title": "D-PACE: Dynamic Position-Aware Cross-Entropy for Parallel Speculative Drafting",
+    "authors": [
+      "Wu, Tianyu",
+      "Yao, Yu",
+      "Qi, Zhenting",
+      "Zheng, Han",
+      "Wang, Zhuohan",
+      "Ma, Haoran",
+      "Liao, Lawrence",
+      "Lakkaraju, Himabindu",
+      "Li, Ju",
+      "Du, Yilun"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.18810",
+    "fetchedAt": "2026-09-09T07:39:15.510423+00:00",
+    "thumbnail": "papers/d-pace.jpg"
+  },
+  "test-time-speculation": {
+    "sourceUrl": "https://arxiv.org/abs/2605.09329",
+    "status": "fetched",
+    "title": "Test-Time Speculation",
+    "authors": [
+      "Kumar, Avinash",
+      "Sanghavi, Sujay",
+      "Das, Poulami"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.09329",
+    "fetchedAt": "2026-09-09T07:39:36.581964+00:00",
+    "thumbnail": "papers/test-time-speculation.jpg"
+  },
+  "draft-opd": {
+    "sourceUrl": "https://arxiv.org/abs/2605.29343",
+    "status": "fetched",
+    "title": "Draft-OPD: On-Policy Distillation for Speculative Draft Models",
+    "authors": [
+      "Lei, Haodi",
+      "Li, Yafu",
+      "Zhang, Haoran",
+      "Zhang, Shunkai",
+      "Cheng, Qianjia",
+      "Qu, Xiaoye",
+      "Cui, Ganqu",
+      "Zhou, Bowen",
+      "Ding, Ning",
+      "Luo, Yun",
+      "Cheng, Yu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.29343",
+    "fetchedAt": "2026-09-09T07:39:36.559482+00:00",
+    "thumbnail": "papers/draft-opd.jpg"
+  },
+  "domino": {
+    "sourceUrl": "https://arxiv.org/abs/2605.29707",
+    "status": "fetched",
+    "title": "Domino: Decoupling Causal Modeling from Autoregressive Drafting in Speculative Decoding",
+    "authors": [
+      "Huang, Jianuo",
+      "Zhang, Yaojie",
+      "Zhang, Qituan",
+      "Lin, Hao",
+      "Xu, Hanlin",
+      "Zhang, Linfeng"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.29707",
+    "fetchedAt": "2026-09-09T07:39:36.649076+00:00",
+    "thumbnail": "papers/domino.jpg"
+  },
+  "caddtree": {
+    "sourceUrl": "https://arxiv.org/abs/2606.01813",
+    "status": "fetched",
+    "title": "Cost-Aware Diffusion Draft Trees for Speculative Decoding",
+    "authors": [
+      "Zhang, Shuai",
+      "Qiu, Huachuan",
+      "He, Hongliang",
+      "Dai, Yong"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.01813",
+    "fetchedAt": "2026-09-09T07:39:59.458389+00:00",
+    "thumbnail": "papers/caddtree.jpg"
+  },
+  "dflare": {
+    "sourceUrl": "https://arxiv.org/abs/2606.02091",
+    "status": "fetched",
+    "title": "DFlare: Scaling Up Draft Capacity for Block Diffusion Speculative Decoding",
+    "authors": [
+      "Zhang, Jiebin",
+      "Yu, Zhenghan",
+      "Liu, Song",
+      "Yu, Eugene J.",
+      "Li, Zheng",
+      "Zhu, Dawei",
+      "Duo, Jiangshan",
+      "Xiong, Weimin",
+      "Song, Yifan",
+      "Yu, Guanghua",
+      "Zhu, Jianchen",
+      "Li, Sujian"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.02091",
+    "fetchedAt": "2026-09-09T07:39:59.335020+00:00",
+    "thumbnail": "papers/dflare.jpg"
+  },
+  "d2sd": {
+    "sourceUrl": "https://arxiv.org/abs/2606.04446",
+    "status": "fetched",
+    "title": "D^2SD: Accelerating Speculative Decoding with Dual Diffusion Draft Models",
+    "authors": [
+      "Zhang, Liyuan",
+      "Zhang, Jiarui",
+      "Yao, Jinwei",
+      "Yan, Ran",
+      "Yang, Yuchen",
+      "Zhang, Jiahao",
+      "Yang, Tongkai",
+      "Wu, Yi",
+      "Yuan, Binhang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.04446",
+    "fetchedAt": "2026-09-09T07:40:10.863398+00:00",
+    "thumbnail": "papers/d2sd.jpg"
+  },
+  "treeflash": {
+    "sourceUrl": "https://arxiv.org/abs/2606.03819v1",
+    "status": "fetched",
+    "title": "TreeFlash: Parallel AR-Approximation for Faster Speculative Decoding",
+    "authors": [
+      "Rheinboldt, Peer",
+      "Berdoz, Frédéric",
+      "Wattenhofer, Roger"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.03819",
+    "fetchedAt": "2026-09-09T07:40:09.443114+00:00",
+    "thumbnail": "papers/treeflash.jpg"
+  },
+  "whiflash": {
+    "sourceUrl": "https://arxiv.org/abs/2606.07710",
+    "status": "fetched",
+    "title": "WhiFlash: Accelerating Speculative Decoding with Token-Level Cross-Paradigm Routing",
+    "authors": [
+      "Kwon, Young D.",
+      "Williams, Miles",
+      "Li, Rui",
+      "Kouris, Alexandros",
+      "Venieris, Stylianos I."
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.07710",
+    "fetchedAt": "2026-09-09T07:40:12.909561+00:00",
+    "thumbnail": "papers/whiflash.jpg"
+  },
+  "teaching-l2r": {
+    "sourceUrl": "https://arxiv.org/abs/2606.11552",
+    "status": "fetched",
+    "title": "Teaching Diffusion to Speculate Left-to-Right",
+    "authors": [
+      "Whalen, Lexington",
+      "Ito, Yuki",
+      "Sakamoto, Ryo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.11552",
+    "fetchedAt": "2026-09-09T07:40:22.653952+00:00",
+    "thumbnail": "papers/teaching-l2r.jpg"
+  },
+  "jetspec": {
+    "sourceUrl": "https://arxiv.org/abs/2606.18394",
+    "status": "fetched",
+    "title": "JetSpec: Breaking the Scaling Ceiling of Speculative Decoding with Parallel Tree Drafting",
+    "authors": [
+      "Hu, Lanxiang",
+      "Feng, Zhaoxiang",
+      "Wu, Yulun",
+      "Yuan, Haoran",
+      "Zhao, Yujie",
+      "Qian, Yu-Yang",
+      "Wang, Bojun",
+      "Zhao, Peng",
+      "Jiang, Daxin",
+      "Zhu, Yibo",
+      "Rosing, Tajana",
+      "Zhang, Hao"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.18394",
+    "fetchedAt": "2026-09-09T07:40:27.989283+00:00",
+    "thumbnail": "papers/jetspec.jpg"
+  },
+  "hyperdflash": {
+    "sourceUrl": "https://arxiv.org/abs/2606.26744",
+    "status": "fetched",
+    "title": "HyperDFlash: Hyper-Connection-Aligned Block Speculative Decoding with Gated Residual Reduction",
+    "authors": [
+      "Lin, Luxi",
+      "Peng, Shuang",
+      "Ma, Rui",
+      "Hua, Junhao",
+      "Fan, Shuwei",
+      "Qin, Zhengda",
+      "Wang, Qiang",
+      "Sun, Hongjian",
+      "Chen, Fangmin",
+      "Liu, Songwei"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.26744",
+    "fetchedAt": "2026-09-09T07:40:25.146471+00:00",
+    "thumbnail": "papers/hyperdflash.jpg"
+  },
+  "spec-auf": {
+    "sourceUrl": "https://arxiv.org/abs/2607.01893",
+    "status": "fetched",
+    "title": "Spec-AUF: Accept-Until-Fail Training under Train-Inference Misalignment for Masked Block Drafters",
+    "authors": [
+      "Yang, Tianjian",
+      "Li, Meng"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.01893",
+    "fetchedAt": "2026-09-09T07:40:41.225907+00:00",
+    "thumbnail": "papers/spec-auf.jpg"
+  },
+  "dspark": {
+    "sourceUrl": "https://arxiv.org/abs/2607.05147",
+    "status": "fetched",
+    "title": "DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation",
+    "authors": [
+      "Cheng, Xin",
+      "Yu, Xingkai",
+      "Shao, Chenze",
+      "Li, Jiashi",
+      "Xiong, Yunfan",
+      "Qian, Yi",
+      "Zhu, Jiaqi",
+      "Ma, Shirong",
+      "Zhang, Xiaokang",
+      "Ye, Jiasheng",
+      "Chen, Qinyu",
+      "Deng, Chengqi",
+      "Yu, Jiping",
+      "Dai, Damai",
+      "Zhang, Zhengyan",
+      "Wei, Yixuan",
+      "Tan, Yixuan",
+      "Yang, Wenkai",
+      "Xu, Runxin",
+      "Wu, Yu",
+      "Xu, Zhean",
+      "Wang, Xuanyu",
+      "Chen, Muyang",
+      "Tian, Rui",
+      "Bi, Xiao",
+      "Hao, Zhewen",
+      "Chen, Shaoyuan",
+      "Cao, Huanqi",
+      "Zhang, Wentao",
+      "Xu, Anyi",
+      "Zhang, Huishuai",
+      "Zhao, Dongyan",
+      "Liang, Wenfeng"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.05147",
+    "fetchedAt": "2026-09-09T07:40:42.824114+00:00",
+    "thumbnail": "papers/dspark.jpg"
+  },
+  "dels-spec": {
+    "sourceUrl": "https://arxiv.org/abs/2607.07409",
+    "status": "fetched",
+    "title": "DeLS-Spec: Decoupled Long-Short Contexts for Parallel Speculative Drafting",
+    "authors": [
+      "Zheng, Hong-Kai",
+      "Li, Piji"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.07409",
+    "fetchedAt": "2026-09-09T07:40:50.267572+00:00",
+    "thumbnail": "papers/dels-spec.jpg"
+  },
+  "dominotree": {
+    "sourceUrl": "https://arxiv.org/abs/2607.08642",
+    "status": "fetched",
+    "title": "DominoTree: Conditional Tree-Structured Drafting with Domino for Speculative Decoding",
+    "authors": [
+      "Lin, Saw S.",
+      "Jang, Jyh-Shing Roger"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.08642",
+    "fetchedAt": "2026-09-09T07:40:57.546735+00:00",
+    "thumbnail": "papers/dominotree.jpg"
+  },
+  "d-cut": {
+    "sourceUrl": "https://arxiv.org/abs/2607.14647",
+    "status": "fetched",
+    "title": "D-cut: Adaptive Verification Depth Pruning for Batched Speculative Decoding",
+    "authors": [
+      "Liu, Tianyu",
+      "Shen, Yuhao",
+      "Cen, Rui",
+      "Shi, Junhan",
+      "Zhang, Jiebin",
+      "Qin, Guangshuo",
+      "Liu, Hong",
+      "Liu, Song",
+      "Yu, Guanghua",
+      "Zhu, Jianchen"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.14647",
+    "fetchedAt": "2026-09-09T07:40:59.065555+00:00",
+    "thumbnail": "papers/d-cut.jpg"
+  },
+  "adaflash": {
+    "sourceUrl": "https://arxiv.org/abs/2607.19223",
+    "status": "fetched",
+    "title": "AdaFlash: Adaptive Speculative Decoding via On-Policy Distilled Diffusion Drafters",
+    "authors": [
+      "Qian, Yu-Yang",
+      "Wu, Hao-Cong",
+      "Chen, Chen",
+      "Sun, Jiacheng",
+      "Dong, Zhenhua",
+      "Zhao, Peng",
+      "Zhou, Zhi-Hua"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.19223",
+    "fetchedAt": "2026-09-09T07:41:01.675456+00:00",
+    "thumbnail": "papers/adaflash.jpg"
+  },
+  "speculative-correction": {
+    "sourceUrl": "https://arxiv.org/abs/2608.02625",
+    "status": "fetched",
+    "title": "Speculative Correction: Draft-then-Refine Decoding for Diffusion Language Models",
+    "authors": [
+      "Chen, Brian K",
+      "Wu, Chong",
+      "Kawaguchi, Kenji"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.02625",
+    "fetchedAt": "2026-09-09T07:41:09.979485+00:00",
+    "thumbnail": "papers/speculative-correction.jpg"
+  },
+  "xpress": {
+    "sourceUrl": "https://arxiv.org/abs/2608.02438",
+    "status": "fetched",
+    "title": "xPress: Parallel Refinement for Diffusion Drafters in Speculative Decoding",
+    "authors": [
+      "Wang, Zheng",
+      "Wertheimer, Davis",
+      "Lim, Yu Chin Fabian",
+      "Srivatsa, Mudhakar",
+      "Ganti, Raghu K.",
+      "Zhang, Minjia",
+      "Wang, Naigang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.02438",
+    "fetchedAt": "2026-09-09T07:41:12.767873+00:00",
+    "thumbnail": "papers/xpress.jpg"
+  },
+  "dblast": {
+    "sourceUrl": "https://arxiv.org/abs/2608.05448",
+    "status": "fetched",
+    "title": "DBLAST: Dependent Block Drafting for Stochastic Speculative Decoding",
+    "authors": [
+      "Karimi, Amirmohammad",
+      "Gao, Chao",
+      "Hassanpour, Negar"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.05448",
+    "fetchedAt": "2026-09-09T07:57:48.954126+00:00",
+    "thumbnail": "papers/dblast.jpg"
+  },
+  "dartree": {
+    "sourceUrl": "https://arxiv.org/abs/2608.13524",
+    "status": "fetched",
+    "title": "DARTree: Speculative Diffusion Decoding with Autoregressive Draft Trees",
+    "authors": [
+      "Li, Tianyi",
+      "Luo, Yaxin",
+      "Shang, Xinyi",
+      "Shen, Zhiqiang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.13524",
+    "fetchedAt": "2026-09-09T07:41:16.491337+00:00",
+    "thumbnail": "papers/dartree.jpg"
+  },
+  "dflash-2": {
+    "sourceUrl": "https://inco.ai/blog/dflash2/",
+    "status": "fetched",
+    "kind": "article",
+    "title": "DFlash 2: Keep Drafting Parallel",
+    "authors": [
+      "Inco AI"
+    ]
+  },
+  "lilicorr": {
+    "sourceUrl": "https://arxiv.org/abs/2608.20530",
+    "status": "fetched",
+    "title": "LiLiCorr: Lightweight Likelihood Correlation of Parallel Drafts for Speculative Decoding",
+    "authors": [
+      "Rusanovsky, Matan",
+      "Miron, Yoav",
+      "Uziel, Roy",
+      "Belhasin, Omer",
+      "Zilberstein, Ran",
+      "Ashkenazi, Maor",
+      "Elad, Michael"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.20530",
+    "fetchedAt": "2026-09-09T07:41:24.606816+00:00",
+    "thumbnail": "papers/lilicorr.jpg"
+  },
+  "vat": {
+    "sourceUrl": "https://arxiv.org/abs/2608.30135",
+    "status": "fetched",
+    "title": "Verification-Aware Training for Speculative Decoding",
+    "authors": [
+      "Gu, Geonmo",
+      "Heo, Byeongho",
+      "Jun, HeeJae",
+      "Kang, Yoohoon",
+      "Lee, Sangmin",
+      "Yun, Sangdoo",
+      "Han, Dongyoon"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.30135",
+    "fetchedAt": "2026-09-09T07:41:34.853429+00:00",
+    "thumbnail": "papers/vat.jpg"
+  },
+  "dbloom": {
+    "sourceUrl": "https://arxiv.org/abs/2608.30427",
+    "status": "fetched",
+    "title": "Ceiling-Clipped Acceptance Histograms Indicate Stranded Speed-up in Block-Diffusion Speculative Decoding",
+    "authors": [
+      "Wu, Ephrem"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.30427",
+    "fetchedAt": "2026-09-09T07:41:35.774931+00:00",
+    "thumbnail": "papers/dbloom.jpg"
+  },
+  "glance": {
+    "sourceUrl": "https://arxiv.org/abs/2609.00355",
+    "status": "fetched",
+    "title": "Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in Vision-Language Models",
+    "authors": [
+      "Lee, Jungseob",
+      "Hong, Seongtae",
+      "Lee, Dongyub Jude",
+      "Park, Chanjun",
+      "Seo, Jaehyung",
+      "Eo, Sugyeong",
+      "Lim, Heuiseok"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.00355",
+    "fetchedAt": "2026-09-09T07:41:36.325881+00:00",
+    "thumbnail": "papers/glance.jpg"
+  },
+  "asd": {
+    "sourceUrl": "https://arxiv.org/abs/2608.03447",
+    "status": "fetched",
+    "title": "Approximate Speculative Decoding",
+    "authors": [
+      "Feng, Yuannuo",
+      "Peng, Zegang",
+      "Xie, Yuxin",
+      "Ye, Yubing",
+      "Chen, Yizhe",
+      "Yao, Wenshuai",
+      "Zhou, Wenyong",
+      "Kang, Wang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.03447",
+    "fetchedAt": "2026-09-09T08:20:51.138304+00:00",
+    "thumbnail": "papers/asd.jpg"
+  },
+  "retrace": {
+    "sourceUrl": "https://arxiv.org/abs/2608.29748",
+    "status": "fetched",
+    "title": "ReTrace: Rejected-Trajectory Conditioning for Speculative Decoding",
+    "authors": [
+      "Lin, Luxi",
+      "Zeng, Zhanpeng",
+      "Peng, Shuang",
+      "Liu, Songwei",
+      "Ji, Rongrong"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.29748",
+    "fetchedAt": "2026-09-09T08:20:52.660132+00:00",
+    "thumbnail": "papers/retrace.jpg"
+  }
+}

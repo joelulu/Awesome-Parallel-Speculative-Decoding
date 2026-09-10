@@ -1,0 +1,50 @@
+[
+  {
+    "source": "dflash",
+    "target": "ddtree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2604.12989",
+    "note": "DDTree 摘要明确说明在 DFlash 的逐位置分布上构建候选树。"
+  },
+  {
+    "source": "dflash",
+    "target": "dspark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://github.com/vllm-project/speculators/blob/main/docs/user_guide/algorithms/dspark.md",
+    "note": "框架文档明确说明 DSpark 在 DFlash 上增加 Markov 与 confidence heads。"
+  },
+  {
+    "source": "domino",
+    "target": "dominotree",
+    "type": "combines",
+    "status": "proposed",
+    "evidenceUrl": "https://arxiv.org/abs/2607.08642",
+    "note": "原仓库归纳的组合关系，尚待核验原文。"
+  },
+  {
+    "source": "ddtree",
+    "target": "dominotree",
+    "type": "combines",
+    "status": "proposed",
+    "evidenceUrl": "https://arxiv.org/abs/2607.08642",
+    "note": "原仓库归纳的组合关系，尚待核验原文。"
+  },
+  {
+    "source": "domino",
+    "target": "dartree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://github.com/VILA-Lab/DARTree",
+    "note": "官方实现使用 Domino drafter，将预训练因果校正从单链扩展到树分支。"
+  },
+  {
+    "source": "dflash",
+    "target": "retrace",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2608.29748",
+    "note": "摘要明确以 DFlash 为骨干，将被拒绝后缀的表示用于下一轮草稿条件，同时保持目标验证不变。"
+  }
+]

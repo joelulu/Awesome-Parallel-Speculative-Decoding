@@ -1,0 +1,44 @@
+[
+  {
+    "id": "architecture",
+    "name": "能力与架构",
+    "description": "更强的并行 drafter",
+    "color": "#2563ad",
+    "english": "Architecture"
+  },
+  {
+    "id": "training",
+    "name": "训练目标对齐",
+    "description": "让训练关注连续接受",
+    "color": "#a6650a",
+    "english": "Training"
+  },
+  {
+    "id": "causality",
+    "name": "因果与相关性",
+    "description": "找回块内 token 依赖",
+    "color": "#168071",
+    "english": "Causality"
+  },
+  {
+    "id": "tree",
+    "name": "树与路径选择",
+    "description": "从单一路径到候选树",
+    "color": "#b44864",
+    "english": "Draft trees"
+  },
+  {
+    "id": "systems",
+    "name": "验证与动态预算",
+    "description": "让接受收益覆盖验证成本",
+    "color": "#7359a5",
+    "english": "Verification"
+  },
+  {
+    "id": "extensions",
+    "name": "多模态与扩展",
+    "description": "走向更广的模型与场景",
+    "color": "#168296",
+    "english": "Beyond text"
+  }
+]

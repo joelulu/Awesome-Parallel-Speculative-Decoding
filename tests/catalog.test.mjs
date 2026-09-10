@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { recommend,filterMethods,chooseBrief,todayInShanghai } from '../src/lib/catalog.mjs';
+import { validateData,loadData } from '../scripts/validate-data.mjs';
+import { updateStars } from '../scripts/update-stars.mjs';
+import { parseBrief } from '../scripts/sync-briefs.mjs';
+const data=await loadData();
+test('catalog and all deep-link targets are valid',()=>assert.deepEqual(validateData(data),[]));
+test('broken cross-reference prevents publication',()=>assert.ok(validateData({...data,relations:[...data.relations,{...data.relations[0],target:'missing'}]}).length));
+test('recommendations retain the foundation and cover six directions',()=>{const result=recommend(data.methods,{},6,Date.parse('2026-09-09'));assert.equal(result[0].id,'dflash');assert.equal(result.length,6);assert.equal(new Set(result.map(m=>m.category)).size,6);assert.equal(new Set(result.map(m=>m.id)).size,6);});
+test('search combines Chinese questions, category and code filters',()=>{assert.ok(filterMethods(data.methods,'并行').length);assert.ok(filterMethods(data.methods,'dflash','all',true).every(m=>m.code.length));assert.equal(filterMethods(data.methods,'nonexistent-paper').length,0);});
+test('brief selection does not label stale or future data as today',()=>{const result=chooseBrief([{date:'2026-09-08'},{date:'2026-09-10'}],'2026-09-09');assert.equal(result.date,'2026-09-08');assert.equal(todayInShanghai(new Date('2026-09-08T17:00:00Z')),'2026-09-09');});
+test('failed GitHub request preserves known stars without inventing zero',async()=>{const old={'z-lab/dflash':{count:123,updatedAt:'2026-09-08'}};const result=await updateStars([data.methods[0]],old,async()=>({ok:false,status:403}));assert.deepEqual(result.output,old);assert.equal(result.failures.length,1);});
+test('brief migration retains actual sources and identifies related methods',()=>{const result=parseBrief('> 今日重点：更新。\n| 2027-01-01 | **DFlash 新版本** | 并行草稿更新 | [来源](https://github.com/z-lab/dflash) |','2027-01-01',data.methods);assert.equal(result.items[0].sourceUrl,'https://github.com/z-lab/dflash');assert.ok(result.items[0].methodIds.includes('dflash'));});

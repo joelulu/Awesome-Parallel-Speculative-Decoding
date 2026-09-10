@@ -1,0 +1,74 @@
+name: Build and deploy research atlas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 1 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Restore most recent public Star snapshots
+        if: github.event_name != 'pull_request'
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/stars.json
+          key: stars-${{ github.run_id }}
+          restore-keys: stars-
+      - name: Restore snapshots into build data
+        run: |
+          if [ -f .cache/stars.json ]; then cp .cache/stars.json src/data/stars.json; fi
+      - run: npm run sync:briefs
+      - name: Refresh public GitHub Star counts
+        if: github.event_name != 'pull_request'
+        run: npm run update:stars
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: npm test
+      - run: npm run build
+      - name: Save Star snapshot for the next refresh
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p .cache
+          cp src/data/stars.json .cache/stars.json
+      - if: github.event_name != 'pull_request'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/stars.json
+          key: stars-${{ github.run_id }}
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

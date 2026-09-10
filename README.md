@@ -1,5 +1,13 @@
 # Awesome Parallel Speculative Decoding
 
+## 交互研究地图
+
+本仓库现包含 **DFlash Atlas** 静态网站：首页为可交互脉络图、重点方法卡片和简短每日简报。DFlash 位于脉络图最左侧，所有方法以细线、圆点和名称标签按研究方向和月份从左向右排列，默认全部展开。方法卡片采用论文首页缩略图、标题作者、中文摘要和 GitHub Star 的横向列表。支持点击方法直达卡片、月份定位、横向浏览、缩放／全屏、卡片返回图中定位、搜索及 GitHub Star 展示。
+
+- 网站部署地址（启用 Pages 后）：https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/
+- [本地预览、GitHub Pages 部署与数据维护说明](WEBSITE.md)
+- 后续网站内容以 `src/data/` 为统一数据源。以下原始时间线和静态图保留作资料归档，尚未逐篇核验。
+
 <p align="center">
   <img src="assets/dflash-method-roadmap.svg" alt="DFlash 后续方法脉络树" width="100%" />
 </p>

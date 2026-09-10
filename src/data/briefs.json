@@ -1,0 +1,52 @@
+[
+  {
+    "date": "2026-09-09",
+    "title": "DFlash / DFlash2 工程与系统侧的实际瓶颈",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-09.md",
+    "items": [
+      {
+        "title": "SGLang：DFlash2 thinking 模式 lossless 一致性问题",
+        "summary": "Qwen3.8-27B 开启 thinking 后，DFlash2 greedy 输出可能与 target-only 在固定位置分叉。",
+        "sourceUrl": null,
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
+      },
+      {
+        "title": "SGLang：DFlash verification mask 显存增长问题",
+        "summary": "verification custom_mask 在 batch size 增长过程中可能持续扩容并长期保留。",
+        "sourceUrl": null,
+        "methodIds": [
+          "dflash"
+        ]
+      },
+      {
+        "title": "vLLM：DFlash2 在超长上下文下可能从加速变成减速",
+        "summary": "在超长 context 下，drafter 的额外历史状态处理可能吞掉 speculative decoding 收益。",
+        "sourceUrl": null,
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
+      },
+      {
+        "title": "llama.cpp：特定编译/调度路径导致 speculative decoding 异常变慢",
+        "summary": "某些 runtime / compiler 路径可能让 MTP/DFlash 出现固定同步开销。",
+        "sourceUrl": null,
+        "methodIds": [
+          "dflash"
+        ]
+      },
+      {
+        "title": "DFlash 生态继续扩大后端与模型覆盖",
+        "summary": "DFlash / DFlash2 正从单篇论文逐步走向通用 speculative decoding 基础设施。",
+        "sourceUrl": null,
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
+      }
+    ]
+  }
+]

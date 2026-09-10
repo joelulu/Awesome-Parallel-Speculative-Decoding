@@ -1,0 +1,86 @@
+{
+  "z-lab/dflash": {
+    "count": 6063,
+    "updatedAt": "2026-09-09T09:03:05.309879+00:00"
+  },
+  "vllm-project/speculators": {
+    "count": 821,
+    "updatedAt": "2026-09-09T09:02:54.622861+00:00"
+  },
+  "liranringel/ddtree": {
+    "count": 397,
+    "updatedAt": "2026-09-09T09:02:47.043018+00:00"
+  },
+  "jianuo-huang/Domino": {
+    "count": 138,
+    "updatedAt": "2026-09-09T09:02:47.201896+00:00"
+  },
+  "VILA-Lab/DARTree": {
+    "count": 9,
+    "updatedAt": "2026-09-09T09:02:32.392512+00:00"
+  },
+  "Kissmetothemoon/ASD": {
+    "count": 2,
+    "updatedAt": "2026-09-09T09:02:04.002342+00:00"
+  },
+  "Lucas-TY/D-PACE": {
+    "count": 17,
+    "updatedAt": "2026-09-09T09:02:14.699061+00:00"
+  },
+  "Simplified-Reasoning/Draft-OPD": {
+    "count": 73,
+    "updatedAt": "2026-09-09T09:02:32.342263+00:00"
+  },
+  "ZhangShuai1230/CaDDTree": {
+    "count": 3,
+    "updatedAt": "2026-09-09T09:02:31.764820+00:00"
+  },
+  "Tencent/AngelSlim": {
+    "count": 1637,
+    "updatedAt": "2026-09-09T09:02:14.952123+00:00"
+  },
+  "catnanami/D2-SD": {
+    "count": 14,
+    "updatedAt": "2026-09-09T09:02:40.049814+00:00"
+  },
+  "ETH-DISCO/TreeFlash": {
+    "count": 2,
+    "updatedAt": "2026-09-09T09:02:04.055175+00:00"
+  },
+  "SamsungLabs/WhiFlash": {
+    "count": 0,
+    "updatedAt": "2026-09-09T09:02:15.076966+00:00"
+  },
+  "hao-ai-lab/JetSpec": {
+    "count": 219,
+    "updatedAt": "2026-09-09T09:02:41.114811+00:00"
+  },
+  "deepseek-ai/DeepSpec": {
+    "count": 7088,
+    "updatedAt": "2026-09-09T09:02:39.989732+00:00"
+  },
+  "dt-3t/DeLS-Spec": {
+    "count": 2,
+    "updatedAt": "2026-09-09T09:02:40.631198+00:00"
+  },
+  "slin-zhq/Domino-Tree": {
+    "count": 3,
+    "updatedAt": "2026-09-09T09:02:53.741900+00:00"
+  },
+  "vllm-project/vllm": {
+    "count": 91323,
+    "updatedAt": "2026-09-09T09:02:55.608425+00:00"
+  },
+  "ZinYY/AdaFlash": {
+    "count": 5,
+    "updatedAt": "2026-09-09T09:02:31.835087+00:00"
+  },
+  "Supercomputing-System-AI-Lab/xPress": {
+    "count": 6,
+    "updatedAt": "2026-09-09T09:02:14.706864+00:00"
+  },
+  "js-lee-AI/GLANCE": {
+    "count": 0,
+    "updatedAt": "2026-09-09T09:02:47.763538+00:00"
+  }
+}
