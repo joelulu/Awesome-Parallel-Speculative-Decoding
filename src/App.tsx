@@ -1,5 +1,5 @@
-import { Component, lazy, Suspense, useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Check, ChevronDown, ChevronUp, Code2, GitBranch, Github, LocateFixed, Search, Sparkles, Star, X } from 'lucide-react';
+import { Component, lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { ArrowRight, ArrowUpRight, ChevronDown, GitBranch, Github, LocateFixed, Search, Sparkles, X } from 'lucide-react';
 import PaperCard from './PaperCard';
 import methodsJson from './data/methods.json';
 import categories from './data/categories.json';
@@ -40,6 +40,7 @@ export default function App(){
   useEffect(()=>{const timer=setInterval(()=>setToday(todayInShanghai()),60000);return()=>clearInterval(timer);},[]);
   const brief=chooseBrief(briefs,today) as Brief|null;
   const isToday=brief?.date===today;
+  const previousBriefs=briefs.filter(item=>item.date!==brief?.date).slice(0,8);
   const searching=Boolean(query.trim()||category!=='all'||codeOnly);
   const recommended=useMemo(()=>recommend(methods,stars,6),[]);
   const visible=useMemo(()=>{
@@ -49,12 +50,10 @@ export default function App(){
   },[all,query,category,codeOnly,sort,searching,recommended]);
   function readMethod(id:string,hash=true){
     if(!methods.some(m=>m.id===id)){setUnknown(true);return;}
-    setUnknown(false);setActive(id);
-    setAll(true);setQuery('');setCategory('all');setCodeOnly(false);
+    setUnknown(false);setActive(id);setAll(true);setQuery('');setCategory('all');setCodeOnly(false);
     if(hash&&window.location.hash!==`#method-${id}`)window.history.pushState(null,'',`#method-${id}`);
     setReadKey(key=>key+1);
   }
-  // Scroll after React commits the expanded, unfiltered card list, including repeated clicks.
   useEffect(()=>{if(active)scrollToId(`method-${active}`);},[active,readKey]);
   useEffect(()=>{
     const onHash=()=>{const hash=window.location.hash;if(hash.startsWith('#method-')){try{readMethod(decodeURIComponent(hash.slice(8)),false);}catch{setUnknown(true);}}else if(hash)scrollToId(hash.slice(1));};
@@ -69,7 +68,7 @@ export default function App(){
     <header className="site-header"><a className="brand" href="#"><span className="brand-mark"><GitBranch size={23}/></span><span>DFlash <b>Atlas</b><small>PARALLEL SPECULATIVE DECODING</small></span></a><nav aria-label="主导航"><a className="nav-active" href="#research-map">研究地图</a><a href="#featured">方法卡片</a><a href="#daily">每日简报</a></nav><External href={repository} className="repo-link"><Github size={18}/><span>GitHub</span><ArrowUpRight size={14}/></External></header>
     <main>
       <section className="intro"><div><div className="eyebrow"><span className="live-dot"/> PAPERS · METHODS · OPEN SOURCE</div><h1>Parallel Speculative Decoding</h1><p>从 DFlash 出发，沿着时间阅读并行投机解码的新方法。</p></div><div className="intro-meta"><span><b>{methods.length.toString().padStart(2,'0')}</b> 方法记录</span><span><b>06</b> 研究方向</span><small>资料更新于 {lastUpdated}</small></div></section>
-      <section id="research-map" className="map-section" tabIndex={-1} aria-labelledby="map-title"><div className="section-heading"><div className="section-title"><span className="section-number">01</span><h2 id="map-title">探索研究脉络</h2><span className="quiet-label">交互地图</span></div><div className="search-wrap"><Search size={17}/><input aria-label="搜索方法、问题或关键词" placeholder="搜索方法、问题或关键词…" value={query} onFocus={()=>setSearchOpen(true)} onChange={e=>{setQuery(e.target.value);setAll(true);setSearchOpen(true);}} onKeyDown={e=>{if(e.key==='Escape')setSearchOpen(false);if(e.key==='Enter'&&searchMatches[0]){locate(searchMatches[0].id);}}}/>{query&&<button className="icon-button" aria-label="清空搜索" onClick={()=>setQuery('')}><X size={15}/></button>}{query&&searchOpen&&<div className="search-results">{searchMatches.length?searchMatches.map(m=><button key={m.id} onClick={()=>locate(m.id)}><span>{m.name}<small>{categoryMap[m.category].name}</small></span><LocateFixed size={15}/></button>):<p>未找到匹配方法</p>}</div>}</div></div>
+      <section id="research-map" className="map-section" tabIndex={-1} aria-labelledby="map-title"><div className="section-heading"><div className="section-title"><span className="section-number">01</span><h2 id="map-title">探索研究脉络</h2><span className="quiet-label">交互地图</span></div><div className="search-wrap"><Search size={17}/><input aria-label="搜索方法、问题或关键词" placeholder="搜索方法、问题或关键词…" value={query} onFocus={()=>setSearchOpen(true)} onChange={e=>{setQuery(e.target.value);setAll(true);setSearchOpen(true);}} onKeyDown={e=>{if(e.key==='Escape')setSearchOpen(false);if(e.key==='Enter'&&searchMatches[0])locate(searchMatches[0].id);}}/>{query&&<button className="icon-button" aria-label="清空搜索" onClick={()=>setQuery('')}><X size={15}/></button>}{query&&searchOpen&&<div className="search-results">{searchMatches.length?searchMatches.map(m=><button key={m.id} onClick={()=>locate(m.id)}><span>{m.name}<small>{categoryMap[m.category].name}</small></span><LocateFixed size={15}/></button>):<p>未找到匹配方法</p>}</div>}</div></div>
       <MapBoundary><Suspense fallback={<div className="map-loading">正在载入研究地图…</div>}><ResearchMap methods={methods} categories={categories} relations={relations} focusId={focusId} focusKey={focusKey} onRead={readMethod}/></Suspense></MapBoundary>
       <div className="map-legend"><span>按问题分支 · 按时间演进</span>{categories.map(c=><button key={c.id} onClick={()=>{setCategory(c.id);setAll(true);scrollToId('featured');}}><i style={{background:c.color}}/>{c.name}</button>)}<span className="legend-note">实线表示时间顺序，非继承关系</span></div>
       <details className="map-outline"><summary>以大纲浏览全部方法 <ChevronDown size={16}/></summary><div>{categories.map(c=><details key={c.id}><summary><i style={{background:c.color}}/>{c.name}</summary>{methods.filter(m=>m.category===c.id).map(m=><button key={m.id} onClick={()=>readMethod(m.id)}>{m.name}<ArrowUpRight size={14}/></button>)}</details>)}</div></details></section>
@@ -81,9 +80,10 @@ export default function App(){
       {!visible.length&&<div className="empty-state"><Search size={25}/><h3>暂时没有匹配的方法</h3><p>试试更短的关键词，或清除筛选条件。</p><button className="primary-button" onClick={resetFilters}>清除筛选</button></div>}
       {!all&&!searching&&<div className="recommendation-note"><Sparkles size={14}/> 综合编辑关注、来源核验、发布时间与方向覆盖推荐；Star 仅作辅助信号。</div>}
       </section>
-      <section id="daily" className="daily-section" tabIndex={-1} aria-labelledby="daily-title"><div className="section-heading"><div className="section-title"><span className="section-number">03</span><h2 id="daily-title">今日简报</h2><span className="quiet-label">{today}</span></div><External className="text-button" href={`${repository}/tree/main/daily`}>查看往期 <ArrowUpRight size={16}/></External></div>
-      {!isToday&&<p className="brief-empty">今日暂无新增。{brief?`以下为最近一期：${brief.date}。`:'新的研究动态会出现在这里。'}</p>}
-      {brief&&<div className="brief-layout"><div className="brief-intro"><span className="eyebrow">{isToday?'TODAY’S BRIEF':'LATEST BRIEF'}</span><h3>{brief.title}</h3><p>值得留意的变化，简短读完。</p><External href={brief.archiveUrl}>阅读完整简报 <ArrowUpRight size={15}/></External></div><ol className="brief-list">{brief.items.slice(0,5).map((item,i)=><li key={`${brief.date}-${i}`}><span className="brief-number">{String(i+1).padStart(2,'0')}</span><div><h4>{item.title}</h4><p>{item.summary}</p><div className="brief-links">{item.sourceUrl?<External href={item.sourceUrl}>来源 <ArrowUpRight size={12}/></External>:<span>来源链接待补充</span>}{item.methodIds.map(id=><button key={id} onClick={()=>readMethod(id)}>{methods.find(m=>m.id===id)?.name} <ArrowRight size={12}/></button>)}</div></div></li>)}</ol></div>}
+      <section id="daily" className="daily-section" tabIndex={-1} aria-labelledby="daily-title"><div className="section-heading"><div className="section-title"><span className="section-number">03</span><h2 id="daily-title">每日简报</h2><span className="quiet-label">DFlash FOLLOW-UP</span></div><External className="text-button" href={`${repository}/tree/main/daily`}>全部往期 <ArrowUpRight size={16}/></External></div>
+      {!isToday&&<p className="brief-empty">今日暂无值得单独收录的新论文。{brief?`以下为最近一期：${brief.date}。`:'新的 DFlash 后续研究会出现在这里。'}</p>}
+      {brief&&<div className="brief-layout"><div className="brief-intro"><span className="eyebrow">{isToday?'TODAY’S BRIEF':'LATEST BRIEF'}</span><h3>{brief.title}</h3><p>只追踪 DFlash 及直接后续研究；新论文优先。</p><External href={brief.archiveUrl}>新窗口阅读完整简报 <ArrowUpRight size={15}/></External></div><ol className="brief-list">{brief.items.slice(0,5).map((item,i)=><li key={`${brief.date}-${i}`}><span className="brief-number">{String(i+1).padStart(2,'0')}</span><div><h4>{item.title}</h4><p>{item.summary}</p><div className="brief-links">{item.sourceUrl?<External href={item.sourceUrl}>来源 <ArrowUpRight size={12}/></External>:<span>来源链接待补充</span>}{item.methodIds.map(id=><button key={id} onClick={()=>readMethod(id)}>{methods.find(m=>m.id===id)?.name} <ArrowRight size={12}/></button>)}</div></div></li>)}</ol></div>}
+      {previousBriefs.length>0&&<div className="brief-archive"><div className="brief-archive-heading"><span>往期简报</span><small>点击后在新窗口打开</small></div><div className="brief-archive-links">{previousBriefs.map(item=><External key={item.date} href={item.archiveUrl} title={item.title}><time>{item.date}</time><span>{item.title}</span><ArrowUpRight size={13}/></External>)}</div></div>}
       </section>
     </main><footer><a className="footer-brand" href="#">DFlash Atlas</a><span>沿着问题，持续阅读。<span className="footer-divider"> / </span>由开放研究连接起来。</span><External href={repository}>在 GitHub 上参与整理 <ArrowUpRight size={14}/></External></footer>
   </>;
