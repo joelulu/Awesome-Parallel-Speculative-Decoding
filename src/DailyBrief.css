@@ -1,0 +1,11 @@
+.brief-archive{margin-top:22px;padding-top:18px;border-top:1px solid #e8e4dc}
+.brief-archive-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+.brief-archive-heading span{font-family:var(--serif);font-size:17px;color:#234b66;font-weight:500}
+.brief-archive-heading small{font-size:11px;color:#9a9b96}
+.brief-archive-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+.brief-archive-links>a{min-width:0;display:grid;grid-template-columns:92px minmax(0,1fr) 16px;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e7e3da;border-radius:6px;background:#fff;color:#526b7b;transition:border-color .15s,background .15s,transform .15s}
+.brief-archive-links>a:hover{border-color:#c9d8e2;background:#f8fbfc;transform:translateY(-1px)}
+.brief-archive-links time{font-size:11px;color:#8e9aa1;font-variant-numeric:tabular-nums}
+.brief-archive-links span{min-width:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brief-archive-links svg{color:#7893a5}
+@media(max-width:760px){.brief-archive-links{grid-template-columns:1fr}.brief-archive-heading{align-items:flex-start;flex-direction:column;gap:3px}}
