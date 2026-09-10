@@ -10,10 +10,16 @@ export function comparePublication(a, b) {
 export function buildTimeline(methods, categories) {
   const root = methods.find(method => method.id === 'dflash');
   if (!root) throw new Error('The timeline requires the DFlash starting point.');
-  const nodeHeight = 76, laneHeight = 82, firstLaneY = 56;
-  const methodGap = 8, monthPadding = 10;
-  // Size labels by their longest word; multiword names wrap instead of widening every month.
-  const widthOf = method => Math.max(68, Math.ceil(Math.max(...method.name.split(/\s+/).map(word => word.length)) * 8.8) + 14);
+  const nodeHeight = 72, laneHeight = 80, firstLaneY = 58;
+  const methodGap = 14, monthPadding = 18;
+
+  // Keep every method title on one line. Width follows the complete display name
+  // instead of the longest word, which previously forced long titles to wrap.
+  const widthOf = method => {
+    const name = method.name.replace(/\s+/g, ' ').trim();
+    const ascii = [...name].reduce((total, char) => total + (/^[\x00-\x7F]$/.test(char) ? 7.45 : 13), 0);
+    return Math.max(82, Math.ceil(ascii) + 22);
+  };
   const laneTop = index => firstLaneY + index * laneHeight;
   const monthOf = method => method.date?.slice(0, 7) ?? 'undated';
   const successors = methods.filter(method => method.id !== root.id);
@@ -23,9 +29,9 @@ export function buildTimeline(methods, categories) {
     id: category.id, y: laneTop(index), color: category.color,
     methods: successors.filter(method => method.category === category.id).sort(comparePublication),
   }));
-  let cursor = 282;
+  let cursor = 304;
   const months = monthKeys.map(key => {
-    const width = Math.max(80, ...lanes.map(lane => {
+    const width = Math.max(112, ...lanes.map(lane => {
       const group = lane.methods.filter(method => monthOf(method) === key);
       return group.reduce((total, method) => total + widthOf(method), 0) + Math.max(0, group.length - 1) * methodGap;
     })) + monthPadding * 2;
@@ -34,8 +40,8 @@ export function buildTimeline(methods, categories) {
     return month;
   });
   const rootNode = {
-    id: root.id, kind: 'root', x: 12, y: firstLaneY + Math.max(0, lanes.length - 1) * laneHeight / 2,
-    width: 100, height: nodeHeight, method: root,
+    id: root.id, kind: 'root', x: 18, y: firstLaneY + Math.max(0, lanes.length - 1) * laneHeight / 2,
+    width: 104, height: nodeHeight, method: root,
   };
   const methodNodes = lanes.flatMap(lane => months.flatMap(month => {
     let x = month.x + monthPadding;
@@ -47,8 +53,8 @@ export function buildTimeline(methods, categories) {
     });
   }));
   const categoryNodes = categories.map((category, index) => ({
-    id: `cat-${category.id}`, kind: 'category', x: 124, y: laneTop(index),
-    width: 142, height: nodeHeight, category, count: lanes[index].methods.length,
+    id: `cat-${category.id}`, kind: 'category', x: 136, y: laneTop(index),
+    width: 148, height: nodeHeight, category, count: lanes[index].methods.length,
   }));
   const timelineEdges = lanes.flatMap(lane => {
     const chain = [root.id, `cat-${lane.id}`, ...lane.methods.map(method => method.id)];
@@ -59,6 +65,6 @@ export function buildTimeline(methods, categories) {
   });
   return {
     root: rootNode, methods: methodNodes, categories: categoryNodes, months, lanes, edges: timelineEdges,
-    width: cursor + 28, height: firstLaneY + Math.max(1, lanes.length) * laneHeight,
+    width: cursor + 42, height: firstLaneY + Math.max(1, lanes.length) * laneHeight,
   };
 }
