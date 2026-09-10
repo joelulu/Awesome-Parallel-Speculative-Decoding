@@ -1,40 +1,41 @@
 /* The map is a reading surface: quiet month guides, colored lanes and clear links. */
-.chronology-map{height:720px;border-radius:12px;border-color:#e1e5e7;box-shadow:0 5px 24px #1c426006}
-.chronology-map .map-topbar{height:52px;padding:0 24px;background:#fcfdfd;border-color:#edf0f1}
-.chronology-map .map-breadcrumb{color:#86959e;gap:12px}
+.chronology-map{height:704px;border-radius:14px;border-color:#dde5e9;box-shadow:0 10px 34px #1c42600a;background:#fff}
+.chronology-map .map-topbar{height:52px;padding:0 24px;background:#fcfdfd;border-color:#edf1f3}
+.chronology-map .map-breadcrumb{color:#8797a1;gap:12px}
 .chronology-map .map-breadcrumb button{font-size:18px}
-.chronology-map .timeline-month-nav{top:52px;height:48px;padding:0 20px;gap:8px;border-bottom:1px solid #f0f2f3}
-.chronology-map .timeline-month-nav button{padding:6px 12px;border-radius:6px;font-size:12px;color:#668093}
-.chronology-map .timeline-month-nav button:hover,.chronology-map .timeline-month-nav button:focus-visible{background:#eaf2f7;color:#245778;border-color:#d7e4ed}
-.chronology-map .flow-surface{top:100px;bottom:72px;background:linear-gradient(90deg,#fafcfd 0,#fff 24%)}
-.chronology-map .timeline-month-label{color:#526d80;font-family:'DM Sans','Noto Sans SC',sans-serif;font-size:16px;font-weight:600;border-color:#e1e8ec;letter-spacing:1px;padding-top:0}
-.chronology-map .timeline-lane-band:after{border-color:#eaf0f3}
-.chronology-map .timeline-category button{background:#fcfdfe;border:1px solid color-mix(in srgb,var(--branch) 15%,#fff);border-radius:7px;height:34px;position:absolute;top:27px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:0 10px;transition:background .15s,border-color .15s}
-.chronology-map .timeline-category button:hover{background:color-mix(in srgb,var(--branch) 6%,#fff);border-color:var(--branch)}
-.chronology-map .timeline-category span{font-size:14px;white-space:nowrap}
+.chronology-map .timeline-month-nav{top:52px;height:46px;padding:0 20px;gap:7px;border-bottom:1px solid #f0f3f4}
+.chronology-map .timeline-month-nav button{padding:6px 11px;border-radius:7px;font-size:12px;color:#6b8292}
+.chronology-map .timeline-month-nav button:hover,.chronology-map .timeline-month-nav button:focus-visible{background:#edf4f8;color:#245778;border-color:#d9e5ec}
+.chronology-map .flow-surface{top:98px;bottom:70px;background:linear-gradient(90deg,#fbfcfd 0,#fff 21%)}
+.chronology-map .timeline-month-label{color:#557084;font-family:'DM Sans','Noto Sans SC',sans-serif;font-size:14px;font-weight:600;border-color:#e4ebef;letter-spacing:.2px;padding-top:2px}
+.chronology-map .timeline-lane-band:after{border-color:#edf2f4}
+.chronology-map .timeline-category button{background:#fcfdfe;border:1px solid color-mix(in srgb,var(--branch) 14%,#fff);border-radius:8px;height:32px;position:absolute;top:28px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:0 11px;transition:background .15s,border-color .15s,box-shadow .15s}
+.chronology-map .timeline-category button:hover{background:color-mix(in srgb,var(--branch) 5%,#fff);border-color:color-mix(in srgb,var(--branch) 45%,#fff);box-shadow:0 3px 12px color-mix(in srgb,var(--branch) 8%,transparent)}
+.chronology-map .timeline-category span{font-size:13px;font-weight:600;white-space:nowrap}
 .chronology-map .timeline-category i{width:5px;height:5px;border-radius:50%;background:var(--branch)}
 .chronology-map .timeline-read{display:block;cursor:pointer;border-radius:7px;transition:background .16s}
-.chronology-map .timeline-read strong{font-size:16px;font-weight:600;line-height:1.2;top:-8px;bottom:42px;padding:0 4px;color:#36566d;overflow-wrap:normal}
-.chronology-map .method-point{width:9px;height:9px;border-width:2px;background:#fff}
-.chronology-map .timeline-read-hint{position:absolute;top:58px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;color:var(--branch);opacity:0;transform:translateY(-3px);transition:opacity .16s,transform .16s;pointer-events:none}
-.chronology-map .timeline-read:hover,.chronology-map .timeline-read:focus-visible,.chronology-map .is-selected .timeline-read{background:color-mix(in srgb,var(--branch) 6%,transparent)}
-.chronology-map .timeline-read:hover .timeline-read-hint,.chronology-map .timeline-read:focus-visible .timeline-read-hint,.chronology-map .is-selected .timeline-read-hint{opacity:1;transform:translateY(0)}
-.chronology-map .timeline-read:focus-visible .method-point{background:var(--branch);box-shadow:0 0 0 5px color-mix(in srgb,var(--branch) 13%,transparent)}
-.chronology-map .timeline-root .timeline-read strong{font-size:23px;font-weight:600;color:#214b69}
-.chronology-map .timeline-root .method-point{width:12px;height:12px;background:#315d7e;box-shadow:0 0 0 5px #315d7e0d}
-.chronology-map .map-tools{right:16px;bottom:90px;border-color:#e0e7eb;border-radius:8px;box-shadow:0 3px 12px #19344808;overflow:hidden}
-.chronology-map .map-tools button{padding:8px;color:#56768d}
-.chronology-map .timeline-navigation{height:40px;bottom:32px;padding:0 24px;gap:16px;border-color:#edf1f3;color:#8a9ba6}
-.chronology-map .timeline-navigation input{accent-color:#698da7;height:16px}
-.chronology-map .map-caption{color:#899aa5;font-size:11px}
+.chronology-map .timeline-read strong{font-size:13px;font-weight:600;line-height:1;top:5px;bottom:39px;padding:0 5px;color:#385a70;white-space:nowrap;overflow:visible;overflow-wrap:normal;word-break:keep-all;letter-spacing:-.1px}
+.chronology-map .method-point{width:8px;height:8px;border-width:2px;background:#fff;top:44px}
+.chronology-map .timeline-method .react-flow__handle{top:44px}
+.chronology-map .timeline-read-hint{position:absolute;top:56px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:3px;font-size:9px;color:var(--branch);opacity:0;transform:translateY(-2px);transition:opacity .16s,transform .16s;pointer-events:none}
+.chronology-map .timeline-read:hover,.chronology-map .timeline-read:focus-visible,.chronology-map .is-selected .timeline-read{background:color-mix(in srgb,var(--branch) 4%,transparent)}
+.chronology-map .timeline-read:hover .timeline-read-hint,.chronology-map .timeline-read:focus-visible .timeline-read-hint,.chronology-map .is-selected .timeline-read-hint{opacity:.82;transform:translateY(0)}
+.chronology-map .timeline-read:focus-visible .method-point{background:var(--branch);box-shadow:0 0 0 5px color-mix(in srgb,var(--branch) 12%,transparent)}
+.chronology-map .timeline-root .timeline-read strong{font-size:22px;font-weight:600;color:#214b69;white-space:nowrap}
+.chronology-map .timeline-root .method-point{width:11px;height:11px;background:#315d7e;box-shadow:0 0 0 5px #315d7e0d}
+.chronology-map .map-tools{right:15px;bottom:87px;border-color:#e0e7eb;border-radius:9px;box-shadow:0 4px 15px #1934480b;overflow:hidden}
+.chronology-map .map-tools button{padding:8px;color:#58778d}
+.chronology-map .timeline-navigation{height:38px;bottom:32px;padding:0 24px;gap:16px;border-color:#edf1f3;color:#8b9ba5}
+.chronology-map .timeline-navigation input{accent-color:#698da7;height:15px}
+.chronology-map .map-caption{color:#899aa5;font-size:10px}
 .chronology-map:fullscreen{height:100vh}
-@media(min-width:1600px){.chronology-map{height:750px}}
+@media(min-width:1600px){.chronology-map{height:724px}}
 @media(max-width:700px){
- .chronology-map{height:650px;border-radius:9px}
+ .chronology-map{height:640px;border-radius:10px}
  .chronology-map .map-topbar{height:74px;padding:0 14px;gap:8px}
  .chronology-map .timeline-month-nav{top:74px;padding:0 8px;gap:2px}
  .chronology-map .timeline-month-nav button{padding:6px 9px;font-size:11px}
- .chronology-map .flow-surface{top:122px}
+ .chronology-map .flow-surface{top:120px}
  .chronology-map .timeline-navigation{padding:0 12px;gap:8px}
  .chronology-map .map-tools{right:9px}
  .chronology-map .map-caption{font-size:10px}
