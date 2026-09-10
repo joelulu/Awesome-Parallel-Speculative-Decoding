@@ -55,7 +55,7 @@
 | **2026-08-13** | **DARTree — Speculative Diffusion Decoding with Autoregressive Draft Trees** | ⭐⭐⭐ 当前非常重要 | diffusion tree 缺路径条件 | 把 AR correction head 从 chain 推广到 **candidate tree**，批量扩展 path 后 best-first pruning。([arXiv](https://arxiv.org/abs/2608.13524)) |
 | **2026-08-18** | **DFlash 2 — Keep Drafting Parallel** | ⭐⭐⭐ 工程上很值得跟 | 正确 token 常在 top-k，但组合路径选错 | **candidate/path selection + lightweight local convolution**。([Hugging Face](https://huggingface.co/wyattearp/Qwen3.8-27B-DFlash2)) |
 | **2026-08-20** | **LiLiCorr — Lightweight Likelihood Correlation of Parallel Drafts** | ⭐⭐⭐ 与 DFlash2/xPress 同一核心问题 | marginal logits 不表达候选组合是否合理 | 计算轻量 **adjacent compatibility / cosine score** 后选 joint path。([arXiv](https://arxiv.org/abs/2608.20530)) |
-| **2026-08-30** | **ReTrace — Rejected-Trajectory Conditioning for Speculative Decoding** | ⭐⭐⭐ 把被拒绝的 suffix 从“废计算”变成下一轮条件信息 | 标准 prefix verification 在 first rejection 后直接丢掉后续 draft suffix，但这些 hidden states 仍保留与 target continuation 对齐的语义/结构信息 | 保留 first-rejection 之后的 rejected hidden trajectory，**对齐到下一轮 block → 用同一次 verification 得到的 target states 做 target-aware correction → gated residual fusion 注入下一轮 drafter 输入**；不额外增加 target/drafter forward，verification 规则不变，因此保持 lossless。([arXiv](https://arxiv.org/abs/2608.29748)) |
+| **2026-08-30** | **ReTrace — Rejected-Trajectory Conditioning for Speculative Decoding** | ⭐⭐⭐ 把被拒绝的 suffix 从“废计算”变成下一轮条件信息 | 标准 prefix verification 在 first rejection 后直接丢掉后续 draft suffix，但这些 hidden states 仍保留与 target continuation 对齐的语义/结构信息 | 保留 first-rejection 之后的 rejected hidden trajectory，**对齐到下一轮 block → 用同一次 verification 得到的 target states 做 target-aware correction → gated residual fusion 注入下一轮 drafter输入**；不额外增加 target/drafter forward，verification 规则不变，因此保持 lossless。([arXiv](https://arxiv.org/abs/2608.29748)) |
 | **2026-08-31** | **Verification-Aware Training (VAT)** | ⭐ 从 verifier 反过来训练 drafter | CE accuracy 不等于 speculative acceptance | verification head 学 survive/reject pattern，并对 first-rejection 周围动态重加权。([arXiv](https://arxiv.org/abs/2608.30135)) |
 | **2026-08-31** | **Ceiling-Clipped Acceptance Histograms / DBloom** | 研究 block size ceiling | 频繁 full-accept 时固定 block=16 变成 ceiling | 用 full-acceptance histogram 判断 ceiling，再扩展 block horizon。([arXiv](https://arxiv.org/abs/2608.30427)) |
 | **2026-09-01 左右** | **GLANCE — Vision Is Not Overhead** | ⭐⭐⭐ DFlash 思想进入 VLM | 多模态 drafter 忽略/压缩视觉信息会降低 acceptance | 读取 target 已算好的 **fused vision-language hidden states** 做 one-pass block drafting，再构造 wide candidate tree 验证。([arXiv](https://arxiv.org/abs/2609.00355)) |
@@ -67,6 +67,28 @@ ReTrace 不是在“本轮”继续增强 path selection、causal correction 或
 ---
 
 # Daily Briefs
+
+## 2026-09-10
+
+> 今日重点：DFlash / DSpark 在新型 Hyper-Connection target 上的真实 serving 兼容性，以及扩散/并行生成侧的新加速信号。
+
+| 时间 | 动态 | 1句摘要 | 核心动机 | 怎么解决 / 启示 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-09 | **SGLang：Qwen3.8-Flash-Next 无法正确导出 DFlash/DSpark aux hidden states** | HC 返回流与 auxiliary capture 冲突 | 新型 HC target 无法直接 serving 已训练 drafter | 增加 HC-contracting aux hook、`dflash_capture` 并修正返回通道 | ⭐⭐⭐ |
+| 2026-09-09 | **vLLM：Qwen3.8-Flash-Next + DFlash/DSpark 的 5 个 serving blocker** | adaptive verification 与 GDN backend 等存在兼容缺口 | acceptance 高不代表系统可落地 | 修补 runner/anchor/allowlist，并研究 hybrid backend verification trimming | ⭐⭐⭐ |
+| 2026-09-09 | **Gaussian Process Rectified Feature Cache** | 用 GP 预测并校正跨 timestep cache feature | 简单缓存复用在动态区间误差累积 | `cache + model-based correction` | ⭐⭐ |
+| 2026-09-08 | **Mask Forcing** | dual-noise masking 改善 AR video diffusion self-rollout | reverse-KL distillation 易 mode collapse | 用时空 clean/noisy token 混合扩大 rollout 覆盖 | ⭐⭐ |
+| 2026-09-03 | **Uno — Lossless Speedups via Discrete Diffusion** | diffusion sampler 并行抽 token 且保持 AR 分布 | 兼顾 AR 质量与并行采样 | diffusion distillation + Ψ-Spec lossless sampling | ⭐⭐⭐ |
+
+完整版本见 [`daily/2026-09-10.md`](daily/2026-09-10.md)。
+
+### 今日研究提示
+
+1. **HC-aware speculative serving**：模型侧 representation adaptation 之外，hidden-state plumbing / anchor layout / backend contract 正成为关键问题。
+2. **Adaptive verification × hybrid backend**：GDN/Mamba-class backend 的 query trimming 是很值得沿 D-CUT / DSpark 深挖的系统方向。
+3. **Rejected-state reuse × cache correction**：ReTrace 与 GP feature cache 都可抽象为 `stale state → correction → reuse`。
+
+---
 
 ## 2026-09-09
 
