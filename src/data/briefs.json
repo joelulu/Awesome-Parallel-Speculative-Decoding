@@ -1,7 +1,7 @@
 [
   {
     "date": "2026-09-10",
-    "title": "HC 架构 serving、adaptive verification 与扩散加速新动态",
+    "title": "DFlash 在新型 HC 架构上的 serving 与 adaptive verification",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-10.md",
     "items": [
       {
@@ -15,24 +15,6 @@
         "summary": "runner、anchor layout、allowlist 与 GDN backend adaptive verification 等系统约束说明高 acceptance 并不等于可部署。",
         "sourceUrl": "https://github.com/vllm-project/vllm/issues/56088",
         "methodIds": ["dflash", "dspark", "hyperdflash"]
-      },
-      {
-        "title": "Gaussian Process Rectified Feature Cache",
-        "summary": "用 Gaussian Process 预测并校正跨 timestep 缓存 feature，把简单 feature reuse 推向 uncertainty/model-based correction。",
-        "sourceUrl": "https://arxiv.org/abs/2609.05981",
-        "methodIds": []
-      },
-      {
-        "title": "Mask Forcing：AR Video Diffusion Distillation 的 dual-noise rollout",
-        "summary": "通过时空 dual-noise masking 改善 reverse-KL self-rollout 的 mode collapse，和 on-policy distillation 的分布修正问题高度相关。",
-        "sourceUrl": "https://arxiv.org/abs/2609.09123",
-        "methodIds": ["draft-opd"]
-      },
-      {
-        "title": "Uno：用 Discrete Diffusion 获得 lossless LLM speedup",
-        "summary": "以轻量 diffusion sampler 并行抽取多个 token，同时保持底层 AR 分布不变，值得与 DFlash 的 drafter-verifier 范式正面对照。",
-        "sourceUrl": "https://arxiv.org/abs/2609.04010",
-        "methodIds": ["dflash"]
       }
     ]
   },
