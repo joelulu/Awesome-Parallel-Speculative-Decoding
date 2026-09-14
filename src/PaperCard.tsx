@@ -2,12 +2,13 @@ import { useState, type CSSProperties } from 'react';
 import { ArrowUpRight, BookOpen, ChevronDown, ChevronUp, Github, LocateFixed, Star } from 'lucide-react';
 import abstractsJson from './data/abstracts.json';
 import metadataJson from './data/paper-metadata.json';
+import dflowData from './data/dflow.json';
 import type { Method, Category, Relation, Stars } from './types';
 
 type Abstract = { text: string; sourceUrl: string; translatedAt: string; kind?: string };
 type Metadata = { title?: string; authors?: string[]; thumbnail?: string; sourceUrl: string; status: string; kind?: string };
-const abstracts = abstractsJson as Record<string, Abstract>;
-const metadata = metadataJson as Record<string, Metadata>;
+const abstracts = {...(abstractsJson as Record<string, Abstract>),dflow:dflowData.abstract as Abstract};
+const metadata = {...(metadataJson as Record<string, Metadata>),dflow:dflowData.metadata as Metadata};
 const External = ({ href, children, ...props }: {href: string; children: React.ReactNode; className?: string; title?: string}) =>
   <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>;
 
@@ -27,7 +28,7 @@ export default function PaperCard({ method, category, highlight, onLocate, stars
   return <article id={`method-${method.id}`} tabIndex={-1} className={`method-card paper-row ${highlight ? 'highlighted' : ''}`} style={{'--branch': category.color} as CSSProperties}>
     <External href={paperUrl} className="paper-preview" title={`打开 ${method.name} 论文`}>
       {source?.thumbnail && !imageFailed
-        ? <img src={`${import.meta.env.BASE_URL}${source.thumbnail}`} alt={`${method.name} 论文首页`} loading="lazy" width="144" height="194" onError={() => setImageFailed(true)}/>
+        ? <img src={`${import.meta.env.BASE_URL}${source.thumbnail}`} alt={`${method.name} 论文预览`} loading="lazy" width="144" height="194" onError={() => setImageFailed(true)}/>
         : <span className="paper-preview-empty"><BookOpen size={30}/><span>{method.name}</span><small>{isArticle ? '官方技术文章' : '论文预览待补充'}</small></span>}
     </External>
     <div className="paper-content">
