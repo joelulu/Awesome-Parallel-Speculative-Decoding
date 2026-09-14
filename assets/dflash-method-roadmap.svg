@@ -54,10 +54,11 @@
 <text x="950" y="756" class="l">JetSpec</text><text x="1135" y="756" class="k">parallel tree drafting</text>
 <text x="950" y="790" class="l">DARTree</text><text x="1135" y="790" class="k">AR draft trees</text>
 
-<!-- 5 ReTrace -->
+<!-- 5 cross-round reuse -->
 <path d="M365 675 C430 675 430 865 500 865" stroke="#b56bc5" stroke-width="10" fill="none"/>
-<rect x="500" y="833" width="385" height="64" rx="18" fill="#f7edf9" stroke="#b56bc5" stroke-width="2"/><text x="524" y="873" class="b">5. 跨轮次轨迹复用</text>
-<rect x="940" y="846" width="600" height="38" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="870" class="l">ReTrace</text><text x="1135" y="870" class="k">rejected-trajectory conditioning / cross-round reuse</text>
+<rect x="500" y="833" width="385" height="64" rx="18" fill="#f7edf9" stroke="#b56bc5" stroke-width="2"/><text x="524" y="873" class="b">5. 跨轮次轨迹 / verifier 复用</text>
+<rect x="940" y="835" width="600" height="38" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="859" class="l">ReTrace</text><text x="1135" y="859" class="k">rejected-trajectory conditioning / cross-round reuse</text>
+<rect x="940" y="879" width="600" height="38" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="903" class="l">DFlow</text><text x="1135" y="903" class="k">verifier hidden-state flow / self-conditioning</text>
 
 <!-- 6 -->
 <path d="M365 675 C430 675 430 980 500 980" stroke="#7c62d6" stroke-width="10" fill="none"/>
@@ -71,5 +72,5 @@
 <rect x="500" y="1068" width="385" height="64" rx="18" fill="#e9f8f8" stroke="#24a7ad" stroke-width="2"/><text x="524" y="1108" class="b">7. 多模态扩展</text>
 <text x="950" y="1105" class="l">GLANCE</text><text x="1135" y="1105" class="k">VLM block drafting</text>
 
-<rect x="430" y="1165" width="1090" height="30" rx="12" fill="#f3f7fb" stroke="#b8c8d8"/><text x="975" y="1186" text-anchor="middle" class="sm">主线：drafter 能力 · 训练目标 · 块内依赖 · 树结构 · 跨轮次轨迹复用 · 验证成本 · 多模态扩展</text>
+<rect x="430" y="1165" width="1090" height="30" rx="12" fill="#f3f7fb" stroke="#b8c8d8"/><text x="975" y="1186" text-anchor="middle" class="sm">主线：drafter 能力 · 训练目标 · 块内依赖 · 树结构 · 跨轮次 verifier/轨迹复用 · 验证成本 · 多模态扩展</text>
 </svg>
