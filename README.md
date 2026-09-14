@@ -12,7 +12,7 @@
   <img src="assets/dflash-method-roadmap.svg" alt="DFlash 后续方法脉络树" width="100%" />
 </p>
 
-持续跟踪 **Parallel Speculative Decoding / DFlash / Block Diffusion Drafting**，并补充 **Diffusion Model Cache / Training-Free Acceleration** 方向。
+持续跟踪 **Parallel Speculative Decoding / DFlash / Block Diffusion Drafting** 及其直接后续工作。
 
 核心参考：
 
@@ -22,7 +22,7 @@
 
 1. **DFlash 后续方法脉络树**：放在最开头，持续按研究主线更新。
 2. **DFlash 后续论文时间线**：持续补充引用或直接延伸 DFlash 的工作。
-3. **Daily Briefs**：每天筛选 5 条最值得关注的新论文 / GitHub / 框架 / 技术动态，最新日期在最前。
+3. **Daily Briefs**：优先收录真正新的 DFlash 后续论文，其次才是重要技术报告和 SGLang / vLLM 工程动态；宁缺毋滥，不为凑数补外围内容。
 
 ---
 
@@ -59,34 +59,47 @@
 | **2026-08-31** | **Verification-Aware Training (VAT)** | ⭐ 从 verifier 反过来训练 drafter | CE accuracy 不等于 speculative acceptance | verification head 学 survive/reject pattern，并对 first-rejection 周围动态重加权。([arXiv](https://arxiv.org/abs/2608.30135)) |
 | **2026-08-31** | **Ceiling-Clipped Acceptance Histograms / DBloom** | 研究 block size ceiling | 频繁 full-accept 时固定 block=16 变成 ceiling | 用 full-acceptance histogram 判断 ceiling，再扩展 block horizon。([arXiv](https://arxiv.org/abs/2608.30427)) |
 | **2026-09-01 左右** | **GLANCE — Vision Is Not Overhead** | ⭐⭐⭐ DFlash 思想进入 VLM | 多模态 drafter 忽略/压缩视觉信息会降低 acceptance | 读取 target 已算好的 **fused vision-language hidden states** 做 one-pass block drafting，再构造 wide candidate tree 验证。([arXiv](https://arxiv.org/abs/2609.00355)) |
+| **2026-09-09** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
 
-### ReTrace 为什么值得单独成一条主线
+### ReTrace / DFlow：跨轮 rejected trajectory reuse
 
-ReTrace 不是在“本轮”继续增强 path selection、causal correction 或 verification pruning，而是首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**。论文报告相对 DFlash，四组 model × temperature 配置的宏平均 **acceptance length +6.97%**、**speedup +5.34%**；而且作者明确指出它与现有 drafting improvements 基本正交，可以继续和 DFlash2 / DSpark / DARTree 等组合。
+ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 则进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件。两者共同形成一条值得单独跟踪的研究主线，并且天然适合继续与 DFlash2 / DSpark / Draft-OPD 等方法组合。
 
 ---
 
 # Daily Briefs
 
+## 2026-09-14
+
+> 本期补齐 9 月 11–14 日真正值得跟进的 DFlash / DSpark 后续动态。继续执行“论文优先、宁缺毋滥”。
+
+| 时间 | 动态 | 1句摘要 | 核心动机 | 怎么解决 / 启示 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-09（补漏） | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | rejected verifier states 跨 drafting round 继续流动 | first rejection 后 target 已经算出的 suffix 表征被浪费 | rejected suffix verifier states + self-conditioning training | ⭐⭐⭐ 本期最值得看 |
+| 2026-09-12 | **SGLang：DeepSeek-V4.1-Flash + DSpark ragged verify 与 Engram CUDA Graph 冲突** | compact ragged verify 会构造不等长 verification layout | adaptive verification 与模型后端的“等长块”契约冲突 | 回退 verify-all；更值得研究 backend-aware ragged verification contract | ⭐⭐⭐ |
+| 2026-09-11 | **SGLang：量化 DFlash2 drafter 可静默退化到近 0% acceptance** | 服务正常、输出正确，但 accept len 从约 3.7 掉到约 1.0 | speculative correctness 会掩盖坏 drafter | 增加 quantization 校验与 acceptance health check | ⭐⭐ |
+| 2026-09-11 | **vLLM：DeepSeek-V4.1-Flash + DSpark 高并发触发 `dsv4_topk` illegal memory access** | 高并发把 MoE router 推到未覆盖 shape | speculative serving 不只是 verification budget 问题 | shape-aware concurrency cap / kernel guard | ⭐⭐ |
+
+完整版本见 [`daily/2026-09-14.md`](daily/2026-09-14.md)。
+
+### 今日研究提示
+
+1. **DFlow 值得和 ReTrace 并列成主线**：比较两者使用的 rejected state、对齐方式、训练目标，以及能否与 Draft-OPD / DSpark 同时使用。
+2. **高并发研究要从 verification length 扩展到 backend contract**：Engram、GDN、MoE router、CUDA Graph 都可能限制 ragged / dynamic shape。
+3. **DFlash2 benchmark 要固定监控 acceptance health**：只看 tok/s 或功能正确性可能漏掉量化导致的“静默失效”。
+
+---
+
 ## 2026-09-10
 
-> 今日重点：DFlash / DSpark 在新型 Hyper-Connection target 上的真实 serving 兼容性，以及扩散/并行生成侧的新加速信号。
+> 今日重点：DFlash / DSpark 在新型 Hyper-Connection target 上的真实 serving 兼容性。
 
 | 时间 | 动态 | 1句摘要 | 核心动机 | 怎么解决 / 启示 | 与 DFlash 关系 |
 |---|---|---|---|---|---|
 | 2026-09-09 | **SGLang：Qwen3.8-Flash-Next 无法正确导出 DFlash/DSpark aux hidden states** | HC 返回流与 auxiliary capture 冲突 | 新型 HC target 无法直接 serving 已训练 drafter | 增加 HC-contracting aux hook、`dflash_capture` 并修正返回通道 | ⭐⭐⭐ |
 | 2026-09-09 | **vLLM：Qwen3.8-Flash-Next + DFlash/DSpark 的 5 个 serving blocker** | adaptive verification 与 GDN backend 等存在兼容缺口 | acceptance 高不代表系统可落地 | 修补 runner/anchor/allowlist，并研究 hybrid backend verification trimming | ⭐⭐⭐ |
-| 2026-09-09 | **Gaussian Process Rectified Feature Cache** | 用 GP 预测并校正跨 timestep cache feature | 简单缓存复用在动态区间误差累积 | `cache + model-based correction` | ⭐⭐ |
-| 2026-09-08 | **Mask Forcing** | dual-noise masking 改善 AR video diffusion self-rollout | reverse-KL distillation 易 mode collapse | 用时空 clean/noisy token 混合扩大 rollout 覆盖 | ⭐⭐ |
-| 2026-09-03 | **Uno — Lossless Speedups via Discrete Diffusion** | diffusion sampler 并行抽 token 且保持 AR 分布 | 兼顾 AR 质量与并行采样 | diffusion distillation + Ψ-Spec lossless sampling | ⭐⭐⭐ |
 
 完整版本见 [`daily/2026-09-10.md`](daily/2026-09-10.md)。
-
-### 今日研究提示
-
-1. **HC-aware speculative serving**：模型侧 representation adaptation 之外，hidden-state plumbing / anchor layout / backend contract 正成为关键问题。
-2. **Adaptive verification × hybrid backend**：GDN/Mamba-class backend 的 query trimming 是很值得沿 D-CUT / DSpark 深挖的系统方向。
-3. **Rejected-state reuse × cache correction**：ReTrace 与 GP feature cache 都可抽象为 `stale state → correction → reuse`。
 
 ---
 
