@@ -1,5 +1,36 @@
 [
   {
+    "date": "2026-09-14",
+    "title": "DFlow 与 DFlash/DSpark 高并发 serving 新动态",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-14.md",
+    "items": [
+      {
+        "title": "DFlow：让 rejected verifier states 跨 drafting round 继续流动",
+        "summary": "DFlow 重用 first rejection 后的 target verifier hidden states，并通过 self-condition training 将其注入下一轮 drafting；这是 ReTrace 之后 rejected-trajectory / cross-round reuse 主线上的又一篇关键工作。",
+        "sourceUrl": "https://arxiv.org/abs/2609.06498",
+        "methodIds": []
+      },
+      {
+        "title": "SGLang：DeepSeek-V4.1-Flash + DSpark ragged verify 与 Engram CUDA Graph 冲突",
+        "summary": "compact ragged verification 在小 batch tier 构造不等长 verify layout，违反 Engram target-verify 的等块假设，说明 adaptive verification 还受模型后端契约约束。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39173",
+        "methodIds": ["dspark"]
+      },
+      {
+        "title": "SGLang：量化 DFlash2 drafter 可静默退化到近 0% acceptance",
+        "summary": "量化 drafter 可以正常加载且输出仍正确，但 accept len 从约 3.7 降至约 1.0；功能测试无法发现，需要单独监控 acceptance health。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39087",
+        "methodIds": ["dflash-2"]
+      },
+      {
+        "title": "vLLM：DeepSeek-V4.1-Flash + DSpark 高并发触发 dsv4_topk illegal memory access",
+        "summary": "8×H20、TP8/EP8 下高于 256 的 max_num_seqs 可触发 MoE routing kernel 非法访存，提示 speculative serving 需要 shape-aware concurrency guard。",
+        "sourceUrl": "https://github.com/vllm-project/vllm/issues/56389",
+        "methodIds": ["dspark"]
+      }
+    ]
+  },
+  {
     "date": "2026-09-10",
     "title": "DFlash 在新型 HC 架构上的 serving 与 adaptive verification",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-10.md",
