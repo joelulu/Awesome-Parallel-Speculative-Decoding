@@ -46,5 +46,21 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/abs/2608.29748",
     "note": "摘要明确以 DFlash 为骨干，将被拒绝后缀的表示用于下一轮草稿条件，同时保持目标验证不变。"
+  },
+  {
+    "source": "dflash",
+    "target": "dflow",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2609.06498",
+    "note": "DFlow 直接面向 block diffusion speculative decoding，将 rejected suffix 的 target verifier hidden states 传递到后续 drafting round。"
+  },
+  {
+    "source": "retrace",
+    "target": "dflow",
+    "type": "related",
+    "status": "editorial",
+    "evidenceUrl": "https://arxiv.org/abs/2609.06498",
+    "note": "二者共同形成跨轮 rejected-state reuse 主线：ReTrace 强调 rejected trajectory conditioning，DFlow 强调 verifier information flow。"
   }
 ]
