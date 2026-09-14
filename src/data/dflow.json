@@ -1,0 +1,46 @@
+{
+  "method": {
+    "id": "dflow",
+    "name": "DFlow",
+    "title": "DFlow: Enabling Verifier Information Flow in Block Diffusion Speculative Decoding",
+    "date": "2026-09-06",
+    "dateLabel": "2026-09-06",
+    "category": "architecture",
+    "tags": [
+      "跨轮条件",
+      "verifier state reuse",
+      "self-conditioning"
+    ],
+    "summary": "复用 first rejection 后的 target verifier hidden states，让上一轮验证信息继续指导下一轮 block drafting。",
+    "problem": "DFlash 只提交 accepted prefix，并丢弃 rejected suffix；但 target verifier 已经为这些位置计算了隐藏表示，这部分已付出的计算无法帮助下一轮 drafting。",
+    "solution": "保留 rejected suffix 的 verifier hidden states，并把它们作为下一轮 drafter 的条件；通过 self-condition training 让 drafter 学会利用跨轮 verifier information flow，不增加额外 target forward。",
+    "paperUrl": "https://arxiv.org/abs/2609.06498",
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": true,
+    "reason": "DFlash 直接后续 · 跨轮 verifier 信息复用",
+    "updatedAt": "2026-09-14"
+  },
+  "metadata": {
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "status": "fetched",
+    "title": "DFlow: Enabling Verifier Information Flow in Block Diffusion Speculative Decoding",
+    "authors": [
+      "Yaojie Zhang",
+      "Linfeng Zhang",
+      "Bin Cui",
+      "Xupeng Miao"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.06498",
+    "fetchedAt": "2026-09-14",
+    "thumbnail": "papers/dflow.svg"
+  },
+  "abstract": {
+    "text": "块扩散投机解码会并行提出未来 token block，再由目标模型一次前向完成验证。现有方法通常只保留 accepted prefix，并把 first rejection 之后的 suffix 连同 verifier 已经计算出的表示一起丢弃。DFlow 观察到，token 被拒绝只意味着它不能直接提交，并不意味着该位置的 verifier representation 没有价值。因此，DFlow 将 rejected suffix 的 target hidden states 传递到后续 drafting round，并通过 self-condition training 让 drafter 学会利用这些跨轮信息，从而在不增加额外 target 计算的情况下提升 draft quality 与 acceptance length。",
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "translatedAt": "2026-09-14"
+  }
+}
