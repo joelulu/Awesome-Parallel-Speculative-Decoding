@@ -8,7 +8,7 @@
         "title": "DFlow：让 rejected verifier states 跨 drafting round 继续流动",
         "summary": "DFlow 重用 first rejection 后的 target verifier hidden states，并通过 self-condition training 将其注入下一轮 drafting；这是 ReTrace 之后 rejected-trajectory / cross-round reuse 主线上的又一篇关键工作。",
         "sourceUrl": "https://arxiv.org/abs/2609.06498",
-        "methodIds": []
+        "methodIds": ["dflow"]
       },
       {
         "title": "SGLang：DeepSeek-V4.1-Flash + DSpark ragged verify 与 Engram CUDA Graph 冲突",
