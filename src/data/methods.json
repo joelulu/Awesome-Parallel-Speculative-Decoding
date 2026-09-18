@@ -882,5 +882,57 @@
     "status": "verified",
     "pinned": false,
     "updatedAt": "2026-09-09"
+  },
+  {
+    "id": "dflow",
+    "name": "DFlow",
+    "title": "DFlow: Enabling Verifier Information Flow in Block Diffusion Speculative Decoding",
+    "date": "2026-09-06",
+    "dateLabel": "2026-09-06",
+    "category": "architecture",
+    "tags": [
+      "跨轮条件",
+      "verifier state reuse",
+      "self-conditioning"
+    ],
+    "summary": "复用 first rejection 后的 target verifier hidden states，让上一轮验证信息继续指导下一轮 block drafting。",
+    "problem": "DFlash 只提交 accepted prefix，并丢弃 rejected suffix；但 target verifier 已经为这些位置计算了隐藏表示，这部分已付出的计算无法帮助下一轮 drafting。",
+    "solution": "保留 rejected suffix 的 verifier hidden states，并把它们作为下一轮 drafter 的条件；通过 self-conditioning 训练让 drafter 学会利用跨轮 verifier information flow，不增加额外 target forward。",
+    "paperUrl": "https://arxiv.org/abs/2609.06498",
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": true,
+    "reason": "DFlash 直接后续 · 跨轮 verifier 信息复用",
+    "updatedAt": "2026-09-18"
+  },
+  {
+    "id": "carryover-drafting",
+    "name": "Carryover Drafting",
+    "title": "Carryover Drafting: Recycling Rejected States for Speculative Decoding",
+    "date": "2026-09-15",
+    "dateLabel": "2026-09-15",
+    "category": "architecture",
+    "tags": [
+      "跨轮复用",
+      "rejected states",
+      "temporary KV",
+      "DFlash",
+      "DSpark"
+    ],
+    "summary": "把 target verification 已计算但被拒绝的 hidden states 作为临时 KV context 交给下一轮 drafter。",
+    "problem": "标准 speculative decoding 在 first rejection 后丢弃 verifier 已经计算出的 rejected hidden states；直接复用又可能增加 drafting latency，训练时也缺少与真实推理一致的 rejected states。",
+    "solution": "将 rejected target hidden states 作为长度最多一个 proposal block 的临时 KV context，让 drafter 选择性 attention；只增加一个 learned embedding 区分 rejected 与 committed context，并用 parallel draft–verify–draft training 构造 inference-aligned rejected states。",
+    "paperUrl": "https://arxiv.org/abs/2609.14717",
+    "sourceUrl": "https://arxiv.org/abs/2609.14717",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": true,
+    "reason": "DFlash / DSpark 直接实验 · 跨轮 rejected verifier state reuse 的最新工作",
+    "updatedAt": "2026-09-18"
   }
 ]
