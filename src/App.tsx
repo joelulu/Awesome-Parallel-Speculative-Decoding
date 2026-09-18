@@ -43,11 +43,13 @@ export default function App(){
   const previousBriefs=briefs.filter(item=>item.date!==brief?.date).slice(0,8);
   const searching=Boolean(query.trim()||category!=='all'||codeOnly);
   const recommended=useMemo(()=>recommend(methods,stars,6),[]);
+  const newestMethods=useMemo(()=>[...methods].filter(m=>m.date).sort((a,b)=>dateValue(b.date)-dateValue(a.date)).slice(0,2),[]);
+  const featured=useMemo(()=>[...newestMethods,...recommended].filter((method,index,list)=>list.findIndex(item=>item.id===method.id)===index),[newestMethods,recommended]);
   const visible=useMemo(()=>{
-    if(!all&&!searching&&sort==='importance')return recommended;
+    if(!all&&!searching&&sort==='importance')return featured;
     const filtered=filterMethods(methods,query,category,codeOnly) as Method[];
     return filtered.sort((a,b)=>sort==='newest'?dateValue(b.date)-dateValue(a.date):sort==='stars'?Math.max(-1,...b.code.map(c=>stars[c.repo]?.count??-1))-Math.max(-1,...a.code.map(c=>stars[c.repo]?.count??-1)):Number(b.pinned)-Number(a.pinned)||scoreMethod(b,stars)-scoreMethod(a,stars));
-  },[all,query,category,codeOnly,sort,searching,recommended]);
+  },[all,query,category,codeOnly,sort,searching,featured]);
   function readMethod(id:string,hash=true){
     if(!methods.some(m=>m.id===id)){setUnknown(true);return;}
     setUnknown(false);setActive(id);setAll(true);setQuery('');setCategory('all');setCodeOnly(false);
@@ -73,7 +75,7 @@ export default function App(){
       <div className="map-legend"><span>按问题分支 · 按时间演进</span>{categories.map(c=><button key={c.id} onClick={()=>{setCategory(c.id);setAll(true);scrollToId('featured');}}><i style={{background:c.color}}/>{c.name}</button>)}<span className="legend-note">实线表示时间顺序，非继承关系</span></div>
       <details className="map-outline"><summary>以大纲浏览全部方法 <ChevronDown size={16}/></summary><div>{categories.map(c=><details key={c.id}><summary><i style={{background:c.color}}/>{c.name}</summary>{methods.filter(m=>m.category===c.id).map(m=><button key={m.id} onClick={()=>readMethod(m.id)}>{m.name}<ArrowUpRight size={14}/></button>)}</details>)}</div></details></section>
       <section id="featured" className="featured-section" tabIndex={-1} aria-labelledby="featured-title"><div className="section-heading"><div className="section-title"><span className="section-number">02</span><h2 id="featured-title">{all||searching?'方法库':'重点阅读'}</h2><span className="quiet-label">{visible.length} 个方法</span></div><button className="text-button" onClick={()=>{if(all||searching)resetFilters();else setAll(true);}}>{all||searching?'返回重点阅读':'查看全部方法'}<ArrowRight size={16}/></button></div>
-      <div className="catalog-toolbar"><p>{all||searching?'沿着问题寻找方法，也可以回到地图中定位。':'从基础方法出发，优先阅读各条主线的关键工作。'}</p><label className="sort-select">排序<select aria-label="方法排序" value={sort} onChange={e=>{setSort(e.target.value);if(e.target.value!=='importance')setAll(true);}}><option value="importance">研究重要性</option><option value="newest">最新发布</option><option value="stars">GitHub Star</option></select></label></div>
+      <div className="catalog-toolbar"><p>{all||searching?'沿着问题寻找方法，也可以回到地图中定位。':'最新新增优先展示，同时保留各条主线的关键工作。'}</p><label className="sort-select">排序<select aria-label="方法排序" value={sort} onChange={e=>{setSort(e.target.value);if(e.target.value!=='importance')setAll(true);}}><option value="importance">研究重要性</option><option value="newest">最新发布</option><option value="stars">GitHub Star</option></select></label></div>
       {(all||searching)&&<div className="filter-row"><button className={category==='all'?'selected':''} onClick={()=>setCategory('all')}>全部方向</button>{categories.map(c=><button key={c.id} className={category===c.id?'selected':''} onClick={()=>setCategory(c.id)}>{c.name}</button>)}<label><input type="checkbox" checked={codeOnly} onChange={e=>setCodeOnly(e.target.checked)}/> 有代码链接</label></div>}
       {unknown&&<div role="status" className="empty-state">没有找到链接中的方法，请搜索名称或浏览方法库。<button onClick={()=>setUnknown(false)}>关闭</button></div>}
       <div className="cards-grid">{visible.map(m=><PaperCard key={m.id} method={m} category={categoryMap[m.category]} highlight={active===m.id} onLocate={locate} stars={stars} relations={relations} methods={methods}/>)}</div>
