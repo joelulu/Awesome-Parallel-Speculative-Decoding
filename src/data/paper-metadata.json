@@ -539,5 +539,60 @@
     "pdfUrl": "https://arxiv.org/pdf/2609.14717",
     "fetchedAt": "2026-09-18T01:30:00+08:00",
     "thumbnail": "papers/carryover-drafting.svg"
+  },
+  "bastion": {
+    "sourceUrl": "https://arxiv.org/abs/2605.29727",
+    "status": "fetched",
+    "title": "Bastion: Budget-Aware Speculative Decoding with Tree-structured Block Diffusion Drafting",
+    "authors": [
+      "Soowon Oh",
+      "Nam Cao",
+      "Yujin Kim",
+      "Hojung Jung",
+      "Huzama Ahmad",
+      "Sangmin Bae",
+      "Se-Young Yun"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.29727",
+    "fetchedAt": "2026-09-18T02:30:00+08:00",
+    "thumbnail": "papers/bastion.svg"
+  },
+  "angelspec": {
+    "sourceUrl": "https://arxiv.org/abs/2607.25852",
+    "status": "fetched",
+    "title": "AngelSpec: Towards Real-World High Performance Inference with Speculative Decoding",
+    "authors": [
+      "Hong Liu",
+      "Rui Cen",
+      "Junhan Shi",
+      "Guangshuo Qin",
+      "Jiebin Zhang",
+      "Tianyu Liu",
+      "Runzhi Fan",
+      "Guoliang Zhao",
+      "Ruobing Xie",
+      "Kai Zhang",
+      "Song Liu",
+      "Guanghua Yu",
+      "Jianchen Zhu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.25852",
+    "fetchedAt": "2026-09-18T02:30:00+08:00",
+    "thumbnail": "papers/angelspec.svg"
+  },
+  "online-draft-cotraining": {
+    "sourceUrl": "https://arxiv.org/abs/2609.07108",
+    "status": "fetched",
+    "title": "Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training",
+    "authors": [
+      "Zili Wang",
+      "Zhaopeng Qiu",
+      "Yuekai Zhang",
+      "Shuang Yu",
+      "Junjie Lai"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.07108",
+    "fetchedAt": "2026-09-18T02:30:00+08:00",
+    "thumbnail": "papers/online-draft-cotraining.svg"
   }
 }
