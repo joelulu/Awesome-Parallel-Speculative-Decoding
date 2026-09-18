@@ -62,5 +62,37 @@
     "status": "editorial",
     "evidenceUrl": "https://arxiv.org/abs/2609.06498",
     "note": "二者共同形成跨轮 rejected-state reuse 主线：ReTrace 强调 rejected trajectory conditioning，DFlow 强调 verifier information flow。"
+  },
+  {
+    "source": "dflash",
+    "target": "carryover-drafting",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2609.14717",
+    "note": "Carryover Drafting 直接在 DFlash 上验证 rejected target hidden states 作为 temporary KV context 的跨轮复用。"
+  },
+  {
+    "source": "dspark",
+    "target": "carryover-drafting",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2609.14717",
+    "note": "论文同时在 DSpark-derived semi-autoregressive drafter 上验证 Carryover 机制，说明该思路可跨不同 parallel drafter 使用。"
+  },
+  {
+    "source": "dflow",
+    "target": "carryover-drafting",
+    "type": "related",
+    "status": "editorial",
+    "evidenceUrl": "https://arxiv.org/abs/2609.14717",
+    "note": "二者都利用 first rejection 后的 verifier states；DFlow 强调信息流与 self-conditioning，Carryover 强调 temporary KV context 与 inference-aligned training。"
+  },
+  {
+    "source": "retrace",
+    "target": "carryover-drafting",
+    "type": "related",
+    "status": "editorial",
+    "evidenceUrl": "https://arxiv.org/abs/2609.14717",
+    "note": "与 ReTrace 一样属于 cross-round rejected-state reuse 主线，但 Carryover 直接把 target hidden states 作为可注意的 KV context。"
   }
 ]
