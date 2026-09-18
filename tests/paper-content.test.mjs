@@ -10,12 +10,17 @@ test('Chinese summaries link to their fetched primary sources', () => {
     assert.equal(data.metadata[id].status, 'fetched');
   }
 });
-test('every referenced thumbnail is a real JPEG inside the public directory', async () => {
+test('every referenced thumbnail is a real image inside the public directory', async () => {
   for (const paper of Object.values(data.metadata)) {
     if (!paper.thumbnail) continue;
     const bytes = await readFile(new URL(`../public/${paper.thumbnail}`, import.meta.url));
-    assert.equal(bytes[0], 0xff);
-    assert.equal(bytes[1], 0xd8);
+    if (paper.thumbnail.endsWith('.jpg')) {
+      assert.equal(bytes[0], 0xff);
+      assert.equal(bytes[1], 0xd8);
+    } else {
+      const text = bytes.toString('utf8').trimStart();
+      assert.ok(text.startsWith('<svg'));
+    }
     assert.ok(bytes.length > 1000);
   }
 });
