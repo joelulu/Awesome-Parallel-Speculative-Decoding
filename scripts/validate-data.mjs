@@ -35,7 +35,7 @@ export function validateData({methods,categories,relations,briefs,stars,abstract
   }
   for(const [id,paper] of Object.entries(metadata)) {
     if(!ids.has(id))errors.push(`Unknown paper metadata: ${id}`);
-    if(paper.thumbnail&&!/^papers\/[a-z0-9-]+\.jpg$/.test(paper.thumbnail))errors.push(`Invalid thumbnail path: ${id}`);
+    if(paper.thumbnail&&!/^papers\/[a-z0-9-]+\.(?:jpg|svg)$/.test(paper.thumbnail))errors.push(`Invalid thumbnail path: ${id}`);
   }
   return errors;
 }
