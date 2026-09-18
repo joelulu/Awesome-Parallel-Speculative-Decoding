@@ -6,11 +6,11 @@ import {
 import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, Minus, Scan, Maximize2, Minimize2, LocateFixed } from 'lucide-react';
 import '@xyflow/react/dist/style.css';
 import './ResearchMap.css';
-import { buildTimeline } from './lib/timeline.mjs';
+import { buildTimeline, comparePublication } from './lib/timeline.mjs';
 import type { Method, Category, Relation } from './types';
 type AtlasData = {
   kind: string; label: string; subtitle: string; color: string;
-  methodId?: string; count?: number; selected?: boolean; onRead?: () => void; onFocus?: () => void;
+  methodId?: string; count?: number; selected?: boolean; latest?: boolean; dateLabel?: string; categoryLabel?: string; onRead?: () => void; onFocus?: () => void;
 };
 type AtlasNode = Node<AtlasData>;
 function AtlasNodeView({ data }: NodeProps<AtlasNode>) {
@@ -20,7 +20,7 @@ function AtlasNodeView({ data }: NodeProps<AtlasNode>) {
   if (data.kind === 'category') return <div className="timeline-category" style={style}>
     <Handle type="target" position={Position.Left}/><Handle type="source" position={Position.Right}/>
     <button className="nodrag" onClick={data.onFocus} title={`聚焦${data.label}`}>
-      <i/><span>{data.label}</span>
+      <i/><span>{data.label}</span>{typeof data.count === 'number' && <small>{data.count}</small>}
     </button>
   </div>;
   return <div className={`timeline-method ${data.kind === 'root' ? 'timeline-root' : ''} ${data.selected ? 'is-selected' : ''}`} style={style}>
@@ -30,7 +30,8 @@ function AtlasNodeView({ data }: NodeProps<AtlasNode>) {
       if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault(); event.stopPropagation(); data.onRead?.();
     }} title={`${data.subtitle} · 点击阅读方法卡片`} aria-label={`阅读 ${data.label} 方法卡片`} aria-current={data.selected ? 'true' : undefined}>
-      <strong>{data.label}</strong><i className="method-point"/><span className="timeline-read-hint">阅读卡片 <ArrowUpRight size={11}/></span>
+      <strong>{data.label}</strong>{data.latest && <span className="timeline-new-badge">NEW</span>}<i className="method-point"/><span className="timeline-read-hint">阅读卡片 <ArrowUpRight size={11}/></span>
+      <span className="timeline-node-tooltip" role="tooltip"><b>{data.label}</b><small>{data.dateLabel}{data.categoryLabel ? ` · ${data.categoryLabel}` : ''}</small><em>{data.subtitle}</em></span>
     </a>
   </div>;
 }
@@ -50,6 +51,9 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
   const flow = useReactFlow<AtlasNode>();
   const nodesReady = useNodesInitialized();
   const timeline = useMemo(() => buildTimeline(methods, categories), [methods, categories]);
+  const latestMethods = useMemo(() => [...methods].filter(method => method.id !== 'dflash' && method.date).sort((a,b) => comparePublication(b,a)).slice(0,3), [methods]);
+  const latestIds = useMemo(() => new Set(latestMethods.map(method => method.id)), [latestMethods]);
+  const latestMethod = latestMethods[0] ?? null;
   const methodIndex = useMemo(() => new Map([timeline.root, ...timeline.methods].map(node => [node.id, node])), [timeline]);
   const duration = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 400;
 
@@ -113,11 +117,13 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
     }));
     const methodNodes = [timeline.root, ...timeline.methods].map(node => make(node.id, node.x, node.y, node.width, node.height, {
       kind: node.kind, label: node.method.name, subtitle: node.method.summary, methodId: node.id,
+      dateLabel: node.method.dateLabel, categoryLabel: categories.find(category => category.id === node.method.category)?.name,
+      latest: latestIds.has(node.id),
       color: node.kind === 'root' ? '#153c39' : categories.find(category => category.id === node.method.category)!.color,
       selected: selected === node.id, onRead: () => { void readMethod(node.id); }, onFocus: () => focusMethod(node.id),
     }));
     return [...laneBands, ...monthNodes, ...categoryNodes, ...methodNodes];
-  }, [timeline, categories, selected, focusLane, readMethod, focusMethod]);
+  }, [timeline, categories, selected, latestIds, focusLane, readMethod, focusMethod]);
   const edges = useMemo<Edge[]>(() => {
     const ordered: Edge[] = timeline.edges.map(edge => ({
       ...edge, type: 'default', zIndex: 0,
@@ -128,7 +134,7 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
       if (!methodIndex.has(relation.source) || !methodIndex.has(relation.target)) continue;
       ordered.push({
         id: `evidence-${relation.source}-${relation.target}`, source: relation.source, target: relation.target,
-        type: 'smoothstep', zIndex: 0, label: relation.type === 'combines' ? '组合关系' : '直接改进',
+        type: 'smoothstep', zIndex: 0, label: relation.type === 'combines' ? '组合' : relation.type === 'related' ? '相关 / 适配' : '直接改进',
         labelStyle: { fontSize: 12, fill: '#153c39' }, labelBgStyle: { fill: '#fff' },
         style: { stroke: '#153c39', strokeWidth: 2, strokeDasharray: '6 5' },
         markerEnd: { type: MarkerType.ArrowClosed, color: '#153c39' },
@@ -149,7 +155,10 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
   return <div className="map-frame chronology-map" ref={container}>
     <div className="map-topbar">
       <div className="map-breadcrumb"><button onClick={startView}>DFlash</button><ArrowRight size={14}/><span>沿着问题，向右探索</span></div>
-      <label className="relation-toggle"><input type="checkbox" checked={showRelations} onChange={event => setShowRelations(event.target.checked)}/>叠加已核验改进关系</label>
+      <div className="map-top-actions">
+        {latestMethod && <button className="map-latest-jump" onClick={() => focusMethod(latestMethod.id)} title={`定位最新论文：${latestMethod.name}`}><LocateFixed size={13}/><span>最新</span><b>{latestMethod.name}</b></button>}
+        <label className="relation-toggle"><input type="checkbox" checked={showRelations} onChange={event => setShowRelations(event.target.checked)}/>叠加已核验关系</label>
+      </div>
     </div>
     <div className="timeline-month-nav" aria-label="按月份定位研究脉络">
       <button onClick={startView}><ArrowLeft size={13}/>研究起点</button>
@@ -183,7 +192,7 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
       }}>{fullscreen ? <Minimize2 size={18}/> : <Maximize2 size={18}/>}</button>
     </div>
     <div className="timeline-navigation"><span>较早</span><input type="range" min="0" max="100" step=".1" value={panPosition} aria-label="横向浏览方法时间线" onChange={event => moveAlong(Number(event.target.value))}/><span>较新 <ArrowRight size={13}/></span></div>
-    <div className="map-caption">{notice || '点击方法，跳转阅读卡片 · 拖动画布探索，滚轮缩放 · 实线表示同类工作的时间顺序'}</div>
+    <div className="map-caption">{notice || '悬停查看摘要 · 点击阅读卡片 · NEW 标记最近 3 篇 · 实线表示时间顺序，虚线表示已核验研究关系'}</div>
   </div>;
 }
 export default function ResearchMap(props: Props) {
