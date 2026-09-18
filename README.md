@@ -2,7 +2,7 @@
 
 ## 交互研究地图
 
-本仓库现包含 **DFlash Atlas** 静态网站：首页为可交互脉络图、重点方法卡片和简短每日简报。DFlash 位于脉络图最左侧，所有方法以细线、圆点和名称标签按研究方向和月份从左向右排列，默认全部展开。方法卡片采用论文首页缩略图、标题作者、中文摘要和 GitHub Star 的横向列表。支持点击方法直达卡片、月份定位、横向浏览、缩放／全屏、卡片返回图中定位、搜索及 GitHub Star 展示。
+本仓库现包含 **DFlash Atlas** 静态网站：首页为可交互脉络图、重点方法卡片和论文优先的每日简报。DFlash 位于脉络图最左侧，所有方法按研究方向和月份从左向右排列；最新 3 篇会显示 `NEW`，可一键定位最新论文，悬停节点查看日期、方向和摘要，并可叠加已核验研究关系。方法卡片展示论文预览、作者、中文摘要和 GitHub Star；支持搜索、月份跳转、方向聚焦、缩放／全屏及卡片—地图双向定位。
 
 - 网站部署地址（启用 Pages 后）：https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/
 - [本地预览、GitHub Pages 部署与数据维护说明](WEBSITE.md)
@@ -35,6 +35,7 @@
 | **2026-05** | **Test-Time Speculation** | 解决长回答下 acceptance 衰减 | 长生成后出现 distribution shift | 推理过程中做 **test-time / online distillation**。([alphaXiv](https://www.alphaxiv.org/abs/2605.09329)) |
 | **2026-05-28** | **Draft-OPD — On-Policy Distillation for Speculative Draft Models** | ⭐ 用 on-policy 数据训练 drafter | SFT teacher trajectory 与真实 rollout 状态不一致 | 从真实 rollout 的 accepted/rejected token 构造训练信号，做 **on-policy distillation**。([arXiv](https://arxiv.org/abs/2605.29343)) |
 | **2026-05-28** | **Domino — Decoupling Causal Modeling from Autoregressive Drafting** | ⭐ 给并行 DFlash 补回因果依赖 | block 内 token 基本独立 | 增加轻量 **causal / prefix-dependent head**。([arXiv](https://arxiv.org/abs/2605.29707)) |
+| **2026-05-28** | **BASTION — Budget-Aware Speculative Decoding with Tree-structured Block Diffusion Drafting** | ⭐⭐⭐ 动态树 + 硬件感知预算 | 单路径浪费 top-k；固定 tree budget 又无法适配请求与 GPU | 从 DFlash 分布 best-first 扩展 query-dependent prefix tree，并用 **hardware-calibrated roofline cost model** 在边际接受收益不再覆盖验证成本时停止扩树。([arXiv](https://arxiv.org/abs/2605.29727)) |
 | **2026-06-01** | **CaDDTree — Cost-Aware Diffusion Draft Trees** | DDTree 的系统版升级 | tree 越大 acceptance 越高，但 verifier 也越贵 | 联合优化 **接受收益 + verification latency**，动态选 tree size。([arXiv](https://arxiv.org/abs/2606.01813)) |
 | **2026-06-01** | **DFlare — Scaling Up Draft Capacity for Block Diffusion Speculative Decoding** | ⭐ 直接增强 drafter 能力 | DFlash drafter 深度继续扩大后收益受限 | 用 **layer-wise target feature fusion** + 更多训练数据突破 scaling ceiling。([arXiv](https://arxiv.org/abs/2606.02091)) |
 | **2026-06-03** | **D²SD — Dual Diffusion Draft Models** | 两级 diffusion drafter | 主路径早期失败后后续预测大量浪费 | 第二个 diffusion drafter 在潜在失败位置生成 alternative continuation，再组成共享前缀树。([alphaXiv](https://www.alphaxiv.org/abs/2606.04446)) |
@@ -49,6 +50,7 @@
 | **2026-07-09** | **DominoTree** | Domino + DDTree | DDTree 建树仍近似位置独立 | 用 Domino 的 path-conditioned score 做 best-first tree construction。([arXiv](https://arxiv.org/abs/2607.08642)) |
 | **2026-07-16** | **D-CUT — Adaptive Verification Depth Pruning for Batched Speculative Decoding** | ⭐⭐⭐ 高并发重点工作 | 高并发时 verifier 走向 compute-bound，固定长 block 产生验证浪费 | 给 batch 一个 **global verification budget**，结合 confidence 与 runtime cost 动态裁剪 verification depth。([arXiv](https://arxiv.org/abs/2607.14647)) |
 | **2026-07-21** | **AdaFlash — Adaptive Speculative Decoding via On-Policy Distilled Diffusion Drafters** | ⭐⭐⭐ OPD + adaptive DFlash | 最佳 draft length 随 domain / request / token 状态变化 | **reverse-KL on-policy distillation + adaptive length head**。([arXiv](https://arxiv.org/abs/2607.19223)) |
+| **2026-07-28** | **AngelSpec / DFly — Towards Real-World High Performance Inference with Speculative Decoding** | ⭐⭐⭐ 架构增强 + 高并发自适应验证 | workload、request、在线 load 与硬件异质性让固定 drafter / verify depth 不稳 | DFly 用 **hybrid target-conditioning + predecessor-conditioned AR head**，再集成 D-CUT 分配 batch-level verification budget；覆盖 concurrency 4–64。([arXiv](https://arxiv.org/abs/2607.25852)) |
 | **2026-07/08** | **Speculative Correction — Draft-then-Refine Decoding for Diffusion LMs** | 相邻路线 | diffusion LM 的双向上下文能力未充分利用 | 先生成整段 draft，再做 bidirectional diffusion refinement。([arXiv](https://arxiv.org/abs/2608.02625)) |
 | **2026-08-03** | **xPress — Parallel Refinement for Diffusion Drafters** | ⭐⭐⭐ 解决独立预测问题 | 各位置 top-1 单独合理，但组合起来不一定 coherent | 用轻量 **parallel causal refiner** 一次性修正整个 block。([alphaXiv](https://www.alphaxiv.org/abs/2608.02438)) |
 | **2026-08-05** | **DBLAST — Dependent Block Drafting for Stochastic Speculative Decoding** | 让 block token 显式相关 | stochastic sampling 下独立 marginals 容易组成低联合概率序列 | 引入 block-level **categorical latent variable**。([ResearchGate](https://www.researchgate.net/publication/411824644_DBLAST_Dependent_Block_Drafting_for_Stochastic_Speculative_Decoding)) |
@@ -60,6 +62,7 @@
 | **2026-08-31** | **Ceiling-Clipped Acceptance Histograms / DBloom** | 研究 block size ceiling | 频繁 full-accept 时固定 block=16 变成 ceiling | 用 full-acceptance histogram 判断 ceiling，再扩展 block horizon。([arXiv](https://arxiv.org/abs/2608.30427)) |
 | **2026-09-01 左右** | **GLANCE — Vision Is Not Overhead** | ⭐⭐⭐ DFlash 思想进入 VLM | 多模态 drafter 忽略/压缩视觉信息会降低 acceptance | 读取 target 已算好的 **fused vision-language hidden states** 做 one-pass block drafting，再构造 wide candidate tree 验证。([arXiv](https://arxiv.org/abs/2609.00355)) |
 | **2026-09-06** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
+| **2026-09-07** | **Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training** | ⭐⭐⭐ DFlash / DSpark 进入 RL online co-training | policy 持续更新时静态 drafter 会逐渐失配，branch attention / target taps 又难直接扩到 CP/PP | 用 **packed zigzag-ring branch attention + TapChannel** 支持同步训练 policy 与 DFlash/DSpark，扩展到 122B target / 256K context。([arXiv](https://arxiv.org/abs/2609.07108)) |
 | **2026-09-15** | **Carryover Drafting — Recycling Rejected States for Speculative Decoding** | ⭐⭐⭐ 把 rejected target states 变成下一轮可注意的 temporary KV | verifier 已为 rejected suffix 付出计算，但传统流程直接丢弃；训练时也缺少 inference-aligned rejected states | 将 rejected target hidden states 作为 bounded temporary KV context，并用 **parallel draft–verify–draft training** 对齐训练/推理；在 DFlash 与 DSpark-derived drafter 上验证。([arXiv](https://arxiv.org/abs/2609.14717)) |
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
@@ -72,21 +75,23 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 
 ## 2026-09-18
 
-> 今日重点：**Carryover Drafting** 把 cross-round rejected-state reuse 进一步具体化为 temporary KV；工程侧继续出现 DFlash2 / HC 模型的 backend contract 与 serving correctness 问题。
+> 今日重新以**论文第一优先级**扫描并补漏：确认 **BASTION、AngelSpec / DFly、Online Draft Co-Training** 三篇此前漏收但应进入长期图谱的直接相关工作；同时保留最新的 Carryover Drafting。
 
 | 时间 | 动态 | 1句摘要 | 核心动机 | 怎么解决 / 启示 | 与 DFlash 关系 |
 |---|---|---|---|---|---|
-| 2026-09-15 | **Carryover Drafting** | rejected target hidden states → 下一轮 temporary KV context | first rejection 后 verifier 已算出的 states 被浪费 | temporary KV + learned rejected/committed embedding + parallel draft–verify–draft training | ⭐⭐⭐ |
-| 2026-09-17 | **SGLang：FlashKDA + GLM-5.3-Flash + DFlash2 prefill contract bug** | fused prefill tuple 未解包导致 RMSNorm 崩溃 | 新 backend contract 会直接阻塞 speculative serving | 修正 fused path 返回约定，并扩大不同 prompt length 的回归测试 | ⭐⭐ |
-| 2026-09-16 | **SGLang：Qwen3.8-Flash-Next / Qwen4-Exp DFLASH CUDA Graph capture 回归** | HC hidden-state stream 覆盖 speculative aux capture | HC-aware hidden-state plumbing 仍是高风险接口 | 恢复 aux-capture guard，避免 clobber packed states | ⭐⭐⭐ |
-| 2026-09-16 | **SGLang：speculative block 跨 EOS 时 usage accounting 失真** | reasoning token 可超过 completion token | 多 token commit 后 accounting 仍按 raw accepted block 更新 | usage 统一按 stop-trimmed committed prefix 计数 | ⭐⭐ |
+| 2026-05-28（补漏） | **BASTION** | DFlash 分布 → query-dependent dynamic tree | 固定单路径 / 固定 tree budget 都会浪费 | path-confidence + best-first expansion + hardware-aware verify cost | ⭐⭐⭐ |
+| 2026-07-28（补漏） | **AngelSpec / DFly** | drafter 架构、块内因果与高并发预算联合优化 | 固定 verify depth 不适应真实 workload / load / hardware | hybrid target conditioning + AR correction + D-CUT | ⭐⭐⭐ |
+| 2026-09-07（补漏） | **Online Draft Co-Training** | DFlash / DSpark 随 RL policy 在线更新 | policy drift 让静态 drafter acceptance 衰减 | packed CP branch attention + TapChannel / PP | ⭐⭐⭐ |
+| 2026-09-15 | **Carryover Drafting** | rejected target states → 下一轮 temporary KV | verifier 已算出的 rejected states 被浪费 | temporary KV + inference-aligned draft–verify–draft training | ⭐⭐⭐ |
+| 2026-09-17 | **SGLang：FlashKDA + DFlash2 prefill contract bug** | fused prefill tuple 未解包导致崩溃 | backend contract 会阻塞 speculative serving | 修正 fused return contract + 增强回归测试 | ⭐⭐ |
 
 完整版本见 [`daily/2026-09-18.md`](daily/2026-09-18.md)。
 
 ### 今日研究提示
 
-1. **ReTrace → DFlow → Carryover Drafting** 已形成连续的 cross-round reuse 主线。
-2. **Carryover + DSpark / D-CUT** 很值得继续看：前者提升每轮 draft/acceptance，后者减少高并发 verification waste。
+1. **高并发主线不再只有 D-CUT / DSpark / AdaFlash**：AngelSpec / DFly 明确把 DFlash 架构增强和 runtime-aware verification 合在一起。
+2. **树结构主线必须加入 BASTION**：它和 DDTree 的差别在于 tree budget 本身也是动态、硬件感知的决策变量。
+3. **训练主线扩展到 RL post-training**：Online Draft Co-Training 解决的是 drafter 随 policy 漂移的问题，而不只是静态数据上的 acceptance。
 
 ---
 
