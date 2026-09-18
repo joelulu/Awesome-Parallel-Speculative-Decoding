@@ -2,7 +2,6 @@ import { Component, lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, ChevronDown, GitBranch, Github, LocateFixed, Search, Sparkles, X } from 'lucide-react';
 import PaperCard from './PaperCard';
 import methodsJson from './data/methods.json';
-import dflowData from './data/dflow.json';
 import categories from './data/categories.json';
 import relations from './data/relations.json';
 import starsJson from './data/stars.json';
@@ -15,7 +14,7 @@ class MapBoundary extends Component<{children:React.ReactNode},{failed:boolean}>
   static getDerivedStateFromError(){return {failed:true};}
   render(){return this.state.failed?<div className="map-loading">地图暂时无法载入，可以使用下方大纲和方法卡片继续阅读。</div>:this.props.children;}
 }
-const methods=[...(methodsJson as Method[]),dflowData.method as Method];
+const methods=methodsJson as Method[];
 const stars=starsJson as Stars;
 const briefs=briefsJson as Brief[];
 const repository='https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding';
