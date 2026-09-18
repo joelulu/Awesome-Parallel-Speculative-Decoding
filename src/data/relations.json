@@ -94,5 +94,45 @@
     "status": "proposed",
     "evidenceUrl": "https://arxiv.org/abs/2609.14717",
     "note": "与 ReTrace 一样属于 cross-round rejected-state reuse 主线，但 Carryover 直接把 target hidden states 作为可注意的 KV context。"
+  },
+  {
+    "source": "dflash",
+    "target": "bastion",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2605.29727",
+    "note": "BASTION 直接使用 DFlash block-diffusion drafters 的逐位置分布构建动态 prefix tree，并联合优化树结构与 verification budget。"
+  },
+  {
+    "source": "dflash",
+    "target": "angelspec",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.25852",
+    "note": "AngelSpec 中的 DFly 明确提出两项 DFlash 架构改进：hybrid target conditioning 与 predecessor-conditioned autoregressive head。"
+  },
+  {
+    "source": "d-cut",
+    "target": "angelspec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.25852",
+    "note": "AngelSpec 将 D-CUT 集成到 DFly serving 中，按请求 confidence 与 runtime cost 动态分配 batch-level verification budget。"
+  },
+  {
+    "source": "dflash",
+    "target": "online-draft-cotraining",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2609.07108",
+    "note": "该系统将 DFlash 作为三类代表性 drafter 之一进行 RL online co-training，并扩展到 CP/PP 与长上下文训练。"
+  },
+  {
+    "source": "dspark",
+    "target": "online-draft-cotraining",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2609.07108",
+    "note": "该系统统一支持 DSpark 的 branch attention 和 target-feature taps，并在 RL post-training 中在线更新 drafter。"
   }
 ]
