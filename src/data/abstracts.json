@@ -196,5 +196,23 @@
     "sourceUrl": "https://arxiv.org/abs/2609.14717",
     "translatedAt": "2026-09-18",
     "kind": "translated-summary"
+  },
+  "bastion": {
+    "text": "BASTION 关注 block-diffusion drafter 从单路径扩展到候选树后最关键的系统问题：树越大，覆盖 target 偏好轨迹的概率越高，但 verification latency 也会快速增加，而且最佳预算随请求、上下文、模型和 GPU 改变。方法直接复用 DFlash 的逐位置分布，以路径概率之和作为期望提交长度代理，用 best-first expansion 动态构造 prefix tree，再用经过在线校准的硬件 roofline cost model 估计验证延迟，在边际接受收益无法覆盖额外验证成本时停止扩树。它无需额外训练并保持 target distribution。论文在 Qwen3 和 Llama-3.1 配合 DFlash drafter 的实验中报告最高 6.61× 相对自回归加速，并相对单路径 DFlash 取得明显提升。",
+    "sourceUrl": "https://arxiv.org/abs/2605.29727",
+    "translatedAt": "2026-09-18",
+    "kind": "translated-summary"
+  },
+  "angelspec": {
+    "text": "AngelSpec 面向真实 serving 中任务类型、请求难度、在线负载和硬件差异带来的 speculative decoding 异质性。论文提出 DFly，在 DFlash 上做两项核心增强：hybrid target-conditioning backbone 让不同 draft layer 使用更合适的 target features；predecessor-conditioned autoregressive head 用上一草稿 token 修正并行预测，补回块内因果依赖。系统侧进一步集成 D-CUT，把 target verification 当作 batch-level 共享资源，根据请求置信度、期望收益和实测 runtime cost 动态分配验证深度。Hy3-A21B 上，DFly 在 concurrency 4–64 的所有测试档位都取得最高平均吞吐，相比 DFlash 高 10.5%–11.8%。",
+    "sourceUrl": "https://arxiv.org/abs/2607.25852",
+    "translatedAt": "2026-09-18",
+    "kind": "translated-summary"
+  },
+  "online-draft-cotraining": {
+    "text": "这项工作把 speculative drafter 从离线一次训练扩展到 RL post-training 过程中的在线共同训练。随着 policy 权重持续变化，静态 DFlash/DSpark 会逐渐失配；但要在大模型和长上下文中同步训练 drafter，还必须解决 branch attention 无法直接使用标准 context parallelism、以及 target hidden features 分布在不同 pipeline stages 的问题。作者用 packed load-balanced zigzag-ring attention 将 causal 主序列注意力与 rank-local branch attention 合并，并提出 TapChannel 在不修改 pipeline schedule 的情况下旁路传输 target intermediate features。系统统一支持 EAGLE-3、DFlash 和 DSpark，并扩展到 122B target 与 256K context；实验报告 1.19–2.23× rollout speedup 和 1.16–1.88× 端到端训练 speedup。",
+    "sourceUrl": "https://arxiv.org/abs/2609.07108",
+    "translatedAt": "2026-09-18",
+    "kind": "translated-summary"
   }
 }
