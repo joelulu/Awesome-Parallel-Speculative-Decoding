@@ -57,8 +57,9 @@
 <!-- 5 cross-round reuse -->
 <path d="M365 675 C430 675 430 865 500 865" stroke="#b56bc5" stroke-width="10" fill="none"/>
 <rect x="500" y="833" width="385" height="64" rx="18" fill="#f7edf9" stroke="#b56bc5" stroke-width="2"/><text x="524" y="873" class="b">5. 跨轮次轨迹 / verifier 复用</text>
-<rect x="940" y="835" width="600" height="38" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="859" class="l">ReTrace</text><text x="1135" y="859" class="k">rejected-trajectory conditioning / cross-round reuse</text>
-<rect x="940" y="879" width="600" height="38" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="903" class="l">DFlow</text><text x="1135" y="903" class="k">verifier hidden-state flow / self-conditioning</text>
+<rect x="940" y="817" width="600" height="30" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="837" class="l">ReTrace</text><text x="1135" y="837" class="k">rejected-trajectory conditioning / cross-round reuse</text>
+<rect x="940" y="851" width="600" height="30" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="871" class="l">DFlow</text><text x="1135" y="871" class="k">verifier hidden-state flow / self-conditioning</text>
+<rect x="940" y="885" width="600" height="30" rx="12" fill="#fbf5fc" stroke="#d8b2df"/><text x="958" y="905" class="l">Carryover Drafting</text><text x="1135" y="905" class="k">rejected states as temporary KV context</text>
 
 <!-- 6 -->
 <path d="M365 675 C430 675 430 980 500 980" stroke="#7c62d6" stroke-width="10" fill="none"/>
