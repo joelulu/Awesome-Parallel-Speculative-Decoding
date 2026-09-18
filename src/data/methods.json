@@ -934,5 +934,103 @@
     "pinned": false,
     "reason": "DFlash / DSpark 直接实验 · 跨轮 rejected verifier state reuse 的最新工作",
     "updatedAt": "2026-09-18"
+  },
+  {
+    "id": "bastion",
+    "name": "BASTION",
+    "title": "Bastion: Budget-Aware Speculative Decoding with Tree-structured Block Diffusion Drafting",
+    "date": "2026-05-28",
+    "dateLabel": "2026-05-28",
+    "category": "tree",
+    "tags": [
+      "动态树",
+      "hardware-aware",
+      "budget-aware",
+      "training-free"
+    ],
+    "summary": "用 DFlash 的并行位置分布动态构造查询相关候选树，并让树预算随接受收益与硬件验证成本在线变化。",
+    "problem": "固定单路径会浪费 block-diffusion 的 top-k 候选，而固定树预算又无法适配不同请求、上下文与 GPU 的验证成本。",
+    "solution": "用 path-confidence surrogate 估计期望提交长度，以 best-first 方式扩展 prefix tree，并用硬件校准的 roofline latency model 在边际收益低于验证成本时停止扩树。",
+    "paperUrl": "https://arxiv.org/abs/2605.29727",
+    "sourceUrl": "https://arxiv.org/abs/2605.29727",
+    "code": [
+      {
+        "url": "https://github.com/kaist-ai-osi-lab/BASTION",
+        "repo": "kaist-ai-osi-lab/BASTION",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2605.29727",
+        "checkedAt": "2026-09-18",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "DFlash 直接后续 · 动态树结构与硬件感知 verification budget",
+    "updatedAt": "2026-09-18"
+  },
+  {
+    "id": "angelspec",
+    "name": "AngelSpec / DFly",
+    "title": "AngelSpec: Towards Real-World High Performance Inference with Speculative Decoding",
+    "date": "2026-07-28",
+    "dateLabel": "2026-07-28",
+    "category": "systems",
+    "tags": [
+      "DFly",
+      "高并发",
+      "adaptive verification",
+      "target conditioning",
+      "intra-block causality"
+    ],
+    "summary": "把 DFlash 架构增强、块内因果补偿和 D-CUT 式批级自适应验证合成一套面向真实服务负载的 DFly/AngelSpec 方案。",
+    "problem": "同一种 drafter 与固定验证深度无法同时适配高熵对话、代码/数学、不同在线负载与不同硬件；高并发时长 block 的验证成本尤其敏感。",
+    "solution": "DFly 用 hybrid target-conditioning backbone + predecessor-conditioned autoregressive head 改善 target feature 利用和块内依赖，再集成 D-CUT 按请求置信度、在线负载和 runtime cost 动态分配 batch-level verification budget。",
+    "paperUrl": "https://arxiv.org/abs/2607.25852",
+    "sourceUrl": "https://arxiv.org/abs/2607.25852",
+    "code": [
+      {
+        "url": "https://github.com/Tencent/AngelSpec",
+        "repo": "Tencent/AngelSpec",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2607.25852",
+        "checkedAt": "2026-09-18",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "DFlash 直接后续 · DFly 架构增强 + 高并发自适应验证",
+    "updatedAt": "2026-09-18"
+  },
+  {
+    "id": "online-draft-cotraining",
+    "name": "Online Draft Co-Training",
+    "title": "Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training",
+    "date": "2026-09-07",
+    "dateLabel": "2026-09-07",
+    "category": "training",
+    "tags": [
+      "online co-training",
+      "RL post-training",
+      "long context",
+      "context parallelism",
+      "TapChannel"
+    ],
+    "summary": "让 DFlash / DSpark drafter 在 RL policy 持续变化时同步在线训练，并把这种训练扩展到 122B 模型与 256K 长上下文。",
+    "problem": "RL post-training 中 policy 不断变化，冻结 drafter 会逐渐失配；同时 DFlash/DSpark 的 branch attention 与 target hidden taps 又不适配标准 CP/PP 训练拓扑。",
+    "solution": "用 packed load-balanced zigzag-ring attention 合并 causal main-sequence 与 rank-local branch attention；用 TapChannel 跨 PP stage 旁路传输 target intermediate features，在不改 pipeline schedule 的前提下联合训练 policy 与 drafter。",
+    "paperUrl": "https://arxiv.org/abs/2609.07108",
+    "sourceUrl": "https://arxiv.org/abs/2609.07108",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "DFlash / DSpark 直接训练扩展 · RL online co-training 与长上下文分布式训练",
+    "updatedAt": "2026-09-18"
   }
 ]
