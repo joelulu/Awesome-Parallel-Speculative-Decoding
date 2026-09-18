@@ -520,8 +520,7 @@
       "Xupeng Miao"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.06498",
-    "fetchedAt": "2026-09-18T01:30:00+08:00",
-    "thumbnail": "papers/dflow.svg"
+    "fetchedAt": "2026-09-18T01:30:00+08:00"
   },
   "carryover-drafting": {
     "sourceUrl": "https://arxiv.org/abs/2609.14717",
@@ -537,7 +536,6 @@
       "Minsub Kim"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.14717",
-    "fetchedAt": "2026-09-18T01:30:00+08:00",
-    "thumbnail": "papers/carryover-drafting.svg"
+    "fetchedAt": "2026-09-18T01:30:00+08:00"
   }
 }
