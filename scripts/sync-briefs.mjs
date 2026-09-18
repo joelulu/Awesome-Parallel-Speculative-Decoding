@@ -11,6 +11,6 @@ export function parseBrief(markdown,date,methods){
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const base=new URL('../',import.meta.url);const methods=JSON.parse(await readFile(new URL('src/data/methods.json',base),'utf8'));const current=JSON.parse(await readFile(new URL('src/data/briefs.json',base),'utf8'));const files=(await readdir(new URL('daily/',base))).filter(f=>/^\d{4}-\d{2}-\d{2}\.md$/.test(f));
-  for(const file of files){const brief=parseBrief(await readFile(new URL(`daily/${file}`,base),'utf8'),file.slice(0,10),methods);if(!brief.items.length){console.warn(`${file}: no table rows found; keeping existing brief`);continue;}const index=current.findIndex(b=>b.date===brief.date);if(index<0)current.push(brief);else current[index]=brief;}
-  current.sort((a,b)=>b.date.localeCompare(a.date));await writeFile(new URL('src/data/briefs.json',base),JSON.stringify(current,null,2)+'\n');console.log(`Synced ${current.length} daily briefs.`);
+  for(const file of files){const brief=parseBrief(await readFile(new URL(`daily/${file}`,base),'utf8'),file.slice(0,10),methods);if(!brief.items.length){console.warn(`${file}: no table rows found; keeping existing brief`);continue;}const index=current.findIndex(b=>b.date===brief.date);if(index<0)current.push(brief);}
+  current.sort((a,b)=>b.date.localeCompare(a.date));await writeFile(new URL('src/data/briefs.json',base),JSON.stringify(current,null,2)+'\n');console.log(`Synced ${current.length} daily briefs without overwriting curated website briefs.`);
 }
