@@ -3,6 +3,20 @@
 .chronology-map .map-topbar{height:52px;padding:0 24px;background:#fcfdfd;border-color:#edf1f3}
 .chronology-map .map-breadcrumb{color:#8797a1;gap:12px}
 .chronology-map .map-breadcrumb button{font-size:18px}
+
+.chronology-map .map-top-actions{margin-left:auto;display:flex;align-items:center;gap:12px;min-width:0}
+.chronology-map .map-latest-jump{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid #dfe8ed;border-radius:999px;background:#fff;color:#5b7485;font-size:11px;white-space:nowrap;transition:background .15s,border-color .15s,color .15s,box-shadow .15s}
+.chronology-map .map-latest-jump:hover,.chronology-map .map-latest-jump:focus-visible{background:#edf6fb;border-color:#bfd4df;color:#245778;box-shadow:0 3px 12px #1f506c12}
+.chronology-map .map-latest-jump span{font-size:9px;font-weight:700;letter-spacing:.5px;color:#9a6a17}
+.chronology-map .map-latest-jump b{font-size:11px;font-weight:650;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.chronology-map .timeline-category small{margin-left:auto;min-width:21px;height:18px;padding:0 6px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--branch) 8%,#fff);color:color-mix(in srgb,var(--branch) 78%,#284350);font-size:9px;font-weight:700}
+.chronology-map .timeline-new-badge{position:absolute;top:20px;left:50%;transform:translateX(-50%);padding:1px 5px;border-radius:999px;background:#fff7df;border:1px solid #efd597;color:#8d6418;font-size:7px;font-weight:800;letter-spacing:.55px;line-height:12px;box-shadow:0 2px 8px #8d641810;pointer-events:none}
+.chronology-map .timeline-node-tooltip{position:absolute;left:50%;bottom:72px;width:250px;transform:translate(-50%,5px);padding:10px 12px;border:1px solid #dce6eb;border-radius:10px;background:rgba(255,255,255,.97);box-shadow:0 12px 32px #173c551f;color:#38566a;text-align:left;opacity:0;visibility:hidden;transition:opacity .14s,transform .14s,visibility .14s;pointer-events:none;z-index:50}
+.chronology-map .timeline-node-tooltip:after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;transform:translateX(-50%) rotate(45deg);background:#fff;border-right:1px solid #dce6eb;border-bottom:1px solid #dce6eb}
+.chronology-map .timeline-node-tooltip b{display:block;margin-bottom:3px;font-size:12px;font-weight:700;color:#274d66;white-space:normal}
+.chronology-map .timeline-node-tooltip small{display:block;margin-bottom:6px;font-size:9px;color:#82949f;white-space:normal}
+.chronology-map .timeline-node-tooltip em{display:block;font-size:10px;line-height:1.45;font-style:normal;color:#627a89;white-space:normal}
+.chronology-map .timeline-read:hover .timeline-node-tooltip,.chronology-map .timeline-read:focus-visible .timeline-node-tooltip,.chronology-map .is-selected .timeline-read .timeline-node-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .chronology-map .timeline-month-nav{top:52px;height:46px;padding:0 20px;gap:7px;border-bottom:1px solid #f0f3f4}
 .chronology-map .timeline-month-nav button{padding:6px 11px;border-radius:7px;font-size:12px;color:#6b8292}
 .chronology-map .timeline-month-nav button:hover,.chronology-map .timeline-month-nav button:focus-visible{background:#edf4f8;color:#245778;border-color:#d9e5ec}
@@ -33,6 +47,10 @@
 @media(max-width:700px){
  .chronology-map{height:640px;border-radius:10px}
  .chronology-map .map-topbar{height:74px;padding:0 14px;gap:8px}
+ .chronology-map .map-top-actions{gap:6px}
+ .chronology-map .map-latest-jump{padding:0 8px}
+ .chronology-map .map-latest-jump b{display:none}
+ .chronology-map .timeline-node-tooltip{display:none}
  .chronology-map .timeline-month-nav{top:74px;padding:0 8px;gap:2px}
  .chronology-map .timeline-month-nav button{padding:6px 9px;font-size:11px}
  .chronology-map .flow-surface{top:120px}
