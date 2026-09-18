@@ -904,7 +904,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 5,
-    "pinned": true,
+    "pinned": false,
     "reason": "DFlash 直接后续 · 跨轮 verifier 信息复用",
     "updatedAt": "2026-09-18"
   },
@@ -931,7 +931,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 5,
-    "pinned": true,
+    "pinned": false,
     "reason": "DFlash / DSpark 直接实验 · 跨轮 rejected verifier state reuse 的最新工作",
     "updatedAt": "2026-09-18"
   }
