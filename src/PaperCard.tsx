@@ -2,13 +2,12 @@ import { useState, type CSSProperties } from 'react';
 import { ArrowUpRight, BookOpen, ChevronDown, ChevronUp, Github, LocateFixed, Star } from 'lucide-react';
 import abstractsJson from './data/abstracts.json';
 import metadataJson from './data/paper-metadata.json';
-import dflowData from './data/dflow.json';
 import type { Method, Category, Relation, Stars } from './types';
 
 type Abstract = { text: string; sourceUrl: string; translatedAt: string; kind?: string };
 type Metadata = { title?: string; authors?: string[]; thumbnail?: string; sourceUrl: string; status: string; kind?: string };
-const abstracts = {...(abstractsJson as Record<string, Abstract>),dflow:dflowData.abstract as Abstract};
-const metadata = {...(metadataJson as Record<string, Metadata>),dflow:dflowData.metadata as Metadata};
+const abstracts = abstractsJson as Record<string, Abstract>;
+const metadata = metadataJson as Record<string, Metadata>;
 const External = ({ href, children, ...props }: {href: string; children: React.ReactNode; className?: string; title?: string}) =>
   <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>;
 
