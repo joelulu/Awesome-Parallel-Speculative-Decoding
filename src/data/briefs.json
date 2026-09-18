@@ -1,5 +1,46 @@
 [
   {
+    "date": "2026-09-18",
+    "title": "Carryover Drafting 与 DFlash/DFlash2 serving 新动态",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-18.md",
+    "items": [
+      {
+        "title": "Carryover Drafting：把 rejected verifier states 变成 temporary KV",
+        "summary": "Carryover Drafting 将 target 已计算的 rejected hidden states 作为下一轮 drafter 的临时 KV context，并用 parallel draft–verify–draft training 对齐训练与真实推理状态；在 DFlash / DSpark-derived drafter 上报告 acceptance 与端到端 speedup 均有提升。",
+        "sourceUrl": "https://arxiv.org/abs/2609.14717",
+        "methodIds": [
+          "carryover-drafting"
+        ]
+      },
+      {
+        "title": "SGLang：FlashKDA prefill contract 会让 GLM-5.3-Flash + DFlash2 崩溃",
+        "summary": "FlashKDA fused prefill 返回 tuple，而调用方在未跟踪 intermediate states 时没有解包；在 DFlash2 block=8、radix cache disabled 的配置中会在 gated RMSNorm 处失败。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39925",
+        "methodIds": [
+          "dflash-2"
+        ]
+      },
+      {
+        "title": "SGLang：Qwen3.8-Flash-Next / Qwen4-Exp 的 DFLASH CUDA Graph capture 回归",
+        "summary": "Hyper-Connection hidden-state 流覆盖了 speculative aux capture 需要的 packed states，导致 decode CUDA-graph capture 崩溃，继续暴露 HC-aware hidden-state plumbing 的系统脆弱点。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39685",
+        "methodIds": [
+          "dflash",
+          "hyperdflash"
+        ]
+      },
+      {
+        "title": "SGLang：speculative block 跨 EOS 时 usage accounting 可失真",
+        "summary": "accepted block 先按整块更新 reasoning counter、再按 stop 边界裁剪 completion，可能出现 reasoning_tokens > completion_tokens；线上 speculative serving 需要按 committed prefix 统一计数。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39826",
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-09-14",
     "title": "DFlow 与 DFlash/DSpark 高并发 serving 新动态",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-14.md",
@@ -8,25 +49,33 @@
         "title": "DFlow：让 rejected verifier states 跨 drafting round 继续流动",
         "summary": "DFlow 重用 first rejection 后的 target verifier hidden states，并通过 self-condition training 将其注入下一轮 drafting；这是 ReTrace 之后 rejected-trajectory / cross-round reuse 主线上的又一篇关键工作。",
         "sourceUrl": "https://arxiv.org/abs/2609.06498",
-        "methodIds": ["dflow"]
+        "methodIds": [
+          "dflow"
+        ]
       },
       {
         "title": "SGLang：DeepSeek-V4.1-Flash + DSpark ragged verify 与 Engram CUDA Graph 冲突",
         "summary": "compact ragged verification 在小 batch tier 构造不等长 verify layout，违反 Engram target-verify 的等块假设，说明 adaptive verification 还受模型后端契约约束。",
         "sourceUrl": "https://github.com/sgl-project/sglang/issues/39173",
-        "methodIds": ["dspark"]
+        "methodIds": [
+          "dspark"
+        ]
       },
       {
         "title": "SGLang：量化 DFlash2 drafter 可静默退化到近 0% acceptance",
         "summary": "量化 drafter 可以正常加载且输出仍正确，但 accept len 从约 3.7 降至约 1.0；功能测试无法发现，需要单独监控 acceptance health。",
         "sourceUrl": "https://github.com/sgl-project/sglang/issues/39087",
-        "methodIds": ["dflash-2"]
+        "methodIds": [
+          "dflash-2"
+        ]
       },
       {
         "title": "vLLM：DeepSeek-V4.1-Flash + DSpark 高并发触发 dsv4_topk illegal memory access",
         "summary": "8×H20、TP8/EP8 下高于 256 的 max_num_seqs 可触发 MoE routing kernel 非法访存，提示 speculative serving 需要 shape-aware concurrency guard。",
         "sourceUrl": "https://github.com/vllm-project/vllm/issues/56389",
-        "methodIds": ["dspark"]
+        "methodIds": [
+          "dspark"
+        ]
       }
     ]
   },
@@ -39,13 +88,21 @@
         "title": "SGLang：Qwen3.8-Flash-Next 无法正确导出 DFlash/DSpark aux hidden states",
         "summary": "Hyper-Connection hidden-state plumbing 与 DFlash auxiliary capture 冲突，直接阻塞新型 HC target 上的 DFlash/DSpark serving。",
         "sourceUrl": "https://github.com/sgl-project/sglang/issues/38589",
-        "methodIds": ["dflash", "dspark", "hyperdflash"]
+        "methodIds": [
+          "dflash",
+          "dspark",
+          "hyperdflash"
+        ]
       },
       {
         "title": "vLLM：Qwen3.8-Flash-Next + DFlash/DSpark 暴露 5 个 serving blocker",
         "summary": "runner、anchor layout、allowlist 与 GDN backend adaptive verification 等系统约束说明高 acceptance 并不等于可部署。",
         "sourceUrl": "https://github.com/vllm-project/vllm/issues/56088",
-        "methodIds": ["dflash", "dspark", "hyperdflash"]
+        "methodIds": [
+          "dflash",
+          "dspark",
+          "hyperdflash"
+        ]
       }
     ]
   },
@@ -58,31 +115,44 @@
         "title": "SGLang：DFlash2 thinking 模式 lossless 一致性问题",
         "summary": "Qwen3.8-27B 开启 thinking 后，DFlash2 greedy 输出可能与 target-only 在固定位置分叉。",
         "sourceUrl": null,
-        "methodIds": ["dflash", "dflash-2"]
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
       },
       {
         "title": "SGLang：DFlash verification mask 显存增长问题",
         "summary": "verification custom_mask 在 batch size 增长过程中可能持续扩容并长期保留。",
         "sourceUrl": null,
-        "methodIds": ["dflash"]
+        "methodIds": [
+          "dflash"
+        ]
       },
       {
         "title": "vLLM：DFlash2 在超长上下文下可能从加速变成减速",
         "summary": "在超长 context 下，drafter 的额外历史状态处理可能吞掉 speculative decoding 收益。",
         "sourceUrl": null,
-        "methodIds": ["dflash", "dflash-2"]
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
       },
       {
         "title": "llama.cpp：特定编译/调度路径导致 speculative decoding 异常变慢",
         "summary": "某些 runtime / compiler 路径可能让 MTP/DFlash 出现固定同步开销。",
         "sourceUrl": null,
-        "methodIds": ["dflash"]
+        "methodIds": [
+          "dflash"
+        ]
       },
       {
         "title": "DFlash 生态继续扩大后端与模型覆盖",
         "summary": "DFlash / DFlash2 正从单篇论文逐步走向通用 speculative decoding 基础设施。",
         "sourceUrl": null,
-        "methodIds": ["dflash", "dflash-2"]
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
       }
     ]
   }
