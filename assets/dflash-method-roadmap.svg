@@ -28,11 +28,12 @@
 <!-- 2 -->
 <path d="M365 675 C430 675 430 300 500 300" stroke="#f39b21" stroke-width="10" fill="none"/>
 <rect x="500" y="268" width="385" height="64" rx="18" fill="#fff5e7" stroke="#f39b21" stroke-width="2"/><text x="524" y="308" class="b">2. 训练目标对齐</text>
-<text x="950" y="235" class="l">D-PACE</text><text x="1135" y="235" class="k">position-aware loss</text>
-<text x="950" y="269" class="l">Teaching L2R</text><text x="1135" y="269" class="k">acceptance-aware objective</text>
-<text x="950" y="303" class="l">Spec-AUF</text><text x="1135" y="303" class="k">accept-until-fail</text>
-<text x="950" y="337" class="l">Draft-OPD</text><text x="1135" y="337" class="k">on-policy distillation</text>
-<text x="950" y="371" class="l">VAT</text><text x="1135" y="371" class="k">verification-aware training</text>
+<text x="950" y="218" class="l">D-PACE</text><text x="1135" y="218" class="k">position-aware loss</text>
+<text x="950" y="248" class="l">Teaching L2R</text><text x="1135" y="248" class="k">acceptance-aware objective</text>
+<text x="950" y="278" class="l">Spec-AUF</text><text x="1135" y="278" class="k">accept-until-fail</text>
+<text x="950" y="308" class="l">Draft-OPD</text><text x="1135" y="308" class="k">on-policy distillation</text>
+<text x="950" y="338" class="l">VAT</text><text x="1135" y="338" class="k">verification-aware training</text>
+<text x="950" y="368" class="l">Online Draft Co-Training</text><text x="1235" y="368" class="k">RL co-training / CP + PP</text>
 
 <!-- 3 -->
 <path d="M365 675 C430 675 430 490 500 490" stroke="#3aa65a" stroke-width="10" fill="none"/>
@@ -48,11 +49,12 @@
 <path d="M365 675 C430 675 430 700 500 700" stroke="#e64b55" stroke-width="10" fill="none"/>
 <rect x="500" y="668" width="385" height="64" rx="18" fill="#fdecef" stroke="#e64b55" stroke-width="2"/><text x="524" y="708" class="b">4. 单路径 → 树结构 / 多路径</text>
 <text x="950" y="620" class="l">DDTree</text><text x="1135" y="620" class="k">draft tree</text>
-<text x="950" y="654" class="l">CaDDTree</text><text x="1135" y="654" class="k">cost-aware tree</text>
-<text x="950" y="688" class="l">D²SD</text><text x="1135" y="688" class="k">dual diffusion drafting</text>
-<text x="950" y="722" class="l">DominoTree</text><text x="1135" y="722" class="k">conditional tree</text>
-<text x="950" y="756" class="l">JetSpec</text><text x="1135" y="756" class="k">parallel tree drafting</text>
-<text x="950" y="790" class="l">DARTree</text><text x="1135" y="790" class="k">AR draft trees</text>
+<text x="950" y="648" class="l">BASTION</text><text x="1135" y="648" class="k">budget-aware dynamic tree</text>
+<text x="950" y="676" class="l">CaDDTree</text><text x="1135" y="676" class="k">cost-aware tree</text>
+<text x="950" y="704" class="l">D²SD</text><text x="1135" y="704" class="k">dual diffusion drafting</text>
+<text x="950" y="732" class="l">JetSpec</text><text x="1135" y="732" class="k">parallel tree drafting</text>
+<text x="950" y="760" class="l">DominoTree</text><text x="1135" y="760" class="k">conditional tree</text>
+<text x="950" y="788" class="l">DARTree</text><text x="1135" y="788" class="k">AR draft trees</text>
 
 <!-- 5 cross-round reuse -->
 <path d="M365 675 C430 675 430 865 500 865" stroke="#b56bc5" stroke-width="10" fill="none"/>
@@ -67,6 +69,7 @@
 <text x="950" y="951" class="l">DSpark</text><text x="1135" y="951" class="k">adaptive verification</text>
 <text x="950" y="985" class="l">D-CUT</text><text x="1135" y="985" class="k">verification pruning</text>
 <text x="950" y="1019" class="l">AdaFlash</text><text x="1135" y="1019" class="k">adaptive draft length</text>
+<text x="950" y="1053" class="l">AngelSpec / DFly</text><text x="1195" y="1053" class="k">load-aware verification / concurrency 4–64</text>
 
 <!-- 7 -->
 <path d="M365 675 C430 675 430 1100 500 1100" stroke="#24a7ad" stroke-width="10" fill="none"/>
