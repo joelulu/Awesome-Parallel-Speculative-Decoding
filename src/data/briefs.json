@@ -1,12 +1,38 @@
 [
   {
     "date": "2026-09-18",
-    "title": "Carryover Drafting 与 DFlash/DFlash2 serving 新动态",
+    "title": "论文补漏：BASTION、AngelSpec / DFly 与 Online Draft Co-Training",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-18.md",
     "items": [
       {
+        "title": "BASTION：动态 DFlash draft tree + hardware-aware verification budget",
+        "summary": "从 DFlash 各位置分布构造 query-dependent prefix tree，用 path-confidence surrogate 估计接受收益，并用硬件校准的 roofline cost model 决定何时停止扩树。",
+        "sourceUrl": "https://arxiv.org/abs/2605.29727",
+        "methodIds": [
+          "bastion"
+        ]
+      },
+      {
+        "title": "AngelSpec / DFly：把 DFlash 架构增强与高并发验证预算统一起来",
+        "summary": "DFly 用 hybrid target-conditioning 与 predecessor-conditioned AR head 改善 draft quality，再集成 D-CUT 根据请求置信度、在线负载与 runtime cost 分配 batch-level verification budget。",
+        "sourceUrl": "https://arxiv.org/abs/2607.25852",
+        "methodIds": [
+          "angelspec",
+          "d-cut"
+        ]
+      },
+      {
+        "title": "Online Draft Co-Training：DFlash / DSpark 进入 RL online co-training",
+        "summary": "在 RL policy 持续变化时同步更新 drafter，并通过 packed CP branch attention 与 TapChannel 支持大规模、长上下文训练；论文覆盖 122B target 与 256K context。",
+        "sourceUrl": "https://arxiv.org/abs/2609.07108",
+        "methodIds": [
+          "online-draft-cotraining",
+          "dspark"
+        ]
+      },
+      {
         "title": "Carryover Drafting：把 rejected verifier states 变成 temporary KV",
-        "summary": "Carryover Drafting 将 target 已计算的 rejected hidden states 作为下一轮 drafter 的临时 KV context，并用 parallel draft–verify–draft training 对齐训练与真实推理状态；在 DFlash / DSpark-derived drafter 上报告 acceptance 与端到端 speedup 均有提升。",
+        "summary": "将 target 已计算的 rejected hidden states 作为下一轮 drafter 的临时 KV context，并用 parallel draft–verify–draft training 对齐训练与真实推理状态。",
         "sourceUrl": "https://arxiv.org/abs/2609.14717",
         "methodIds": [
           "carryover-drafting"
@@ -14,27 +40,9 @@
       },
       {
         "title": "SGLang：FlashKDA prefill contract 会让 GLM-5.3-Flash + DFlash2 崩溃",
-        "summary": "FlashKDA fused prefill 返回 tuple，而调用方在未跟踪 intermediate states 时没有解包；在 DFlash2 block=8、radix cache disabled 的配置中会在 gated RMSNorm 处失败。",
+        "summary": "FlashKDA fused prefill 返回 tuple 而 caller 未解包；说明 DFlash2 serving 仍受新 backend contract 与 dynamic-shape 路径约束。",
         "sourceUrl": "https://github.com/sgl-project/sglang/issues/39925",
         "methodIds": [
-          "dflash-2"
-        ]
-      },
-      {
-        "title": "SGLang：Qwen3.8-Flash-Next / Qwen4-Exp 的 DFLASH CUDA Graph capture 回归",
-        "summary": "Hyper-Connection hidden-state 流覆盖了 speculative aux capture 需要的 packed states，导致 decode CUDA-graph capture 崩溃，继续暴露 HC-aware hidden-state plumbing 的系统脆弱点。",
-        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39685",
-        "methodIds": [
-          "dflash",
-          "hyperdflash"
-        ]
-      },
-      {
-        "title": "SGLang：speculative block 跨 EOS 时 usage accounting 可失真",
-        "summary": "accepted block 先按整块更新 reasoning counter、再按 stop 边界裁剪 completion，可能出现 reasoning_tokens > completion_tokens；线上 speculative serving 需要按 committed prefix 统一计数。",
-        "sourceUrl": "https://github.com/sgl-project/sglang/issues/39826",
-        "methodIds": [
-          "dflash",
           "dflash-2"
         ]
       }
