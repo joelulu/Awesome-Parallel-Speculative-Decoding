@@ -184,5 +184,17 @@
     "sourceUrl": "https://arxiv.org/abs/2608.29748",
     "translatedAt": "2026-09-09",
     "kind": "translated-summary"
+  },
+  "dflow": {
+    "text": "块扩散投机解码会并行提出未来 token block，再由目标模型一次前向完成验证。现有方法通常只保留 accepted prefix，并把 first rejection 之后的 suffix 连同 verifier 已经计算出的表示一起丢弃。DFlow 观察到，token 被拒绝只意味着它不能直接提交，并不意味着该位置的 verifier representation 没有价值。因此，DFlow 将 rejected suffix 的 target hidden states 传递到后续 drafting round，并通过 self-conditioning 训练让 drafter 学会利用这些跨轮信息，从而在不增加额外 target 计算的情况下提升 draft quality 与 acceptance length。",
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "translatedAt": "2026-09-18",
+    "kind": "translated-summary"
+  },
+  "carryover-drafting": {
+    "text": "投机解码的 target verification 会同时计算 accepted 与 rejected token 的表示，但传统方法只保留 accepted 部分。Carryover Drafting 发现，这些被丢弃的 target hidden states 仍包含对未来 token 有价值的信息。方法把 rejected states 作为临时 KV context 交给下一轮 drafter，让其选择性 attention；仅增加一个 learned embedding 区分 rejected context 与 committed context，并把额外 KV 长度限制在一个 proposal block 内。为避免训练—推理状态错位，作者提出 parallel draft–verify–draft training，在保持训练位置并行性的同时生成 inference-aligned rejected states。论文在 DFlash 与 DSpark-derived drafter、两个 target model 上报告平均接受长度提升 6.5%–14.7%，端到端 vLLM speedup 提升 7.9%–14.4%，翻译任务最高提升 28.8%。",
+    "sourceUrl": "https://arxiv.org/abs/2609.14717",
+    "translatedAt": "2026-09-18",
+    "kind": "translated-summary"
   }
 }
