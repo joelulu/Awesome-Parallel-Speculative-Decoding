@@ -59,7 +59,7 @@
     "source": "retrace",
     "target": "dflow",
     "type": "related",
-    "status": "editorial",
+    "status": "proposed",
     "evidenceUrl": "https://arxiv.org/abs/2609.06498",
     "note": "二者共同形成跨轮 rejected-state reuse 主线：ReTrace 强调 rejected trajectory conditioning，DFlow 强调 verifier information flow。"
   },
@@ -83,7 +83,7 @@
     "source": "dflow",
     "target": "carryover-drafting",
     "type": "related",
-    "status": "editorial",
+    "status": "proposed",
     "evidenceUrl": "https://arxiv.org/abs/2609.14717",
     "note": "二者都利用 first rejection 后的 verifier states；DFlow 强调信息流与 self-conditioning，Carryover 强调 temporary KV context 与 inference-aligned training。"
   },
@@ -91,7 +91,7 @@
     "source": "retrace",
     "target": "carryover-drafting",
     "type": "related",
-    "status": "editorial",
+    "status": "proposed",
     "evidenceUrl": "https://arxiv.org/abs/2609.14717",
     "note": "与 ReTrace 一样属于 cross-round rejected-state reuse 主线，但 Carryover 直接把 target hidden states 作为可注意的 KV context。"
   }
