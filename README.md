@@ -59,15 +59,36 @@
 | **2026-08-31** | **Verification-Aware Training (VAT)** | ⭐ 从 verifier 反过来训练 drafter | CE accuracy 不等于 speculative acceptance | verification head 学 survive/reject pattern，并对 first-rejection 周围动态重加权。([arXiv](https://arxiv.org/abs/2608.30135)) |
 | **2026-08-31** | **Ceiling-Clipped Acceptance Histograms / DBloom** | 研究 block size ceiling | 频繁 full-accept 时固定 block=16 变成 ceiling | 用 full-acceptance histogram 判断 ceiling，再扩展 block horizon。([arXiv](https://arxiv.org/abs/2608.30427)) |
 | **2026-09-01 左右** | **GLANCE — Vision Is Not Overhead** | ⭐⭐⭐ DFlash 思想进入 VLM | 多模态 drafter 忽略/压缩视觉信息会降低 acceptance | 读取 target 已算好的 **fused vision-language hidden states** 做 one-pass block drafting，再构造 wide candidate tree 验证。([arXiv](https://arxiv.org/abs/2609.00355)) |
-| **2026-09-09** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
+| **2026-09-06** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
+| **2026-09-15** | **Carryover Drafting — Recycling Rejected States for Speculative Decoding** | ⭐⭐⭐ 把 rejected target states 变成下一轮可注意的 temporary KV | verifier 已为 rejected suffix 付出计算，但传统流程直接丢弃；训练时也缺少 inference-aligned rejected states | 将 rejected target hidden states 作为 bounded temporary KV context，并用 **parallel draft–verify–draft training** 对齐训练/推理；在 DFlash 与 DSpark-derived drafter 上验证。([arXiv](https://arxiv.org/abs/2609.14717)) |
 
-### ReTrace / DFlow：跨轮 rejected trajectory reuse
+### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
 ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 则进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件。两者共同形成一条值得单独跟踪的研究主线，并且天然适合继续与 DFlash2 / DSpark / Draft-OPD 等方法组合。
 
 ---
 
 # Daily Briefs
+
+## 2026-09-18
+
+> 今日重点：**Carryover Drafting** 把 cross-round rejected-state reuse 进一步具体化为 temporary KV；工程侧继续出现 DFlash2 / HC 模型的 backend contract 与 serving correctness 问题。
+
+| 时间 | 动态 | 1句摘要 | 核心动机 | 怎么解决 / 启示 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-15 | **Carryover Drafting** | rejected target hidden states → 下一轮 temporary KV context | first rejection 后 verifier 已算出的 states 被浪费 | temporary KV + learned rejected/committed embedding + parallel draft–verify–draft training | ⭐⭐⭐ |
+| 2026-09-17 | **SGLang：FlashKDA + GLM-5.3-Flash + DFlash2 prefill contract bug** | fused prefill tuple 未解包导致 RMSNorm 崩溃 | 新 backend contract 会直接阻塞 speculative serving | 修正 fused path 返回约定，并扩大不同 prompt length 的回归测试 | ⭐⭐ |
+| 2026-09-16 | **SGLang：Qwen3.8-Flash-Next / Qwen4-Exp DFLASH CUDA Graph capture 回归** | HC hidden-state stream 覆盖 speculative aux capture | HC-aware hidden-state plumbing 仍是高风险接口 | 恢复 aux-capture guard，避免 clobber packed states | ⭐⭐⭐ |
+| 2026-09-16 | **SGLang：speculative block 跨 EOS 时 usage accounting 失真** | reasoning token 可超过 completion token | 多 token commit 后 accounting 仍按 raw accepted block 更新 | usage 统一按 stop-trimmed committed prefix 计数 | ⭐⭐ |
+
+完整版本见 [`daily/2026-09-18.md`](daily/2026-09-18.md)。
+
+### 今日研究提示
+
+1. **ReTrace → DFlow → Carryover Drafting** 已形成连续的 cross-round reuse 主线。
+2. **Carryover + DSpark / D-CUT** 很值得继续看：前者提升每轮 draft/acceptance，后者减少高并发 verification waste。
+
+---
 
 ## 2026-09-14
 
