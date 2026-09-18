@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="980" viewBox="0 0 720 980">
+  <rect width="720" height="980" fill="#fffdf8"/>
+  <rect x="26" y="26" width="668" height="928" rx="12" fill="none" stroke="#d8d0c2" stroke-width="2"/>
+  <text x="60" y="92" font-family="Georgia,serif" font-size="30" fill="#17486b">arXiv:2609.14717</text>
+  <text x="60" y="154" font-family="Georgia,serif" font-weight="700" font-size="40" fill="#153a57">Carryover Drafting</text>
+  <text x="60" y="205" font-family="Arial,sans-serif" font-size="23" fill="#355b70">Recycling Rejected States</text>
+  <text x="60" y="238" font-family="Arial,sans-serif" font-size="23" fill="#355b70">for Speculative Decoding</text>
+  <line x1="60" y1="282" x2="660" y2="282" stroke="#ddd3c6"/>
+  <text x="60" y="326" font-family="Arial,sans-serif" font-size="18" fill="#6a6e70">Jahyun Koo · Sunghyeon Woo · Jaeeun Kil</text>
+  <text x="60" y="356" font-family="Arial,sans-serif" font-size="18" fill="#6a6e70">Jeongtae Lee · Sungjae Lee · Kyomin Jung · Minsub Kim</text>
+  <rect x="64" y="452" width="190" height="86" rx="16" fill="#edf4f8" stroke="#91b2c7"/>
+  <text x="159" y="486" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#244e69">Target verify</text>
+  <text x="159" y="517" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#4c6878">accepted + rejected</text>
+  <path d="M255 495 C300 495 310 495 350 495" fill="none" stroke="#7a5aa6" stroke-width="7" stroke-linecap="round"/>
+  <polygon points="340,480 370,495 340,510" fill="#7a5aa6"/>
+  <rect x="372" y="437" width="284" height="116" rx="18" fill="#f5eff9" stroke="#b79dcc"/>
+  <text x="514" y="472" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#5e4376">Temporary KV context</text>
+  <text x="514" y="505" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#6f5d7b">rejected target hidden states</text>
+  <text x="514" y="533" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#6f5d7b">bounded by one proposal block</text>
+  <path d="M514 554 L514 632" fill="none" stroke="#7a5aa6" stroke-width="7" stroke-linecap="round"/>
+  <polygon points="499,620 514,650 529,620" fill="#7a5aa6"/>
+  <rect x="372" y="650" width="284" height="92" rx="18" fill="#edf7f3" stroke="#9ac8b5"/>
+  <text x="514" y="685" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#245b4c">Next-round drafter</text>
+  <text x="514" y="716" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#4f7569">selective attention over carryover</text>
+  <text x="60" y="812" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#244e69">Core idea</text>
+  <text x="60" y="852" font-family="Arial,sans-serif" font-size="18" fill="#59676e">Recycle verifier-computed rejected states instead of discarding them.</text>
+  <text x="60" y="884" font-family="Arial,sans-serif" font-size="18" fill="#59676e">Train with parallel draft–verify–draft to match inference states.</text>
+  <text x="60" y="925" font-family="Arial,sans-serif" font-size="16" fill="#9b9488">DFlash Atlas · paper preview</text>
+</svg>
