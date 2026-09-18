@@ -508,5 +508,36 @@
     "pdfUrl": "https://arxiv.org/pdf/2608.29748",
     "fetchedAt": "2026-09-09T08:20:52.660132+00:00",
     "thumbnail": "papers/retrace.jpg"
+  },
+  "dflow": {
+    "sourceUrl": "https://arxiv.org/abs/2609.06498",
+    "status": "fetched",
+    "title": "DFlow: Enabling Verifier Information Flow in Block Diffusion Speculative Decoding",
+    "authors": [
+      "Yaojie Zhang",
+      "Linfeng Zhang",
+      "Bin Cui",
+      "Xupeng Miao"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.06498",
+    "fetchedAt": "2026-09-18T01:30:00+08:00",
+    "thumbnail": "papers/dflow.svg"
+  },
+  "carryover-drafting": {
+    "sourceUrl": "https://arxiv.org/abs/2609.14717",
+    "status": "fetched",
+    "title": "Carryover Drafting: Recycling Rejected States for Speculative Decoding",
+    "authors": [
+      "Jahyun Koo",
+      "Sunghyeon Woo",
+      "Jaeeun Kil",
+      "Jeongtae Lee",
+      "Sungjae Lee",
+      "Kyomin Jung",
+      "Minsub Kim"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.14717",
+    "fetchedAt": "2026-09-18T01:30:00+08:00",
+    "thumbnail": "papers/carryover-drafting.svg"
   }
 }
