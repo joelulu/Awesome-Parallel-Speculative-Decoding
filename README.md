@@ -64,7 +64,7 @@
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
-ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 则进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件。两者共同形成一条值得单独跟踪的研究主线，并且天然适合继续与 DFlash2 / DSpark / Draft-OPD 等方法组合。
+ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件；Carryover Drafting 则把 rejected target states 组织为下一轮 drafter 可选择性 attention 的 **temporary KV context**，并用 parallel draft–verify–draft training 对齐训练与真实推理状态。三者共同形成一条连续的跨轮复用主线，并且天然适合继续与 DFlash2 / DSpark / D-CUT 等方法组合。
 
 ---
 
