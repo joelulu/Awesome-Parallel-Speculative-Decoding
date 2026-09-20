@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-09-20",
+    "title": "工程进展：DFlash2 量化 drafter 静默 acceptance 崩溃已有直接修复",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-20.md",
+    "items": [
+      {
+        "title": "SGLang #39254：让 pack-quantized DFlash2 target-context projection 正确加载",
+        "summary": "此前 compressed-tensors 的 fc.weight_packed / weight_scale / weight_shape 会被普通 Linear loader 静默跳过，使 fc 随机初始化并把 acceptance 压到接近 bonus-token-only；修复后 W4A16 mean accept length 3.23，BF16 reference 为 3.25。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/pull/39254",
+        "methodIds": ["dflash-2"]
+      }
+    ]
+  },
+  {
     "date": "2026-09-19",
     "title": "新论文：Block Parallelism / CSBP 直接加速 DFlash2 长上下文训练",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-19.md",
