@@ -214,5 +214,17 @@
     "sourceUrl": "https://arxiv.org/abs/2609.07108",
     "translatedAt": "2026-09-18",
     "kind": "translated-summary"
+  },
+  "h-spec": {
+    "text": "H-Spec 研究并行 drafter 的上下文注入成本。它通过 Mamba 的末位隐藏状态初始化与 attention 的 target KV 原位复用，取消随输入长度增长的独立 drafter KV cache，并使用 DSpark Markov head。论文在三个 target 上报告相对最强基线平均接受长度提升 5.0–13.3%、单请求延迟加速比提升 5.3–12.6%；这些是特定实验配置的相对增益，不是普遍吞吐保证。",
+    "sourceUrl": "https://arxiv.org/abs/2609.24197",
+    "translatedAt": "2026-09-24",
+    "kind": "translated-summary"
+  },
+  "gravityocr": {
+    "text": "GravityOCR 用共享权重完成并行 diffusion drafting 与 causal AR verification，避免直接提交不一致的并行预测。AR 路径支持序列和结构奖励的 GRPO。论文报告区域裁剪 decode-only 加速 3.94×、整页端到端加速 1.32×；需分别比较测量边界。精确算术下对齐同权重 AR greedy 输出，官方代码报告 bf16 内核下 96.6% 裁剪完全一致，不能宣传为所有配置逐字节无损。",
+    "sourceUrl": "https://arxiv.org/abs/2609.26638",
+    "translatedAt": "2026-09-24",
+    "kind": "translated-summary"
   }
 }

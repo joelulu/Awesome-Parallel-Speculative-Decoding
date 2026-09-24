@@ -82,5 +82,17 @@
   "js-lee-AI/GLANCE": {
     "count": 0,
     "updatedAt": "2026-09-09T09:02:47.763538+00:00"
+  },
+  "trillion-labs/GravityOCR": {
+    "count": 2,
+    "updatedAt": "2026-09-24T01:03:14.414Z"
+  },
+  "kaist-ai-osi-lab/BASTION": {
+    "count": 12,
+    "updatedAt": "2026-09-24T01:04:39.058Z"
+  },
+  "Tencent/AngelSpec": {
+    "count": 272,
+    "updatedAt": "2026-09-24T01:04:39.059Z"
   }
 }

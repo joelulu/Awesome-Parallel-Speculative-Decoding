@@ -71,10 +71,13 @@
 <text x="950" y="1019" class="l">AdaFlash</text><text x="1135" y="1019" class="k">adaptive draft length</text>
 <text x="950" y="1053" class="l">AngelSpec / DFly</text><text x="1195" y="1053" class="k">load-aware verification / concurrency 4–64</text>
 
+<text x="950" y="1080" class="l">H-Spec</text><text x="1135" y="1080" class="k">target KV reuse + last-token state / no draft KV</text>
+
 <!-- 7 -->
 <path d="M365 675 C430 675 430 1100 500 1100" stroke="#24a7ad" stroke-width="10" fill="none"/>
 <rect x="500" y="1068" width="385" height="64" rx="18" fill="#e9f8f8" stroke="#24a7ad" stroke-width="2"/><text x="524" y="1108" class="b">7. 多模态扩展</text>
-<text x="950" y="1105" class="l">GLANCE</text><text x="1135" y="1105" class="k">VLM block drafting</text>
+<text x="950" y="1120" class="l">GLANCE</text><text x="1135" y="1120" class="k">VLM block drafting</text>
 
+<text x="950" y="1150" class="l">GravityOCR</text><text x="1135" y="1150" class="k">shared AR-diffusion OCR / related</text>
 <rect x="430" y="1165" width="1090" height="30" rx="12" fill="#f3f7fb" stroke="#b8c8d8"/><text x="975" y="1186" text-anchor="middle" class="sm">主线：drafter 能力 · 训练目标 · 块内依赖 · 树结构 · 跨轮次 verifier/轨迹复用 · 验证成本 · 多模态扩展</text>
 </svg>

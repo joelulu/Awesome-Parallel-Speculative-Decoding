@@ -65,6 +65,9 @@
 | **2026-09-07** | **Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training** | ⭐⭐⭐ DFlash / DSpark 进入 RL online co-training | policy 持续更新时静态 drafter 会逐渐失配，branch attention / target taps 又难直接扩到 CP/PP | 用 **packed zigzag-ring branch attention + TapChannel** 支持同步训练 policy 与 DFlash/DSpark，扩展到 122B target / 256K context。([arXiv](https://arxiv.org/abs/2609.07108)) |
 | **2026-09-15** | **Carryover Drafting — Recycling Rejected States for Speculative Decoding** | ⭐⭐⭐ 把 rejected target states 变成下一轮可注意的 temporary KV | verifier 已为 rejected suffix 付出计算，但传统流程直接丢弃；训练时也缺少 inference-aligned rejected states | 将 rejected target hidden states 作为 bounded temporary KV context，并用 **parallel draft–verify–draft training** 对齐训练/推理；在 DFlash 与 DSpark-derived drafter 上验证。([arXiv](https://arxiv.org/abs/2609.14717)) |
 
+| **2026-09-21** | **H-Spec — H-Spec: Parallel Speculative Decoding Without a Drafter-Side KV Cache** | 用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。 | DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。 | Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。 ([arXiv](https://arxiv.org/abs/2609.24197)) |
+| **2026-09-22** | **GravityOCR — Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding** | 共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。 | OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 | 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。 ([arXiv](https://arxiv.org/abs/2609.26638)) |
+
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
 ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件；Carryover Drafting 则把 rejected target states 组织为下一轮 drafter 可选择性 attention 的 **temporary KV context**，并用 parallel draft–verify–draft training 对齐训练与真实推理状态。三者共同形成一条连续的跨轮复用主线，并且天然适合继续与 DFlash2 / DSpark / D-CUT 等方法组合。
@@ -72,6 +75,15 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+## 2026-09-24
+
+| 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-21 | [H-Spec](https://arxiv.org/abs/2609.24197) | 用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。 | DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。 | Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。 | 直接研究 DFlash KV injection 的系统成本；值得纳入能力与架构路线。KV 维度需匹配 target，低并发和短输入下 backbone 可能更慢。 |
+| 2026-09-22 | [GravityOCR](https://arxiv.org/abs/2609.26638) | 共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。 | OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 | 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。 | 明确引用 DFlash 的多模态相关路线，值得观察共享参数自投机；并非冻结 target 的 DFlash 插件，也不等价于原始 GLM-OCR。 |
+
+完整分析与扫描范围见 [`daily/2026-09-24.md`](daily/2026-09-24.md)。交互地图单列 Cross-round Reuse，保留原有搜索、NEW 与卡片跳转。
 
 ## 2026-09-18
 

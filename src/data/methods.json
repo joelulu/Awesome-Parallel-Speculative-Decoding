@@ -863,7 +863,7 @@
     "name": "ReTrace",
     "title": "ReTrace: Rejected-Trajectory Conditioning for Speculative Decoding",
     "date": "2026-08-30",
-    "category": "architecture",
+    "category": "reuse",
     "tags": [
       "跨轮条件",
       "拒绝轨迹复用",
@@ -889,7 +889,7 @@
     "title": "DFlow: Enabling Verifier Information Flow in Block Diffusion Speculative Decoding",
     "date": "2026-09-06",
     "dateLabel": "2026-09-06",
-    "category": "architecture",
+    "category": "reuse",
     "tags": [
       "跨轮条件",
       "verifier state reuse",
@@ -914,7 +914,7 @@
     "title": "Carryover Drafting: Recycling Rejected States for Speculative Decoding",
     "date": "2026-09-15",
     "dateLabel": "2026-09-15",
-    "category": "architecture",
+    "category": "reuse",
     "tags": [
       "跨轮复用",
       "rejected states",
@@ -1032,5 +1032,68 @@
     "pinned": false,
     "reason": "DFlash / DSpark 直接训练扩展 · RL online co-training 与长上下文分布式训练",
     "updatedAt": "2026-09-18"
+  },
+  {
+    "id": "h-spec",
+    "name": "H-Spec",
+    "title": "H-Spec: Parallel Speculative Decoding Without a Drafter-Side KV Cache",
+    "date": "2026-09-21",
+    "dateLabel": "2026-09-21",
+    "category": "architecture",
+    "tags": [
+      "Draft Quality",
+      "target KV reuse",
+      "Mamba",
+      "高并发",
+      "target hidden states"
+    ],
+    "summary": "用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。",
+    "problem": "DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。",
+    "solution": "Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。",
+    "paperUrl": "https://arxiv.org/abs/2609.24197",
+    "sourceUrl": "https://arxiv.org/abs/2609.24197",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "直接研究 DFlash KV injection 的系统成本；值得纳入能力与架构路线。KV 维度需匹配 target，低并发和短输入下 backbone 可能更慢。",
+    "updatedAt": "2026-09-24"
+  },
+  {
+    "id": "gravityocr",
+    "name": "GravityOCR",
+    "title": "Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding",
+    "date": "2026-09-22",
+    "dateLabel": "2026-09-22",
+    "category": "extensions",
+    "tags": [
+      "OCR",
+      "block diffusion",
+      "self-speculation",
+      "GRPO",
+      "multimodal"
+    ],
+    "summary": "共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。",
+    "problem": "OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。",
+    "solution": "联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。",
+    "paperUrl": "https://arxiv.org/abs/2609.26638",
+    "sourceUrl": "https://arxiv.org/abs/2609.26638",
+    "code": [
+      {
+        "url": "https://github.com/trillion-labs/GravityOCR",
+        "repo": "trillion-labs/GravityOCR",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/html/2609.26638v1",
+        "checkedAt": "2026-09-24",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "pinned": false,
+    "reason": "明确引用 DFlash 的多模态相关路线，值得观察共享参数自投机；并非冻结 target 的 DFlash 插件，也不等价于原始 GLM-OCR。",
+    "updatedAt": "2026-09-24"
   }
 ]

@@ -1,5 +1,28 @@
 [
   {
+    "date": "2026-09-24",
+    "title": "新论文：H-Spec 消除独立 draft KV；GravityOCR 探索共享参数自投机",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-24.md",
+    "items": [
+      {
+        "title": "H-Spec：用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。",
+        "summary": "DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。 Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。",
+        "sourceUrl": "https://arxiv.org/abs/2609.24197",
+        "methodIds": [
+          "h-spec"
+        ]
+      },
+      {
+        "title": "GravityOCR：共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。",
+        "summary": "OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。",
+        "sourceUrl": "https://arxiv.org/abs/2609.26638",
+        "methodIds": [
+          "gravityocr"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-09-20",
     "title": "工程进展：DFlash2 量化 drafter 静默 acceptance 崩溃已有直接修复",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-20.md",

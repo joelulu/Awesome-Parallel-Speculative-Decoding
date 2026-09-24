@@ -4,7 +4,7 @@
     "name": "能力与架构",
     "description": "更强的并行 drafter",
     "color": "#2563ad",
-    "english": "Architecture"
+    "english": "Draft Quality"
   },
   {
     "id": "training",
@@ -25,14 +25,21 @@
     "name": "树与路径选择",
     "description": "从单一路径到候选树",
     "color": "#b44864",
-    "english": "Draft trees"
+    "english": "Candidate Search"
   },
   {
     "id": "systems",
     "name": "验证与动态预算",
     "description": "让接受收益覆盖验证成本",
     "color": "#7359a5",
-    "english": "Verification"
+    "english": "Verification Cost"
+  },
+  {
+    "id": "reuse",
+    "name": "跨轮状态复用",
+    "description": "保留拒绝轨迹与 verifier 信息",
+    "color": "#b56bc5",
+    "english": "Cross-round Reuse"
   },
   {
     "id": "extensions",

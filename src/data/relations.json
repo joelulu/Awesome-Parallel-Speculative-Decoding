@@ -134,5 +134,29 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/abs/2609.07108",
     "note": "该系统统一支持 DSpark 的 branch attention 和 target-feature taps，并在 RL post-training 中在线更新 drafter。"
+  },
+  {
+    "source": "dflash",
+    "target": "h-spec",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.24197v1#S3",
+    "note": "从 DFlash target-KV 复用消融出发替换 drafter 架构；不是对现有 DFlash checkpoint 的即插即用修补。"
+  },
+  {
+    "source": "dspark",
+    "target": "h-spec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.24197v1#S3.SS3.SSS3",
+    "note": "H-Spec §3.3.3 明确采用 DSpark Markov head。"
+  },
+  {
+    "source": "dflash",
+    "target": "gravityocr",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.26638v1#S1",
+    "note": "引言明确引用 DFlash 作为 diffusion drafting 启发；实现采用共享参数自投机，不是 DFlash 的直接继承。"
   }
 ]
