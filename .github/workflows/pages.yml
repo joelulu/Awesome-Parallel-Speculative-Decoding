@@ -26,7 +26,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: Render real first-page covers for recent papers
+      - name: Render missing real arXiv paper covers
         run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils

@@ -521,7 +521,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.06498",
     "fetchedAt": "2026-09-18T01:30:00+08:00",
-    "thumbnail": "papers/dflow.svg"
+    "thumbnail": "papers/dflow.jpg"
   },
   "carryover-drafting": {
     "sourceUrl": "https://arxiv.org/abs/2609.14717",
@@ -538,7 +538,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.14717",
     "fetchedAt": "2026-09-18T01:30:00+08:00",
-    "thumbnail": "papers/carryover-drafting.svg"
+    "thumbnail": "papers/carryover-drafting.jpg"
   },
   "bastion": {
     "sourceUrl": "https://arxiv.org/abs/2605.29727",
@@ -555,7 +555,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2605.29727",
     "fetchedAt": "2026-09-18T02:30:00+08:00",
-    "thumbnail": "papers/bastion.svg"
+    "thumbnail": "papers/bastion.jpg"
   },
   "angelspec": {
     "sourceUrl": "https://arxiv.org/abs/2607.25852",
@@ -578,7 +578,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2607.25852",
     "fetchedAt": "2026-09-18T02:30:00+08:00",
-    "thumbnail": "papers/angelspec.svg"
+    "thumbnail": "papers/angelspec.jpg"
   },
   "online-draft-cotraining": {
     "sourceUrl": "https://arxiv.org/abs/2609.07108",
@@ -593,7 +593,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.07108",
     "fetchedAt": "2026-09-18T02:30:00+08:00",
-    "thumbnail": "papers/online-draft-cotraining.svg"
+    "thumbnail": "papers/online-draft-cotraining.jpg"
   },
   "h-spec": {
     "sourceUrl": "https://arxiv.org/abs/2609.24197",
@@ -612,7 +612,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.24197",
     "fetchedAt": "2026-09-24T01:03:14.407Z",
-    "thumbnail": "papers/h-spec.svg"
+    "thumbnail": "papers/h-spec.jpg"
   },
   "gravityocr": {
     "sourceUrl": "https://arxiv.org/abs/2609.26638",
@@ -629,7 +629,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.26638",
     "fetchedAt": "2026-09-24T01:03:14.409Z",
-    "thumbnail": "papers/gravityocr.svg"
+    "thumbnail": "papers/gravityocr.jpg"
   },
   "dpara": {
     "sourceUrl": "https://arxiv.org/abs/2609.27396",

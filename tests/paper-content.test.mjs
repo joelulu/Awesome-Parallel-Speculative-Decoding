@@ -10,17 +10,22 @@ test('Chinese summaries link to their fetched primary sources', () => {
     assert.equal(data.metadata[id].status, 'fetched');
   }
 });
-test('every referenced thumbnail is a real image inside the public directory', async () => {
-  for (const paper of Object.values(data.metadata)) {
-    if (!paper.thumbnail) continue;
-    const bytes = await readFile(new URL(`../public/${paper.thumbnail}`, import.meta.url));
-    if (paper.thumbnail.endsWith('.jpg')) {
-      assert.equal(bytes[0], 0xff);
-      assert.equal(bytes[1], 0xd8);
-    } else {
-      const text = bytes.toString('utf8').trimStart();
-      assert.ok(text.startsWith('<svg'));
+test('every arXiv paper has a rendered PDF cover and every thumbnail is a JPEG', async () => {
+  for (const [id, paper] of Object.entries(data.metadata)) {
+    if (paper.pdfUrl?.startsWith('https://arxiv.org/pdf/')) {
+      assert.equal(paper.thumbnail, `papers/${id}.jpg`, `${id} should use its PDF cover`);
     }
+    if (!paper.thumbnail) continue;
+    assert.ok(paper.thumbnail.endsWith('.jpg'), `${id} should not use a generated info-card SVG`);
+    let bytes;
+    try {
+      bytes = await readFile(new URL(`../public/${paper.thumbnail}`, import.meta.url));
+    } catch (error) {
+      if (error.code === 'ENOENT' && !process.env.CI) continue;
+      throw error;
+    }
+    assert.equal(bytes[0], 0xff, `${id} cover should have a JPEG signature`);
+    assert.equal(bytes[1], 0xd8, `${id} cover should have a JPEG signature`);
     assert.ok(bytes.length > 1000);
   }
 });

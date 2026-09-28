@@ -30,5 +30,18 @@ render_cover() {
   echo "Rendered ${output}.jpg from arXiv:${arxiv_id}, page 1 of ${pages}."
 }
 
-render_cover dpara 2609.27396
-render_cover ncp-archpreview 2609.10715
+while IFS=$'\t' read -r paper_id arxiv_id; do
+  [[ -n "$paper_id" && -n "$arxiv_id" ]] || continue
+  render_cover "$paper_id" "$arxiv_id"
+done < <(node <<'NODE'
+const fs = require('node:fs');
+const metadata = JSON.parse(fs.readFileSync('src/data/paper-metadata.json', 'utf8'));
+for (const [paperId, paper] of Object.entries(metadata)) {
+  const arxivId = paper.sourceUrl?.match(/arxiv\.org\/abs\/(\d{4}\.\d{4,5})(?:v\d+)?/)?.[1];
+  const expectedThumbnail = `papers/${paperId}.jpg`;
+  if (arxivId && (paper.thumbnail !== expectedThumbnail || !fs.existsSync(`public/${expectedThumbnail}`))) {
+    console.log(`${paperId}\t${arxivId}`);
+  }
+}
+NODE
+)
