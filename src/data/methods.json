@@ -1095,5 +1095,67 @@
     "pinned": false,
     "reason": "明确引用 DFlash 的多模态相关路线，值得观察共享参数自投机；并非冻结 target 的 DFlash 插件，也不等价于原始 GLM-OCR。",
     "updatedAt": "2026-09-24"
+  },
+  {
+    "id": "dpara",
+    "name": "DPara",
+    "title": "When Parallel Drafter Meets Parallel Speculative Decoding",
+    "date": "2026-09-23",
+    "category": "systems",
+    "tags": [
+      "draft–verify overlap",
+      "M-DFlash",
+      "DSpark",
+      "多锚点"
+    ],
+    "summary": "预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。",
+    "problem": "块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。",
+    "solution": "从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。",
+    "importance": 5,
+    "reason": "值得纳入验证成本路线：减少串行关键路径。主要实验额外使用 drafting GPU；完全隐藏 backbone 要求预计算落在验证窗口内。",
+    "code": [],
+    "dateLabel": "2026-09-23",
+    "paperUrl": "https://arxiv.org/abs/2609.27396",
+    "sourceUrl": "https://arxiv.org/abs/2609.27396",
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "pinned": false,
+    "updatedAt": "2026-09-28"
+  },
+  {
+    "id": "ncp-archpreview",
+    "name": "NCP-ArchPreview",
+    "title": "NCP-ArchPreview Technical Report: Moving towards Latent Space Language Models through Next Concept Prediction",
+    "date": "2026-09-09",
+    "category": "architecture",
+    "tags": [
+      "历史补漏",
+      "concept conditioning",
+      "DFlash2",
+      "DFlare"
+    ],
+    "summary": "将已验证前缀的概念表示注入 DFlash2/DFlare drafter，改善块内预测一致性。",
+    "problem": "块并行草稿缺少跨多个未来位置的整体语义条件，仅 token-level target features 仍会产生不连贯候选。",
+    "solution": "取最后完整 target chunk 的 concept，经 RMSNorm 与零初始化门控注入各 draft 层；在 DFlash2 局部卷积/路径选择和 DFlare 逐层特征融合之上增加条件。",
+    "importance": 4,
+    "reason": "值得作为 Draft Quality 子方向观察；依赖具备 Concept Module 的 target，不能视为任意冻结 LLM 的通用插件。4.17% 是平均接受长度提升，非端到端速度。",
+    "code": [
+      {
+        "url": "https://github.com/LUMIA-Group/ncp_olmo_eval",
+        "repo": "LUMIA-Group/ncp_olmo_eval",
+        "kind": "official",
+        "label": "NCP evaluation",
+        "evidenceUrl": "https://arxiv.org/pdf/2609.10715",
+        "checkedAt": "2026-09-28",
+        "availability": "available"
+      }
+    ],
+    "dateLabel": "2026-09-09",
+    "paperUrl": "https://arxiv.org/abs/2609.10715",
+    "sourceUrl": "https://arxiv.org/abs/2609.10715",
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "pinned": false,
+    "updatedAt": "2026-09-28"
   }
 ]

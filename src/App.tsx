@@ -44,7 +44,7 @@ export default function App(){
   const searching=Boolean(query.trim()||category!=='all'||codeOnly);
   const recommended=useMemo(()=>recommend(methods,stars,categories.length),[]);
   const newestMethods=useMemo(()=>[...methods].filter(m=>m.date).sort((a,b)=>dateValue(b.date)-dateValue(a.date)).slice(0,2),[]);
-  const featured=useMemo(()=>[...newestMethods,...recommended].filter((method,index,list)=>list.findIndex(item=>item.id===method.id)===index),[newestMethods,recommended]);
+  const featured=useMemo(()=>[...(brief?.items.flatMap(item=>item.methodIds).map(id=>methods.find(m=>m.id===id)).filter((m):m is Method=>Boolean(m))??[]),...newestMethods,...recommended].filter((method,index,list)=>list.findIndex(item=>item.id===method.id)===index),[brief,newestMethods,recommended]);
   const visible=useMemo(()=>{
     if(!all&&!searching&&sort==='importance')return featured;
     const filtered=filterMethods(methods,query,category,codeOnly) as Method[];

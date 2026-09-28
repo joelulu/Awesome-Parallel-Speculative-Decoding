@@ -226,5 +226,17 @@
     "sourceUrl": "https://arxiv.org/abs/2609.26638",
     "translatedAt": "2026-09-24",
     "kind": "translated-summary"
+  },
+  "dpara": {
+    "text": "DPara 针对并行草稿仍与验证串行执行的问题，预计算所有可能接受边界的草稿表示，将 bonus token 条件延后到轻量自回归头。M-DFlash 从 DSpark 初始化，仅适配多锚点 backbone。论文在 Qwen3-8B/14B 七项任务上报告相对 AR 平均 3.21×/3.52×加速；主要实验额外配置 drafting GPU。无预测失败回退不等于所有硬件上都能完全隐藏计算。",
+    "sourceUrl": "https://arxiv.org/abs/2609.27396",
+    "translatedAt": "2026-09-28",
+    "kind": "translated-summary"
+  },
+  "ncp-archpreview": {
+    "text": "NCP-ArchPreview 联合学习 next-token 与 next-concept prediction，以离散概念向 token 生成提供更高层条件。本次收录聚焦其 §5.3：在结合 DFlash2 与 DFlare 的 1.1B drafter 上，注入已验证前缀最后完整块的概念表示，新增 0.04M 参数。四项任务宏平均 MAL 从 5.933 增至 6.180（4.17%）；该指标包含 correction/bonus token，不能换算成端到端加速。",
+    "sourceUrl": "https://arxiv.org/abs/2609.10715",
+    "translatedAt": "2026-09-28",
+    "kind": "translated-summary"
   }
 }

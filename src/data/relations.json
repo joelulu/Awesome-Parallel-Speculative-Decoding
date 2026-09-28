@@ -158,5 +158,37 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/html/2609.26638v1#S1",
     "note": "引言明确引用 DFlash 作为 diffusion drafting 启发；实现采用共享参数自投机，不是 DFlash 的直接继承。"
+  },
+  {
+    "source": "dspark",
+    "target": "dpara",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.27396v1#S3.SS2",
+    "note": "§3.2：从官方 DSpark checkpoint 初始化，微调多锚点 backbone，冻结 AR head。"
+  },
+  {
+    "source": "dflash",
+    "target": "dpara",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.27396v1#S3.SS1",
+    "note": "§3.1：将 DFlash 单锚点语义推广为多锚点；实际初始化来源是 DSpark。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "ncp-archpreview",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2609.10715",
+    "note": "§5.3：基线使用 DFlash2 two-tap convolution 与 top-16 path selector，再加入 concept conditioning。"
+  },
+  {
+    "source": "dflare",
+    "target": "ncp-archpreview",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2609.10715",
+    "note": "§5.3：基线同时使用 DFlare 的逐层五个 target hidden states 加权融合。"
   }
 ]

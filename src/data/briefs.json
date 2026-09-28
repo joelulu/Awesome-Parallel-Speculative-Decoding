@@ -1,5 +1,28 @@
 [
   {
+    "date": "2026-09-28",
+    "title": "DPara 调度重叠；补漏 NCP-ArchPreview 概念条件",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-28.md",
+    "items": [
+      {
+        "title": "DPara",
+        "summary": "预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。",
+        "sourceUrl": "https://arxiv.org/abs/2609.27396",
+        "methodIds": [
+          "dpara"
+        ]
+      },
+      {
+        "title": "NCP-ArchPreview",
+        "summary": "将已验证前缀的概念表示注入 DFlash2/DFlare drafter，改善块内预测一致性。",
+        "sourceUrl": "https://arxiv.org/abs/2609.10715",
+        "methodIds": [
+          "ncp-archpreview"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-09-24",
     "title": "新论文：H-Spec 消除独立 draft KV；GravityOCR 探索共享参数自投机",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-24.md",

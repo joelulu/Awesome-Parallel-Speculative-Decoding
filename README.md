@@ -63,10 +63,11 @@
 | **2026-09-01 左右** | **GLANCE — Vision Is Not Overhead** | ⭐⭐⭐ DFlash 思想进入 VLM | 多模态 drafter 忽略/压缩视觉信息会降低 acceptance | 读取 target 已算好的 **fused vision-language hidden states** 做 one-pass block drafting，再构造 wide candidate tree 验证。([arXiv](https://arxiv.org/abs/2609.00355)) |
 | **2026-09-06** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
 | **2026-09-07** | **Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training** | ⭐⭐⭐ DFlash / DSpark 进入 RL online co-training | policy 持续更新时静态 drafter 会逐渐失配，branch attention / target taps 又难直接扩到 CP/PP | 用 **packed zigzag-ring branch attention + TapChannel** 支持同步训练 policy 与 DFlash/DSpark，扩展到 122B target / 256K context。([arXiv](https://arxiv.org/abs/2609.07108)) |
+| **2026-09-09** | **NCP-ArchPreview — NCP-ArchPreview Technical Report: Moving towards Latent Space Language Models through Next Concept Prediction** | 将已验证前缀的概念表示注入 DFlash2/DFlare drafter，改善块内预测一致性。 | 块并行草稿缺少跨多个未来位置的整体语义条件，仅 token-level target features 仍会产生不连贯候选。 | 取最后完整 target chunk 的 concept，经 RMSNorm 与零初始化门控注入各 draft 层；在 DFlash2 局部卷积/路径选择和 DFlare 逐层特征融合之上增加条件。 ([arXiv](https://arxiv.org/abs/2609.10715)) |
 | **2026-09-15** | **Carryover Drafting — Recycling Rejected States for Speculative Decoding** | ⭐⭐⭐ 把 rejected target states 变成下一轮可注意的 temporary KV | verifier 已为 rejected suffix 付出计算，但传统流程直接丢弃；训练时也缺少 inference-aligned rejected states | 将 rejected target hidden states 作为 bounded temporary KV context，并用 **parallel draft–verify–draft training** 对齐训练/推理；在 DFlash 与 DSpark-derived drafter 上验证。([arXiv](https://arxiv.org/abs/2609.14717)) |
-
 | **2026-09-21** | **H-Spec — H-Spec: Parallel Speculative Decoding Without a Drafter-Side KV Cache** | 用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。 | DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。 | Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。 ([arXiv](https://arxiv.org/abs/2609.24197)) |
 | **2026-09-22** | **GravityOCR — Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding** | 共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。 | OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 | 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。 ([arXiv](https://arxiv.org/abs/2609.26638)) |
+| **2026-09-23** | **DPara — When Parallel Drafter Meets Parallel Speculative Decoding** | 预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。 | 块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。 | 从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。 ([arXiv](https://arxiv.org/abs/2609.27396)) |
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
@@ -75,6 +76,15 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+## 2026-09-28
+
+| 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-23 | [DPara](https://arxiv.org/abs/2609.27396) | 预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。 | 块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。 | 从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。 | 值得纳入验证成本路线：减少串行关键路径。主要实验额外使用 drafting GPU；完全隐藏 backbone 要求预计算落在验证窗口内。 |
+| 2026-09-09（补漏） | [NCP-ArchPreview](https://arxiv.org/abs/2609.10715) | 将已验证前缀的概念表示注入 DFlash2/DFlare drafter，改善块内预测一致性。 | 块并行草稿缺少跨多个未来位置的整体语义条件，仅 token-level target features 仍会产生不连贯候选。 | 取最后完整 target chunk 的 concept，经 RMSNorm 与零初始化门控注入各 draft 层；在 DFlash2 局部卷积/路径选择和 DFlare 逐层特征融合之上增加条件。 | 值得作为 Draft Quality 子方向观察；依赖具备 Concept Module 的 target，不能视为任意冻结 LLM 的通用插件。4.17% 是平均接受长度提升，非端到端速度。 |
+
+完整核验、实验边界与扫描记录见 [`daily/2026-09-28.md`](daily/2026-09-28.md)。
 
 ## 2026-09-24
 

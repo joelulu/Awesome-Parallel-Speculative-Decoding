@@ -630,5 +630,60 @@
     "pdfUrl": "https://arxiv.org/pdf/2609.26638",
     "fetchedAt": "2026-09-24T01:03:14.409Z",
     "thumbnail": "papers/gravityocr.svg"
+  },
+  "dpara": {
+    "sourceUrl": "https://arxiv.org/abs/2609.27396",
+    "status": "fetched",
+    "title": "When Parallel Drafter Meets Parallel Speculative Decoding",
+    "authors": [
+      "Fuliang Liu",
+      "Xue Li",
+      "Kun Qian",
+      "Zhibin Wang",
+      "Wanchun Dou",
+      "Wenyuan Yu",
+      "Chen Tian"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.27396",
+    "fetchedAt": "2026-09-28T02:13:34.317Z",
+    "thumbnail": "papers/dpara.svg"
+  },
+  "ncp-archpreview": {
+    "sourceUrl": "https://arxiv.org/abs/2609.10715",
+    "status": "fetched",
+    "title": "NCP-ArchPreview Technical Report: Moving towards Latent Space Language Models through Next Concept Prediction",
+    "authors": [
+      "The Intern-NCP Team",
+      "Jiaqi Cao",
+      "Chiyu Chen",
+      "Shuang Cheng",
+      "Xu Cheng",
+      "Beiya Dai",
+      "Yufan Feng",
+      "Kewen Ge",
+      "Ruijun Ge",
+      "Jiayi Huang",
+      "Yang Jiao",
+      "Dahua Lin",
+      "Zhouhan Lin",
+      "Yifan Liu",
+      "Yuliang Liu",
+      "Biqing Qi",
+      "Mowen Ruan",
+      "Junzhe Shen",
+      "Yunchong Song",
+      "Hao Sun",
+      "Zhongbo Tian",
+      "Yixuan Wang",
+      "Rubin Wei",
+      "Jiaxin Xiong",
+      "Kangyu Yang",
+      "Qian Yao",
+      "Qi Zhang",
+      "Bowen Zhou"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.10715",
+    "fetchedAt": "2026-09-28T02:13:34.326Z",
+    "thumbnail": "papers/ncp-archpreview.svg"
   }
 }
