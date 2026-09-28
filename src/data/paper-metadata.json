@@ -646,7 +646,7 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.27396",
     "fetchedAt": "2026-09-28T02:13:34.317Z",
-    "thumbnail": "papers/dpara.svg"
+    "thumbnail": "papers/dpara.jpg"
   },
   "ncp-archpreview": {
     "sourceUrl": "https://arxiv.org/abs/2609.10715",
@@ -684,6 +684,6 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.10715",
     "fetchedAt": "2026-09-28T02:13:34.326Z",
-    "thumbnail": "papers/ncp-archpreview.svg"
+    "thumbnail": "papers/ncp-archpreview.jpg"
   }
 }

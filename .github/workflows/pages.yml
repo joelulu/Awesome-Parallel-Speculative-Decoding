@@ -26,6 +26,11 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Render real first-page covers for recent papers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          bash scripts/generate-paper-covers.sh
       - name: Restore most recent public Star snapshots
         if: github.event_name != 'pull_request'
         uses: actions/cache/restore@v4
