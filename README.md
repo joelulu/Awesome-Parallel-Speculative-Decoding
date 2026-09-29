@@ -77,6 +77,12 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 
 # Daily Briefs
 
+## 2026-09-29
+
+**暂无重要新增。** 完成近期论文与历史方向补查；DPara、H-Spec、D²SD、AdaFlash 等已收录工作不重复新增，工程侧未核实重要增量。
+
+扫描范围、原始来源与限制见 [`daily/2026-09-29.md`](daily/2026-09-29.md)。
+
 ## 2026-09-28
 
 | 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
