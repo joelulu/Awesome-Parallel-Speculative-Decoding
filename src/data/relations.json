@@ -212,16 +212,16 @@
     "target": "longspark",
     "type": "related",
     "status": "verified",
-    "evidenceUrl": "https://long-spark.github.io/",
-    "note": "官方博客引用并比较 DFlash，针对完整前缀条件化的草拟开销；不据此宣称直接继承。"
+    "evidenceUrl": "https://arxiv.org/html/2609.37029v1",
+    "note": "论文 §1/§2 直接研究 DFlash 等完整前缀条件化的草拟成本；以固定大小 target 视图提出相关架构，不宣称冻结 DFlash 直接继承。"
   },
   {
     "source": "dspark",
     "target": "longspark",
     "type": "combines",
     "status": "verified",
-    "evidenceUrl": "https://long-spark.github.io/",
-    "note": "Parallel draft, sequential polish 部分明确采用 DSpark-style low-rank correction。"
+    "evidenceUrl": "https://arxiv.org/html/2609.37029v1",
+    "note": "论文 §2.3 在并行 backbone 后使用 DSpark 的 Markov correction head。"
   },
   {
     "source": "dflash",
@@ -238,5 +238,77 @@
     "status": "verified",
     "evidenceUrl": "https://github.com/js-lee-AI/GLANCE",
     "note": "论文及官方仓库明确说明 GLANCE 将 DFlash 风格 block-diffusion draft head 用于冻结 VLM target 的融合视觉语言状态，并增加一次性候选树验证；代码 README 明确引用而非重新声称 DFlash 的 block-diffusion head。"
+  },
+  {
+    "source": "dflash",
+    "target": "dspine",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.36173v1",
+    "note": "原文 Appendix A 明确以 DFlash 五层骨干为基础，加入逐层相邻因果注入与末次校正。"
+  },
+  {
+    "source": "dflash",
+    "target": "ubtree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "原文使用预训练 DFlash 作为 unigram proposer，并联合训练 bigram selector 与 proposer。"
+  },
+  {
+    "source": "dartree",
+    "target": "ubtree",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "原文明确采用 DARTree 的 depth-wise tree construction 与 global pruning。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "ubtree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "bigram selector 受 DFlash2 启发并重新设计；不等同于采用整个 DFlash2 骨干。"
+  },
+  {
+    "source": "dflash",
+    "target": "drelay",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.01439v1",
+    "note": "原文明示 DFlash 并行块草拟的早期选错问题，并直接评测；新增全局候选读与因果修复，不据此声称复用冻结权重。"
+  },
+  {
+    "source": "dflash",
+    "target": "sharpdraft",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.05106v1",
+    "note": "§3.3 直接在 DFlash Q-normalization 后缩放 query，保持权重、target 和验证规则。"
+  },
+  {
+    "source": "dflash",
+    "target": "presto",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2607.22634v1",
+    "note": "论文 §5 明确将前缀评分与树构建应用于 DFlash 独立 drafter。"
+  },
+  {
+    "source": "dflash",
+    "target": "fast-dvlm",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2604.06832v2",
+    "note": "§3.4/Appendix D.3 引用 DFlash 的 diffusion draft→AR verify 范式，但 Fast-dVLM 转换整个 VLM 并用共享权重自投机。"
+  },
+  {
+    "source": "fast-dvlm",
+    "target": "fast-ddrive",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2605.23163v2",
+    "note": "§1/§3 基于 Fast-dVLM 双模式架构扩展 section-aware scaffold 训练与自投机，未核实直接继承 DFlash。"
   }
 ]

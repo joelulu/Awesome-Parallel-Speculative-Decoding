@@ -357,16 +357,21 @@
   {
     "id": "jetspec",
     "name": "JetSpec",
-    "title": "JetSpec — Breaking the Scaling Ceiling of Speculative Decoding with Parallel Tree Drafting",
-    "date": "2026-06-25",
-    "dateLabel": "2026-06-25",
+    "title": "JetSpec: Breaking the Scaling Ceiling of Speculative Decoding with Parallel Tree Drafting",
+    "date": "2026-06-16",
+    "dateLabel": "2026-06-16 · v5 2026-10-03",
     "category": "tree",
-    "tags": [],
+    "tags": [
+      "parallel tree drafting",
+      "causal head",
+      "target features",
+      "vLLM"
+    ],
     "summary": "并行生成带因果依赖的候选树，减少串行建树开销。",
     "problem": "DFlash 快但缺 causality；传统 tree 有 causality 但路径生成开销高",
     "solution": "用 target hidden state + causal parallel draft head 一次性给大量 tree branches 打分。",
-    "paperUrl": null,
-    "sourceUrl": "https://jetspec-project.github.io/jetspec-web/",
+    "paperUrl": "https://arxiv.org/abs/2606.18394",
+    "sourceUrl": "https://arxiv.org/abs/2606.18394",
     "code": [
       {
         "url": "https://github.com/hao-ai-lab/JetSpec",
@@ -377,12 +382,12 @@
         "availability": "available"
       }
     ],
-    "status": "imported",
-    "citationStatus": "unconfirmed",
+    "status": "verified",
+    "citationStatus": "confirmed",
     "importance": 5,
     "pinned": false,
-    "reason": "编辑关注 · 树与路径选择",
-    "updatedAt": "2026-09-09"
+    "reason": "核验 arXiv 原文及官方代码后补齐论文入口；原提交日期为 2026-06-16，最新版本 v5 为 2026-10-03，不按项目日期当作新论文。值得纳入 Candidate Search；一次生成深度候选并不意味着 tree construction 无顺序操作。",
+    "updatedAt": "2026-10-08"
   },
   {
     "id": "hyperdflash",
@@ -801,7 +806,13 @@
     "date": "2026-08-31",
     "dateLabel": "2026-08-31",
     "category": "extensions",
-    "tags": ["vision-language", "multimodal", "block diffusion", "candidate tree", "lossless greedy"],
+    "tags": [
+      "vision-language",
+      "multimodal",
+      "block diffusion",
+      "candidate tree",
+      "lossless greedy"
+    ],
     "summary": "让 DFlash 风格的块扩散 drafter 直接读取 VLM 融合视觉语言状态，一次并行提议整块文本。",
     "problem": "VLM 自回归 drafter 受逐 token 成本限制，常压缩或隐藏图像输入，导致它在最受图像约束的 grounded 文本上缺少关键证据。",
     "solution": "将 DFlash 风格 block-diffusion head 接到冻结 VLM target 已融合的视觉语言 hidden states，从一次块分布构造 prefix-closed candidate tree，并用一次 ancestor-masked target pass 验证。论文给出 greedy 输出一致性的精确成立条件；每个 audited prompt 均验证复现 target greedy 输出。",
@@ -1188,22 +1199,21 @@
   {
     "id": "longspark",
     "name": "LongSpark",
-    "title": "LongSpark: Drafting at a Fixed Cost",
-    "date": "2026-09-28",
-    "dateLabel": "2026-09-28 · 官方博客",
+    "title": "LongSpark: Efficient speculative decoding with a fixed-cost parallel drafter",
+    "date": "2026-09-29",
+    "dateLabel": "2026-09-29 · 博客 09-28",
     "category": "architecture",
     "tags": [
       "fixed-cost drafting",
       "long context",
       "target KV",
       "global summary",
-      "DSpark",
-      "官方博客"
+      "DSpark"
     ],
     "summary": "用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。",
     "problem": "DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。",
     "solution": "融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。",
-    "sourceUrl": "https://long-spark.github.io/",
+    "sourceUrl": "https://arxiv.org/abs/2609.37029",
     "code": [
       {
         "url": "https://github.com/Hao-Yuan-He/LongSpark",
@@ -1218,8 +1228,9 @@
     "citationStatus": "confirmed",
     "importance": 5,
     "pinned": false,
-    "reason": "值得纳入 Draft Quality 的长上下文条件化路线；固定的是 drafter 状态与每轮草拟成本，target KV 仍增长。实验额外使用专用 drafter GPU；目前核实为官方博客与代码，未核实独立 arXiv/PDF。",
-    "updatedAt": "2026-09-30"
+    "reason": "已补齐 arXiv 原文与 PDF，值得纳入 Draft Quality 的固定成本长上下文路线。固定的是 drafter 状态与每轮草拟工作，target KV 仍增长；论文投机配置比 AR 多一张专用 drafter GPU，吞吐不能解释为同 GPU 数收益。",
+    "updatedAt": "2026-10-08",
+    "paperUrl": "https://arxiv.org/abs/2609.37029"
   },
   {
     "id": "dscale",
@@ -1246,6 +1257,218 @@
     "importance": 5,
     "pinned": false,
     "reason": "直接复用 DFlash drafter，解决其高并发验证成本；值得纳入 Verification Cost 长期路线。论文在单张 A100、TP1、Qwen3-4B/8B、并发 8–32 上评测，报告相对 DFlash 的几何平均吞吐提升 43.9%/48.8%，不是跨模型或硬件的通用保证。未核实到作者官方代码仓库。",
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "dspine",
+    "name": "DSpine",
+    "title": "Draft in Parallel, Condition Through Depth: Adjacent Causal Injection for Speculative Decoding",
+    "date": "2026-09-28",
+    "category": "causality",
+    "tags": [
+      "DFlash",
+      "adjacent causal injection",
+      "layerwise supervision",
+      "embedding transfer",
+      "parallel correction"
+    ],
+    "summary": "逐层把前驱预测特征注入后继，在并行 DFlash 骨干内部建立相邻因果依赖。",
+    "problem": "独立位置的预测缺少真实前驱条件；只在骨干输出后做因果校正，无法帮助浅层形成更好的后继表示。",
+    "solution": "在每个 draft 层后以门控注入相邻前驱预测特征，使用 block-causal attention；将冻结 LM-head 嵌入映射到 PCA 白化的低维空间，以逐层余弦监督训练浅层预测，并用同一注入算子做末次修正和预计算候选转移。",
+    "reason": "直接基于 DFlash 骨干，值得纳入块内因果关系与 Draft Quality 长期路线。Qwen3-4B/8B、15 个 proposal、四个数学/代码任务上评测，SGLang 平均吞吐较 DFlash 提高 23.3%；仍有按前驱选择候选的轻量顺序操作，不能称为完全无串行依赖。未核实作者代码。",
+    "dateLabel": "2026-09-28",
+    "sourceUrl": "https://arxiv.org/abs/2609.36173",
+    "paperUrl": "https://arxiv.org/abs/2609.36173",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "ubtree",
+    "name": "UBTree",
+    "title": "UBTree: Parallel Tree Drafting via Unigram and Bigram Models for Speculative Decoding",
+    "date": "2026-09-30",
+    "category": "tree",
+    "tags": [
+      "DFlash",
+      "unigram",
+      "bigram selector",
+      "DARTree",
+      "candidate diversity",
+      "forward KL"
+    ],
+    "summary": "DFlash 并行提出 unigram 候选，以可查表的 bigram 兼容分数构建更有条件相关性的树。",
+    "problem": "独立候选分布无法给不同前驱下的树分支可靠打分；只训练主路径又削弱候选池多样性。",
+    "solution": "在预训练 DFlash proposer 上训练 target 嵌入衍生的两套 MLP bigram codebook、深度缩放与 selector；候选对神经打分并行，再用 DARTree 的逐深度搜索和全局剪枝建树。高温 target 轨迹配合 proposer CE 和候选支持集重归一化的 forward-KL 训练。",
+    "reason": "值得纳入 Candidate Search 与树原生训练路线；直接使用 DFlash proposer，借鉴 DFlash2 selector，并采用 DARTree 搜索。单 H200、batch 1 的 64-node 学术验证与 DFlash 16-token 路径预算不同；SGLang 并发 1/8/16/32 各自调优 B/W 后，相对次优基线报告 7.0–16.3% 吞吐收益。神经评分并行，树搜索仍有顺序操作。未核实官方代码。",
+    "dateLabel": "2026-09-30",
+    "sourceUrl": "https://arxiv.org/abs/2609.39972",
+    "paperUrl": "https://arxiv.org/abs/2609.39972",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "drelay",
+    "name": "DRelay",
+    "title": "DRelay: Global Draft Context for Prefix-Aware Parallel Speculative Decoding Repair",
+    "date": "2026-10-01",
+    "category": "causality",
+    "tags": [
+      "DFlash",
+      "global candidate read",
+      "prefix-aware repair",
+      "acceptance-aware loss",
+      "causal selector"
+    ],
+    "summary": "读取整块候选分布，用实际已选前缀决定 KEEP/REPAIR，在 target 验证前修复早期选错。",
+    "problem": "早期 token 选错会截断可接受前缀，即使正确 token 已在 top-k 池、后续预测也可提供辨别证据，单向因果 head 仍无法回看这些信息。",
+    "solution": "Global Read 并行读取 top-16 候选和后续预测；Causal Selector 逐位置查询可寻址的已选前缀及严格已验证历史，门控保留或替换候选。联合训练候选支持、修复 gate/rank，以到达概率和后续连续接受价值加权修复 loss。",
+    "reason": "明确引用并对比 DFlash，值得纳入块内修复与 acceptance-aware Training 路线；不把它宣称为冻结 DFlash 权重的即插即用扩展。Qwen3-4B/8B、八任务、单 H800，SGLang 平均端到端 speedup 相对 DFlash 提高 14.7–16.8%。全局读并行，15 次 causal selection 顺序执行；动机中的 oracle 修复收益不等于部署收益。未核实官方代码。",
+    "dateLabel": "2026-10-01",
+    "sourceUrl": "https://arxiv.org/abs/2610.01439",
+    "paperUrl": "https://arxiv.org/abs/2610.01439",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "sharpdraft",
+    "name": "SharpDraft",
+    "title": "SharpDraft: Accelerating Long-Context Speculative Decoding with Cardinality-Aware Query Scaling",
+    "date": "2026-10-04",
+    "category": "architecture",
+    "tags": [
+      "DFlash",
+      "long context",
+      "query scaling",
+      "training-free",
+      "attention dilution",
+      "vLLM"
+    ],
+    "summary": "按可见 Key 数缩放 DFlash query，无需更新权重即可缓解长生成的 attention mass dilution。",
+    "problem": "长上下文使 softmax 竞争 Key 增多，重要 Key 的 attention mass 被稀释；接受率降低，在线重训又增加延迟和显存。",
+    "solution": "在 Q-normalization 后应用带上限的长度相关 query scale，以参考 Key 数和固定斜率近似 top-k mass 校正；target、验证规则和缓存 K/V 均保持原实现。",
+    "reason": "直接在 DFlash 上实现与评测，值得纳入 Draft Quality 的长度泛化路线。主要端到端实验为单 RTX 6000 Ada、greedy、Qwen3-4B/8B 与 Llama-3.1-8B；三任务几何平均 AR 相对速度 2.59–3.19×。attention-mass 推导有条件假设，固定斜率近似不保证接受率；100K 多轮实验仅验证 MAL，包含重复续写，不能称为 100K 端到端加速。未核实官方代码。",
+    "dateLabel": "2026-10-04",
+    "sourceUrl": "https://arxiv.org/abs/2610.05106",
+    "paperUrl": "https://arxiv.org/abs/2610.05106",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "presto",
+    "name": "PRESTO",
+    "title": "PRESTO: Prefix-Aligned Tree Drafting for Diffusion Speculative Decoding",
+    "date": "2026-06-20",
+    "category": "tree",
+    "tags": [
+      "DFlash",
+      "prefix-aligned scoring",
+      "n-gram",
+      "tree budget",
+      "self-speculation",
+      "历史补收"
+    ],
+    "summary": "将 diffusion marginals 与轻量前缀条件分数结合，以优先级搜索选取更可能被验证接受的树。",
+    "problem": "diffusion 边缘概率缺少路径条件，直接相乘会错误排序候选前缀，并浪费树预算。",
+    "solution": "以 log marginal 加权融合前缀条件信号，论文用 trigram；以 best-first 或 beam search 加全局保留分配树节点，适配独立 DFlash drafter 和共享模型自投机。",
+    "reason": "历史遗漏补收，值得纳入 Candidate Search 长期路线。直接在 DFlash 上扩展树草拟，且不额外训练模型。B200、batch 1、PyTorch/FlexAttention，扫 128/256/512 预算后选最佳吞吐，DFlash 路线约 1.5×增益；不代表同预算或高并发 serving 保证。日期按 arXiv 提交历史 2026-06-20，不能由 2607 编号推断日期。未核实官方代码。",
+    "dateLabel": "2026-06-20",
+    "sourceUrl": "https://arxiv.org/abs/2607.22634",
+    "paperUrl": "https://arxiv.org/abs/2607.22634",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "fast-dvlm",
+    "name": "Fast-dVLM",
+    "title": "Fast-dVLM: Efficient Block-Diffusion VLM via Direct Conversion from Autoregressive VLM",
+    "date": "2026-04-08",
+    "category": "extensions",
+    "tags": [
+      "multimodal",
+      "VLM",
+      "block diffusion",
+      "self-speculation",
+      "SGLang",
+      "历史补收"
+    ],
+    "summary": "将完整 AR VLM 直接转为双模式 block-diffusion VLM，以同一模型并行草拟、因果验证。",
+    "problem": "VLM 逐 token 解码难利用硬件并行，先改文本骨干再做视觉对齐又可能破坏预训练多模态能力。",
+    "solution": "直接转换完整 VLM，以 block-size annealing、causal context attention、auto-truncation masking 与视觉拼接训练；共享权重的 diffusion 模式生成块、AR 模式验证前缀，支持 linear 与 quadratic 自投机和定制 SGLang。",
+    "reason": "多模态历史补收；原文明确引用 DFlash，但训练会修改整个 VLM，属于共享模型自投机相关路线。值得纳入 Beyond text 长期观察。MMMU-Pro-V 的 self-spec 是 1.98× AR 吞吐；超过 6×另包含 SGLang/FP8，不能视为纯算法增益，也不能宣称与原始未转换 AR 模型精确等价。",
+    "dateLabel": "2026-04-08",
+    "sourceUrl": "https://arxiv.org/abs/2604.06832",
+    "paperUrl": "https://arxiv.org/abs/2604.06832",
+    "code": [
+      {
+        "url": "https://github.com/NVlabs/Fast-dLLM/tree/main/fast_dvlm",
+        "repo": "NVlabs/Fast-dLLM",
+        "kind": "official",
+        "availability": "available",
+        "evidenceUrl": "https://github.com/NVlabs/Fast-dLLM/blob/main/fast_dvlm/README.md",
+        "checkedAt": "2026-10-08"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-08"
+  },
+  {
+    "id": "fast-ddrive",
+    "name": "Fast-dDrive",
+    "title": "Fast-dDrive: Efficient Block-Diffusion VLM for Autonomous Driving",
+    "date": "2026-05-22",
+    "category": "extensions",
+    "tags": [
+      "multimodal",
+      "VLA",
+      "autonomous driving",
+      "scaffold",
+      "self-speculation",
+      "历史补收"
+    ],
+    "summary": "驾驶 VLA 按语义段并行起草值 token，固定 JSON scaffold，再由共享 AR 分支验证。",
+    "problem": "完整序列扩散会混淆感知与规划因果顺序；AR 驾驶输出串行慢，固定格式 token 又占用草拟和验证预算。",
+    "solution": "基于 Fast-dVLM 保留段间因果、段内双向关系，以分段加权 loss 和噪声训练；Scaffold Spec 自动接受模板 token，仅并行草拟动态值并以因果 AR forward 验证。",
+    "reason": "多模态/VLA 历史补收；明确扩展 Fast-dVLM，未核实直接引用或继承 DFlash，因此仅经共享自投机路线关联。值得观察结构化多模态解码与预算节省；模板自动接受以固定 schema 为前提。WOD-E2E 的约 12×包含 scaffold 与 SGLang，TPS 包含模板 token，不能泛化为 DFlash 加速或安全性保证。",
+    "dateLabel": "2026-05-22",
+    "sourceUrl": "https://arxiv.org/abs/2605.23163",
+    "paperUrl": "https://arxiv.org/abs/2605.23163",
+    "code": [
+      {
+        "url": "https://github.com/NVlabs/Fast-dLLM/tree/main/fast_ddrive",
+        "repo": "NVlabs/Fast-dLLM",
+        "kind": "official",
+        "availability": "available",
+        "evidenceUrl": "https://github.com/NVlabs/Fast-dLLM/blob/main/fast_ddrive/README.md",
+        "checkedAt": "2026-10-08"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "pinned": false,
     "updatedAt": "2026-10-08"
   }
 ]

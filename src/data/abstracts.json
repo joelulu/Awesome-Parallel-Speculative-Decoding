@@ -246,14 +246,56 @@
     "kind": "translated-summary"
   },
   "longspark": {
-    "text": "LongSpark 从 target 验证过程提取边界状态、近期 KV 与全局压缩摘要，减少长前缀重复读取。学习到的固定 query 通过合并新提交 token 的注意力统计量更新摘要，不重读历史前缀。并行草稿经 DSpark 式低秩修正后按真实 proposal 分布验证。官方博客报告 Qwen3-4B/8B/14B 相对 AR 吞吐提升 1.88×/1.99×/2.13×；所有投机配置比 AR 多一张专用 drafter GPU。固定成本仅针对 drafter，不代表 target KV 或整轮计算恒定。",
-    "sourceUrl": "https://long-spark.github.io/",
-    "translatedAt": "2026-09-30",
-    "kind": "source-summary"
+    "text": "LongSpark 从 target 验证过程提取边界状态、近期 KV 与全局压缩摘要，减少长前缀重复读取。学习到的固定 query 通过合并新提交 token 的注意力统计量更新摘要，不重读历史前缀。并行草稿经 DSpark 式低秩修正后按真实 proposal 分布验证。论文报告 Qwen3-4B/8B/14B 相对 AR 吞吐提升 1.88×/1.99×/2.13×；所有投机配置比 AR 多一张专用 drafter GPU。固定成本仅针对 drafter，不代表 target KV 或整轮计算恒定。",
+    "sourceUrl": "https://arxiv.org/abs/2609.37029",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
   },
   "dscale": {
     "text": "DScale 针对高并发 block-diffusion 投机解码中的验证 padding、请求间接受前缀差异和固定形状 CUDA Graph 约束，直接复用 DFlash 原有 drafter，不改架构、权重或完整草稿长度。它以 path-aware tile 分开处理 prefill 与 verification；使用每个 target–drafter 对单独训练的 112K 参数接受长度预测器，为各请求打分，并由动态验证长度（DVL）在一半的原生验证槽位预算内跨请求分配前缀；固定地址工作区使变化的边界可在 GPU 上贯穿验证和接受，避免 CPU 重新切片并继续复用已捕获图。在单张 A100-40GB、TP1、Qwen3-4B/8B、四项数学与代码基准以及并发 8–32 的实验中，论文报告几何平均吞吐相对 DFlash 提升 43.9%/48.8%，平均端到端延迟下降 31.4%/33.1%。结果支持其对 DFlash 高并发验证成本的直接价值，但不代表其他硬件与负载也有相同收益。尚未核实到作者官方代码链接。",
     "sourceUrl": "https://arxiv.org/abs/2609.37532",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "dspine": {
+    "text": "DSpine 将因果信息进入草稿的时机提前到骨干各层：相邻前驱的预测特征逐层进入后继，而全部位置仍并行更新。固定目标输出嵌入经低维白化形成共享转移空间，逐层监督支持浅层生成可用特征；训练中的前驱条件逐渐过渡到预测信息。最终校正复用该注入机制，并预计算候选转移。它以 DFlash 为骨干，在 Qwen3-4B/8B 的数学与代码任务、SGLang 并发 2–32 中报告接受长度和吞吐收益；平均吞吐较 DFlash 提升 23.3%，适用范围以论文配置为限。",
+    "sourceUrl": "https://arxiv.org/abs/2609.36173",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "ubtree": {
+    "text": "UBTree 将边缘候选质量和前驱兼容性分开处理：DFlash 提供 unigram 分布，轻量 bigram selector 对候选对评分。冻结 target 嵌入通过两个独立投影形成可预计算的转移查表，深度系数调整融合强度；DARTree 的搜索和剪枝把分数转成有限预算树。训练使用高温 target 重生成数据，同时优化 proposer 的交叉熵与候选支持集上的 forward KL，以保留替代分支。H200 学术实验和 SGLang serving 分别报告收益，但树节点预算与单路径长度不同，不能把它们解释为同验证成本的统一增益。",
+    "sourceUrl": "https://arxiv.org/abs/2609.39972",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "drelay": {
+    "text": "DRelay 在一轮并行草拟后，把整个候选块作为修复证据。Global Read 为各候选提取跨位置信息，因果选择器再结合严格已验证的 target 历史与当前实际选择的前缀，决定保留原 token 或替换为候选池内替代项。骨干与选择器联合学习候选覆盖和修复，并依据到达当前位置的机会及后续连续接受价值调整修复权重。读取信息来自草稿侧预测，不借用未验证的 target 未来状态。Qwen3-4B/8B、八项任务、H800 与 SGLang 实验显示对 DFlash 等基线的收益；选择阶段依然按位置顺序执行。",
+    "sourceUrl": "https://arxiv.org/abs/2610.01439",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "sharpdraft": {
+    "text": "SharpDraft 研究长生成中草稿注意力随可见 Key 数增长而分散的问题。它将 top-k 注意力质量与竞争 Key 的数量分开，推导带假设的参考质量校正，再以固定斜率、参考数量和上限实现低成本 query 缩放。DFlash 的 query 在归一化后被调整，模型权重、缓存 K/V 与 target 验证保持原实现。主要 greedy 端到端实验显示它改善冻结 DFlash 草稿，并避免在线更新成本。推导不直接保证接受长度；多轮长序列结果衡量的是 MAL，重复生成也被保留，需要连同输出质量解释。",
+    "sourceUrl": "https://arxiv.org/abs/2610.05106",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "presto": {
+    "text": "PRESTO 指出 diffusion marginals 的可信度与 target 对具体前缀的条件验证之间存在结构性差异。它将边缘预测与轻量前缀条件信号融合为可累加的路径分数，再用优先级扩展或 beam search 与全局保留生成有限预算树。论文以 trigram 实现条件校正，既扩展独立 DFlash 草拟，也处理共享 diffusion/AR 模型的自投机。收益来自路径评分和树搜索，验证工作量也随节点预算变化；实验主要为 B200 单请求，不能据此推出高并发或统一验证成本收益。",
+    "sourceUrl": "https://arxiv.org/abs/2607.22634",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "fast-dvlm": {
+    "text": "Fast-dVLM 从已完成视觉语言对齐的 AR VLM 直接转换，保留视觉编码条件并训练 block diffusion。块长退火、上下文因果注意力、自动截断 masking 和视觉高效拼接构成训练方案。转换后的同一组权重支持双向并行草拟和因果验证，linear 模式每块两次 forward，quadratic 模式合并验证与新提议但增加 token 计算。它与 DFlash 共享 diffusion draft→AR verify 思路并引用原作；target 本身经过转换。论文的超过 6×加速包含定制 SGLang 与 FP8，不能归因于纯自投机，也不保证与原始 AR VLM 完全等价。",
+    "sourceUrl": "https://arxiv.org/abs/2604.06832",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
+  },
+  "fast-ddrive": {
+    "text": "Fast-dDrive 将 Fast-dVLM 的双模式草拟与验证用于驾驶 VLA 的结构化输出。模型按语义段保留严格因果顺序，并仅对固定 JSON scaffold 之外的动态值执行扩散；分段 loss 权重和噪声计划强调规划。Scaffold Spec 自动接受模板位置，块内动态值经一次扩散草拟和一次 AR 因果 forward 验证，随后提交匹配前缀。额外共享前缀的轨迹采样用于质量提升，应与解码加速区分。约 12×吞吐包含系统优化且计入 scaffold token；与 DFlash 的联系来自扩散草拟/AR 验证的相关范式，未证实直接继承。",
+    "sourceUrl": "https://arxiv.org/abs/2605.23163",
     "translatedAt": "2026-10-08",
     "kind": "translated-summary"
   }

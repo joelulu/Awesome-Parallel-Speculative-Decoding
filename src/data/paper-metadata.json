@@ -701,16 +701,18 @@
     "thumbnail": "papers/recguide.jpg"
   },
   "longspark": {
-    "sourceUrl": "https://long-spark.github.io/",
+    "sourceUrl": "https://arxiv.org/abs/2609.37029",
     "status": "fetched",
-    "title": "LongSpark: Drafting at a Fixed Cost",
+    "title": "LongSpark: Efficient speculative decoding with a fixed-cost parallel drafter",
     "authors": [
-      "Hao-Yuan He",
-      "Peng-Fei Liu",
-      "Si Shen",
-      "Ming Li"
+      "He, Hao-Yuan",
+      "Liu, Peng-Fei",
+      "Shen, Si",
+      "Li, Ming"
     ],
-    "fetchedAt": "2026-09-30T01:22:49.617Z"
+    "pdfUrl": "https://arxiv.org/pdf/2609.37029",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/longspark.jpg"
   },
   "dscale": {
     "sourceUrl": "https://arxiv.org/abs/2609.37532",
@@ -726,5 +728,133 @@
     "pdfUrl": "https://arxiv.org/pdf/2609.37532",
     "fetchedAt": "2026-10-08T00:00:00.000Z",
     "thumbnail": "papers/dscale.jpg"
+  },
+  "dspine": {
+    "sourceUrl": "https://arxiv.org/abs/2609.36173",
+    "status": "fetched",
+    "title": "Draft in Parallel, Condition Through Depth: Adjacent Causal Injection for Speculative Decoding",
+    "authors": [
+      "Zhang, Haohui",
+      "Chen, Keyu",
+      "Sun, Haocheng",
+      "Gu, Weibo",
+      "Qiao, Ruizhi",
+      "Sun, Xing",
+      "Jiang, Bo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.36173",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/dspine.jpg"
+  },
+  "ubtree": {
+    "sourceUrl": "https://arxiv.org/abs/2609.39972",
+    "status": "fetched",
+    "title": "UBTree: Parallel Tree Drafting via Unigram and Bigram Models for Speculative Decoding",
+    "authors": [
+      "Liang, Chumeng",
+      "Wang, Linxuan",
+      "Peng, Xinyu",
+      "Liu, Huabin",
+      "Chen, Yuxin",
+      "Liu, Ge",
+      "Lin, Guang",
+      "Song, Qifan",
+      "Li, Jianguo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.39972",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/ubtree.jpg"
+  },
+  "drelay": {
+    "sourceUrl": "https://arxiv.org/abs/2610.01439",
+    "status": "fetched",
+    "title": "DRelay: Global Draft Context for Prefix-Aware Parallel Speculative Decoding Repair",
+    "authors": [
+      "Wang, Zhuoyu",
+      "Huang, Junnan",
+      "Chen, Xinyu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.01439",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/drelay.jpg"
+  },
+  "sharpdraft": {
+    "sourceUrl": "https://arxiv.org/abs/2610.05106",
+    "status": "fetched",
+    "title": "SharpDraft: Accelerating Long-Context Speculative Decoding with Cardinality-Aware Query Scaling",
+    "authors": [
+      "Park, Jeonghoon",
+      "Jo, Seongwoon",
+      "Lee, Jongwon",
+      "Gong, Taesik"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.05106",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/sharpdraft.jpg"
+  },
+  "presto": {
+    "sourceUrl": "https://arxiv.org/abs/2607.22634",
+    "status": "fetched",
+    "title": "PRESTO: Prefix-Aligned Tree Drafting for Diffusion Speculative Decoding",
+    "authors": [
+      "Wang, Zheng",
+      "Ye, Zhifan",
+      "Cheng, Qi",
+      "Fu, Yonggan",
+      "Wang, Ziyan",
+      "Zhu, Feng",
+      "Zhao, Haozhe",
+      "Kautz, Jan",
+      "Molchanov, Pavlo",
+      "Shi, Humphrey",
+      "Zhang, Minjia"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2607.22634",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/presto.jpg"
+  },
+  "fast-dvlm": {
+    "sourceUrl": "https://arxiv.org/abs/2604.06832",
+    "status": "fetched",
+    "title": "Fast-dVLM: Efficient Block-Diffusion VLM via Direct Conversion from Autoregressive VLM",
+    "authors": [
+      "Wu, Chengyue",
+      "Lan, Shiyi",
+      "Fu, Yonggan",
+      "Gao, Sensen",
+      "Wang, Jin",
+      "Yu, Jincheng",
+      "Alvarez, Jose M.",
+      "Molchanov, Pavlo",
+      "Luo, Ping",
+      "Han, Song",
+      "Zhu, Ligeng",
+      "Xie, Enze"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2604.06832",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/fast-dvlm.jpg"
+  },
+  "fast-ddrive": {
+    "sourceUrl": "https://arxiv.org/abs/2605.23163",
+    "status": "fetched",
+    "title": "Fast-dDrive: Efficient Block-Diffusion VLM for Autonomous Driving",
+    "authors": [
+      "Zhang, Kewei",
+      "Wang, Jin",
+      "Gao, Sensen",
+      "Wu, Chengyue",
+      "Cao, Yulong",
+      "Han, Songyang",
+      "Ivanovic, Boris",
+      "Liu, Langechuan",
+      "Pavone, Marco",
+      "Han, Song",
+      "Zhou, Daquan",
+      "Xie, Enze"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2605.23163",
+    "fetchedAt": "2026-10-08",
+    "thumbnail": "papers/fast-ddrive.jpg"
   }
 }

@@ -30,21 +30,24 @@
 
 | 时间 | Paper | 简单摘要 | 核心动机 | 怎么解决 |
 |---|---|---|---|---|
+| **2026-04-08** | **Fast-dVLM — Efficient Block-Diffusion VLM via Direct Conversion from Autoregressive VLM** | 将完整 AR VLM 直接转为双模式 block-diffusion VLM，以同一模型并行草拟、因果验证。 | VLM 逐 token 解码难利用硬件并行，先改文本骨干再做视觉对齐又可能破坏预训练多模态能力。 | 直接转换完整 VLM，以 block-size annealing、causal context attention、auto-truncation masking 与视觉拼接训练；共享权重的 diffusion 模式生成块、AR 模式验证前缀，支持 linear 与 quadratic 自投机和定制 SGLang。 ([arXiv](https://arxiv.org/abs/2604.06832)); 共享模型自投机，target 经转换。 |
 | **2026-04-14** | **DDTree — Accelerating Speculative Decoding with Block Diffusion Draft Trees** | ⭐ 把 DFlash 从“一条路径”变成“候选树” | 单路径浪费各位置 top-k 候选 | 从 DFlash 各位置 top-k 分布构建 **draft tree**，best-first 搜索后一次性验证整棵树。([arXiv](https://arxiv.org/abs/2604.12989)) |
-| **2026-05-12** | **D-PACE — Dynamic Position-Aware Cross-Entropy for Parallel Speculative Drafting** | 改 DFlash 的训练 loss | 固定位置权重与真实 first-rejection 位置不一致 | 用 expected accepted length 的可微 surrogate 动态调整各位置 loss 权重。([arXiv](https://arxiv.org/abs/2605.18810)) |
 | **2026-05** | **Test-Time Speculation** | 解决长回答下 acceptance 衰减 | 长生成后出现 distribution shift | 推理过程中做 **test-time / online distillation**。([alphaXiv](https://www.alphaxiv.org/abs/2605.09329)) |
+| **2026-05-12** | **D-PACE — Dynamic Position-Aware Cross-Entropy for Parallel Speculative Drafting** | 改 DFlash 的训练 loss | 固定位置权重与真实 first-rejection 位置不一致 | 用 expected accepted length 的可微 surrogate 动态调整各位置 loss 权重。([arXiv](https://arxiv.org/abs/2605.18810)) |
+| **2026-05-22** | **Fast-dDrive — Efficient Block-Diffusion VLM for Autonomous Driving** | 驾驶 VLA 按语义段并行起草值 token，固定 JSON scaffold，再由共享 AR 分支验证。 | 完整序列扩散会混淆感知与规划因果顺序；AR 驾驶输出串行慢，固定格式 token 又占用草拟和验证预算。 | 基于 Fast-dVLM 保留段间因果、段内双向关系，以分段加权 loss 和噪声训练；Scaffold Spec 自动接受模板 token，仅并行草拟动态值并以因果 AR forward 验证。 ([arXiv](https://arxiv.org/abs/2605.23163)); Fast-dVLM 扩展，未核实直接继承 DFlash。 |
 | **2026-05-28** | **Draft-OPD — On-Policy Distillation for Speculative Draft Models** | ⭐ 用 on-policy 数据训练 drafter | SFT teacher trajectory 与真实 rollout 状态不一致 | 从真实 rollout 的 accepted/rejected token 构造训练信号，做 **on-policy distillation**。([arXiv](https://arxiv.org/abs/2605.29343)) |
 | **2026-05-28** | **Domino — Decoupling Causal Modeling from Autoregressive Drafting** | ⭐ 给并行 DFlash 补回因果依赖 | block 内 token 基本独立 | 增加轻量 **causal / prefix-dependent head**。([arXiv](https://arxiv.org/abs/2605.29707)) |
 | **2026-05-28** | **BASTION — Budget-Aware Speculative Decoding with Tree-structured Block Diffusion Drafting** | ⭐⭐⭐ 动态树 + 硬件感知预算 | 单路径浪费 top-k；固定 tree budget 又无法适配请求与 GPU | 从 DFlash 分布 best-first 扩展 query-dependent prefix tree，并用 **hardware-calibrated roofline cost model** 在边际接受收益不再覆盖验证成本时停止扩树。([arXiv](https://arxiv.org/abs/2605.29727)) |
+| **2026-06** | **TreeFlash — Parallel AR-Approximation for Faster Speculative Decoding** | 并行逼近 AR dependency | DFlash 独立位置预测缺因果性 | 用轻量结构近似 autoregressive conditioning。([alphaXiv](https://www.alphaxiv.org/abs/2606.03819v1)) |
 | **2026-06-01** | **CaDDTree — Cost-Aware Diffusion Draft Trees** | DDTree 的系统版升级 | tree 越大 acceptance 越高，但 verifier 也越贵 | 联合优化 **接受收益 + verification latency**，动态选 tree size。([arXiv](https://arxiv.org/abs/2606.01813)) |
 | **2026-06-01** | **DFlare — Scaling Up Draft Capacity for Block Diffusion Speculative Decoding** | ⭐ 直接增强 drafter 能力 | DFlash drafter 深度继续扩大后收益受限 | 用 **layer-wise target feature fusion** + 更多训练数据突破 scaling ceiling。([arXiv](https://arxiv.org/abs/2606.02091)) |
 | **2026-06-03** | **D²SD — Dual Diffusion Draft Models** | 两级 diffusion drafter | 主路径早期失败后后续预测大量浪费 | 第二个 diffusion drafter 在潜在失败位置生成 alternative continuation，再组成共享前缀树。([alphaXiv](https://www.alphaxiv.org/abs/2606.04446)) |
-| **2026-06** | **TreeFlash — Parallel AR-Approximation for Faster Speculative Decoding** | 并行逼近 AR dependency | DFlash 独立位置预测缺因果性 | 用轻量结构近似 autoregressive conditioning。([alphaXiv](https://www.alphaxiv.org/abs/2606.03819v1)) |
 | **2026-06-05** | **WhiFlash — Token-Level Cross-Paradigm Routing** | AR / diffusion drafter 动态切换 | 不同 token 更适合不同 drafting 范式 | controller 动态选择 AR 或 diffusion drafting。([arXiv](https://arxiv.org/abs/2606.07710)) |
 | **2026-06-11 左右** | **Teaching Diffusion to Speculate Left-to-Right** | 让训练目标和 verifier 行为一致 | verifier 只关心 first-error 前 prefix | 对前部 token、first-error 附近和连续正确链特殊 weighting/reward。([alphaXiv](https://www.alphaxiv.org/abs/2606.11552)) |
-| **2026-06-25** | **JetSpec — Breaking the Scaling Ceiling of Speculative Decoding with Parallel Tree Drafting** | ⭐⭐⭐ 并行地产生“有因果关系的树” | DFlash 快但缺 causality；传统 tree 有 causality 但路径生成慢 | 用 target hidden state + **causal parallel draft head** 一次性给大量 tree branches 打分。([Project](https://jetspec-project.github.io/jetspec-web/)) |
-| **2026-09-29** | **DScale — Scaling Block-Diffusion Speculative Decoding with Adaptive Verification** | ⭐⭐⭐ 保持 DFlash 草稿能力，降低高并发验证浪费 | 固定宽度 verification padding、请求间接受前缀不同、动态边界难以复用 CUDA Graph | 用 path-aware tiles、接受长度预测与动态验证长度预算，在固定地址工作区中紧凑打包并复用图。A100、TP1、Qwen3-4B/8B、并发 8–32 的论文结果相对 DFlash 吞吐提升 48.8%/43.9%。([arXiv](https://arxiv.org/abs/2609.37532)) |
+| **2026-06-16 · v5 2026-10-03** | **JetSpec — Breaking the Scaling Ceiling of Speculative Decoding with Parallel Tree Drafting** | 并行生成带因果依赖的候选树，减少串行建树开销。 | DFlash 快但缺 causality；传统 tree 有 causality 但路径生成开销高 | 用 target hidden state + causal parallel draft head 一次性给大量 tree branches 打分。 ([arXiv](https://arxiv.org/abs/2606.18394)) |
+| **2026-06-20** | **PRESTO — Prefix-Aligned Tree Drafting for Diffusion Speculative Decoding** | 将 diffusion marginals 与轻量前缀条件分数结合，以优先级搜索选取更可能被验证接受的树。 | diffusion 边缘概率缺少路径条件，直接相乘会错误排序候选前缀，并浪费树预算。 | 以 log marginal 加权融合前缀条件信号，论文用 trigram；以 best-first 或 beam search 加全局保留分配树节点，适配独立 DFlash drafter 和共享模型自投机。 ([arXiv](https://arxiv.org/abs/2607.22634)) |
 | **2026-06-29** | **HyperDFlash** | 适配 Hyper-Connection 模型 | 新架构 hidden representation 与普通 Transformer 不同 | 用 HC-aware gated residual reduction 转换 target hidden states。([alphaXiv](https://www.alphaxiv.org/abs/2606.26744)) |
+| **2026-07/08** | **Speculative Correction — Draft-then-Refine Decoding for Diffusion LMs** | 相邻路线 | diffusion LM 的双向上下文能力未充分利用 | 先生成整段 draft，再做 bidirectional diffusion refinement。([arXiv](https://arxiv.org/abs/2608.02625)) |
 | **2026-07-02** | **Spec-AUF — Accept-Until-Fail Training** | ⭐ 极简单但合理的 loss 修改 | first fail 后 token 不会被接受，却仍参与 CE | **loss 只计算到 first fail**。([arXiv](https://arxiv.org/abs/2607.01893)) |
 | **2026-07-06** | **DSpark — Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation** | ⭐⭐⭐ DFlash 重要直接改进 | ① block 内缺依赖；②固定验证整块浪费 | **low-rank Markov Head + confidence head**，兼顾因果补偿和 adaptive verification。([GitHub](https://github.com/vllm-project/speculators/blob/main/docs/user_guide/algorithms/dspark.md)) |
 | **2026-07-08** | **DeLS-Spec — Decoupled Long-Short Contexts** | 不重训 DFlash 的因果增强 | Domino/DSpark 等整体重训成本高 | 冻结 DFlash，只训练轻量 local short-context head 并做 logits 融合。([arXiv](https://arxiv.org/abs/2607.07409)) |
@@ -52,7 +55,6 @@
 | **2026-07-16** | **D-CUT — Adaptive Verification Depth Pruning for Batched Speculative Decoding** | ⭐⭐⭐ 高并发重点工作 | 高并发时 verifier 走向 compute-bound，固定长 block 产生验证浪费 | 给 batch 一个 **global verification budget**，结合 confidence 与 runtime cost 动态裁剪 verification depth。([arXiv](https://arxiv.org/abs/2607.14647)) |
 | **2026-07-21** | **AdaFlash — Adaptive Speculative Decoding via On-Policy Distilled Diffusion Drafters** | ⭐⭐⭐ OPD + adaptive DFlash | 最佳 draft length 随 domain / request / token 状态变化 | **reverse-KL on-policy distillation + adaptive length head**。([arXiv](https://arxiv.org/abs/2607.19223)) |
 | **2026-07-28** | **AngelSpec / DFly — Towards Real-World High Performance Inference with Speculative Decoding** | ⭐⭐⭐ 架构增强 + 高并发自适应验证 | workload、request、在线 load 与硬件异质性让固定 drafter / verify depth 不稳 | DFly 用 **hybrid target-conditioning + predecessor-conditioned AR head**，再集成 D-CUT 分配 batch-level verification budget；覆盖 concurrency 4–64。([arXiv](https://arxiv.org/abs/2607.25852)) |
-| **2026-07/08** | **Speculative Correction — Draft-then-Refine Decoding for Diffusion LMs** | 相邻路线 | diffusion LM 的双向上下文能力未充分利用 | 先生成整段 draft，再做 bidirectional diffusion refinement。([arXiv](https://arxiv.org/abs/2608.02625)) |
 | **2026-08-03** | **xPress — Parallel Refinement for Diffusion Drafters** | ⭐⭐⭐ 解决独立预测问题 | 各位置 top-1 单独合理，但组合起来不一定 coherent | 用轻量 **parallel causal refiner** 一次性修正整个 block。([alphaXiv](https://www.alphaxiv.org/abs/2608.02438)) |
 | **2026-08-05** | **DBLAST — Dependent Block Drafting for Stochastic Speculative Decoding** | 让 block token 显式相关 | stochastic sampling 下独立 marginals 容易组成低联合概率序列 | 引入 block-level **categorical latent variable**。([ResearchGate](https://www.researchgate.net/publication/411824644_DBLAST_Dependent_Block_Drafting_for_Stochastic_Speculative_Decoding)) |
 | **2026-08-13** | **DARTree — Speculative Diffusion Decoding with Autoregressive Draft Trees** | ⭐⭐⭐ 当前非常重要 | diffusion tree 缺路径条件 | 把 AR correction head 从 chain 推广到 **candidate tree**，批量扩展 path 后 best-first pruning。([arXiv](https://arxiv.org/abs/2608.13524)) |
@@ -62,7 +64,6 @@
 | **2026-08-31** | **Verification-Aware Training (VAT)** | ⭐ 从 verifier 反过来训练 drafter | CE accuracy 不等于 speculative acceptance | verification head 学 survive/reject pattern，并对 first-rejection 周围动态重加权。([arXiv](https://arxiv.org/abs/2608.30135)) |
 | **2026-08-31** | **Ceiling-Clipped Acceptance Histograms / DBloom** | 研究 block size ceiling | 频繁 full-accept 时固定 block=16 变成 ceiling | 用 full-acceptance histogram 判断 ceiling，再扩展 block horizon。([arXiv](https://arxiv.org/abs/2608.30427)) |
 | **2026-08-31（v2：09-29）** | **GLANCE — Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in VLMs** | ⭐⭐⭐ DFlash 风格块扩散草稿进入 VLM | 自回归视觉 drafter 成本高，压缩/隐藏图像后又失去 grounded 文本所需证据 | 读取 target 已融合的视觉语言 hidden states，一次起草 block diffusion，再以一次 target pass 验证候选树；grounding 类任务获益更明显，captioning 可能减速。([arXiv](https://arxiv.org/abs/2609.00355), [official code](https://github.com/js-lee-AI/GLANCE)) |
-| **2026-09-29** | **DScale — Scaling Block-Diffusion Speculative Decoding with Adaptive Verification** | ⭐⭐⭐ 保持 DFlash 草稿能力，降低高并发验证浪费 | 固定宽度 verification padding、请求间接受前缀不同、动态边界难以复用 CUDA Graph | 用 path-aware tiles、接受长度预测与动态验证长度预算，在固定地址工作区中紧凑打包并复用图。A100、TP1、Qwen3-4B/8B、并发 8–32 的论文结果相对 DFlash 吞吐提升 48.8%/43.9%。([arXiv](https://arxiv.org/abs/2609.37532)) |
 | **2026-09-06** | **DFlow — Enabling Verifier Information Flow in Block Diffusion Speculative Decoding** | ⭐⭐⭐ 让 verifier 信息跨 drafting round 流动 | first rejection 后 target 已计算出的 suffix hidden states 被直接丢弃，下一轮又从 accepted prefix 重新猜 | 将 rejected suffix 的 verifier hidden states 带到下一轮，并通过 **self-conditioning** 训练 drafter 利用跨轮信息。([arXiv](https://arxiv.org/abs/2609.06498)) |
 | **2026-09-07** | **Online Draft Co-Training for Speculative Decoding in Large-Scale, Long-Context RL Post-Training** | ⭐⭐⭐ DFlash / DSpark 进入 RL online co-training | policy 持续更新时静态 drafter 会逐渐失配，branch attention / target taps 又难直接扩到 CP/PP | 用 **packed zigzag-ring branch attention + TapChannel** 支持同步训练 policy 与 DFlash/DSpark，扩展到 122B target / 256K context。([arXiv](https://arxiv.org/abs/2609.07108)) |
 | **2026-09-09** | **NCP-ArchPreview — NCP-ArchPreview Technical Report: Moving towards Latent Space Language Models through Next Concept Prediction** | 将已验证前缀的概念表示注入 DFlash2/DFlare drafter，改善块内预测一致性。 | 块并行草稿缺少跨多个未来位置的整体语义条件，仅 token-level target features 仍会产生不连贯候选。 | 取最后完整 target chunk 的 concept，经 RMSNorm 与零初始化门控注入各 draft 层；在 DFlash2 局部卷积/路径选择和 DFlare 逐层特征融合之上增加条件。 ([arXiv](https://arxiv.org/abs/2609.10715)) |
@@ -71,7 +72,12 @@
 | **2026-09-22** | **GravityOCR — Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding** | 共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。 | OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 | 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。 ([arXiv](https://arxiv.org/abs/2609.26638)) |
 | **2026-09-23** | **DPara — When Parallel Drafter Meets Parallel Speculative Decoding** | 预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。 | 块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。 | 从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。 ([arXiv](https://arxiv.org/abs/2609.27396)) |
 | **2026-09-28** | **RecGuide — Reciprocal Guidance** | 按并发负载联合调度 diffusion 草拟与 AR 验证，改善固定草稿预算的效率。 | 低并发时两阶段串行，高并发时统一长块增加计算成本。 | 低负载预测纠错/续写分支并与验证合批；高负载结合验证历史和硬件成本选择块长并分桶调度。 ([arXiv](https://arxiv.org/abs/2609.34388))；共享骨干相关路线，非 DFlash 直接扩展。 |
-| **2026-09-28（官方博客）** | **LongSpark — Drafting at a Fixed Cost** | 用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。 | DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。 | 融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。 ([项目页](https://long-spark.github.io/))；额外 drafter GPU，尚无已核实独立 PDF。 |
+| **2026-09-28** | **DSpine — Draft in Parallel, Condition Through Depth: Adjacent Causal Injection for Speculative Decoding** | 逐层把前驱预测特征注入后继，在并行 DFlash 骨干内部建立相邻因果依赖。 | 独立位置的预测缺少真实前驱条件；只在骨干输出后做因果校正，无法帮助浅层形成更好的后继表示。 | 在每个 draft 层后以门控注入相邻前驱预测特征，使用 block-causal attention；将冻结 LM-head 嵌入映射到 PCA 白化的低维空间，以逐层余弦监督训练浅层预测，并用同一注入算子做末次修正和预计算候选转移。 ([arXiv](https://arxiv.org/abs/2609.36173)) |
+| **2026-09-29 · 博客 09-28** | **LongSpark — Efficient speculative decoding with a fixed-cost parallel drafter** | 用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。 | DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。 | 融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。 ([arXiv](https://arxiv.org/abs/2609.37029)) |
+| **2026-09-29** | **DScale — Scaling Block-Diffusion Speculative Decoding with Adaptive Verification** | 保留 DFlash 草稿长度与权重，跨请求分配一半验证槽位并消除 padding。 | 高并发时 DFlash 的固定宽度验证产生大量 padding；各请求接受长度不同，统一缩短又会丢失有价值的候选，动态前缀还难以兼容固定形状 CUDA Graph。 | 用 path-aware tiles 区分 prefill 与 verify；112K 参数接受长度预测器估计每请求前缀收益，并以 DVL 在总验证预算减半时重分配候选；固定地址工作区把动态边界贯穿验证和接受步骤，复用已捕获 Graph。drafter 架构、权重和完整草稿长度均不变。 ([arXiv](https://arxiv.org/abs/2609.37532)) |
+| **2026-09-30** | **UBTree — Parallel Tree Drafting via Unigram and Bigram Models for Speculative Decoding** | DFlash 并行提出 unigram 候选，以可查表的 bigram 兼容分数构建更有条件相关性的树。 | 独立候选分布无法给不同前驱下的树分支可靠打分；只训练主路径又削弱候选池多样性。 | 在预训练 DFlash proposer 上训练 target 嵌入衍生的两套 MLP bigram codebook、深度缩放与 selector；候选对神经打分并行，再用 DARTree 的逐深度搜索和全局剪枝建树。高温 target 轨迹配合 proposer CE 和候选支持集重归一化的 forward-KL 训练。 ([arXiv](https://arxiv.org/abs/2609.39972)) |
+| **2026-10-01** | **DRelay — Global Draft Context for Prefix-Aware Parallel Speculative Decoding Repair** | 读取整块候选分布，用实际已选前缀决定 KEEP/REPAIR，在 target 验证前修复早期选错。 | 早期 token 选错会截断可接受前缀，即使正确 token 已在 top-k 池、后续预测也可提供辨别证据，单向因果 head 仍无法回看这些信息。 | Global Read 并行读取 top-16 候选和后续预测；Causal Selector 逐位置查询可寻址的已选前缀及严格已验证历史，门控保留或替换候选。联合训练候选支持、修复 gate/rank，以到达概率和后续连续接受价值加权修复 loss。 ([arXiv](https://arxiv.org/abs/2610.01439)) |
+| **2026-10-04** | **SharpDraft — Accelerating Long-Context Speculative Decoding with Cardinality-Aware Query Scaling** | 按可见 Key 数缩放 DFlash query，无需更新权重即可缓解长生成的 attention mass dilution。 | 长上下文使 softmax 竞争 Key 增多，重要 Key 的 attention mass 被稀释；接受率降低，在线重训又增加延迟和显存。 | 在 Q-normalization 后应用带上限的长度相关 query scale，以参考 Key 数和固定斜率近似 top-k mass 校正；target、验证规则和缓存 K/V 均保持原实现。 ([arXiv](https://arxiv.org/abs/2610.05106)) |
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
@@ -80,6 +86,21 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+## 2026-10-08
+
+> 核验用户提供的 DSpine 后重新补查，新增 7 个论文条目，并更正此前“10 月暂无直接新论文”的结论。近期新工作包括 DSpine、UBTree、DRelay、SharpDraft；PRESTO、Fast-dVLM、Fast-dDrive 为历史补收。LongSpark/JetSpec 补齐论文入口与日期，DScale/GLANCE 的本日既有核验记录保留。
+
+| 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-28 / 10-01 | [DSpine](https://arxiv.org/abs/2609.36173) · [DRelay](https://arxiv.org/abs/2610.01439) | DSpine 提前到各层注入前驱预测；DRelay 用全块证据修复早期选择，延长连续接受前缀。 | 块内缺少前驱条件；早期选错会使可用后缀无法提交。 | 逐层相邻因果注入；Global Read + KEEP/REPAIR 因果选择器及前缀价值 loss。 | DSpine 直接扩展 DFlash 骨干；DRelay 明确引用并评测相关框架。均值得加入因果关系与 Training 路线；保留各自顺序选择开销的说明。 |
+| 2026-09-30 / 06-20（历史补收） | [UBTree](https://arxiv.org/abs/2609.39972) · [PRESTO](https://arxiv.org/abs/2607.22634) | 以 bigram 或前缀条件信号补足 diffusion marginals，再分配有限树预算。 | 位置独立分数不能可靠排序路径；候选多样性与验证预算需要共同处理。 | UBTree 的 CE/候选集 forward-KL + bigram 查表 + DARTree 搜索；PRESTO 的 trigram 分数与优先级搜索。 | 两者直接在 DFlash 上实现，值得加入 Candidate Search；不同节点预算和服务配置下的速度不能直接横比。 |
+| 2026-10-04 / 09-29（论文入口补齐） | [SharpDraft](https://arxiv.org/abs/2610.05106) · [LongSpark](https://arxiv.org/abs/2609.37029) | SharpDraft 修正长生成的 query 缩放；LongSpark 用固定大小 target 视图控制长前缀草拟成本。 | 长上下文既稀释 attention，也使草拟状态和读取成本增长。 | 按 Key 数、参考数量和固定斜率缩放 Q；边界状态 + 近期 KV + 增量全局摘要。 | SharpDraft 直接用于 DFlash；LongSpark 明确分析 DFlash 并结合 DSpark。值得纳入 Draft Quality；前者理论有条件，后者实验额外使用专用 drafter GPU。 |
+| 2026-04-08 / 05-22（历史补收）；GLANCE v2 09-29 | [Fast-dVLM](https://arxiv.org/abs/2604.06832) · [Fast-dDrive](https://arxiv.org/abs/2605.23163) · [GLANCE](https://arxiv.org/abs/2609.00355) | 补齐图像理解与驾驶 VLA 的共享模型块扩散自投机，并保留 GLANCE 的冻结 VLM 草稿路线。 | 多模态条件、语义段因果关系和固定结构占用解码预算。 | Fast-dVLM 直接转换 AR VLM、双模式草拟验证；Fast-dDrive 分段 scaffold；GLANCE 利用融合视觉语言 target hidden states。 | Fast-dVLM 引用 DFlash；Fast-dDrive 扩展 Fast-dVLM，未证实直接继承 DFlash；GLANCE 为明确 DFlash 风格扩展。值得加入 Beyond text，区分 target 是否改变。 |
+| 2026-09-29 | [DScale](https://arxiv.org/abs/2609.37532) · [论文全文](https://arxiv.org/html/2609.37532v1) | 保留本日已核验的 DScale：保持 DFlash 草稿能力，用半数验证槽位减少高并发浪费。 | 固定宽度 padding、不同请求接受长度、变长验证与 CUDA Graph 兼容。 | Path-aware tiles + 112K 接受前缀预测器 + DVL 跨请求预算 + 固定地址工作区。 | 直接复用 DFlash drafter；值得加入 Verification Cost。单 A100、TP1、Qwen3-4B/8B、并发 8–32 的吞吐增益仅代表论文配置。 |
+
+每篇的问题、方法、长期路线判断、实验边界和原始来源见 [完整日报](daily/2026-10-08.md)。网站 Featured papers、Latest methods、Research Map 与 Paper Card 使用同步的 src/data 数据；所有新增论文均有中文摘要和真实 PDF 首页缩略图生成入口。
+
 
 ## 2026-09-30
 
@@ -136,18 +157,6 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 
 ---
 
-## 2026-10-08
-
-> 本期补录 DScale（9 月 29 日提交），并复核已有 GLANCE 条目的 v2（9 月 29 日更新）：前者直接复用 DFlash drafter、优化高并发验证成本；后者是明确 DFlash-like 的多模态 VLM 块扩散草稿工作。10 月 1–8 日检索未发现更新且核验充分的新论文；无关或未解决的工程 issues 不作为进展收录。
-
-| 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
-|---|---|---|---|---|---|
-| 2026-09-29 | [DScale](https://arxiv.org/abs/2609.37532) · [论文全文](https://arxiv.org/html/2609.37532v1) | 以 path-aware tile、接受前缀预测和动态预算减少验证槽位，并保持 DFlash 草稿长度不变。 | 高并发时固定宽度验证 padding 浪费计算；变长前缀又难直接接入 CUDA Graph。 | 112K 参数 predictor + dynamic verify-length（DVL）分配半数原生验证槽位；固定地址 workspace 贯通 GPU 验证与接受。 | **解决：** DFlash 高并发验证成本。**为何需要：** 论文测得特定配置下 target verify 是主要 GPU kernel 时间。**方法：** 预测并跨请求分配前缀预算、紧凑打包、复用 captured graphs。**长期路线：** 值得加入 Verification Cost；A100/TP1、Qwen3-4B/8B、并发 8–32 的提升不能无条件外推。未核实作者官方代码。 |
-| 2026-08-31（v2：2026-09-29） | [GLANCE](https://arxiv.org/abs/2609.00355) · [官方代码](https://github.com/js-lee-AI/GLANCE) | 用 target 融合视觉语言状态一次性生成 DFlash 风格块扩散草稿和候选树。 | VLM 自回归 drafter 要么逐 token 成本高，要么缩减图像信息后难预测 grounding 文本。 | Block-diffusion head 在已融合的视觉语言 hidden states 上起草，宽候选树由一次 target pass 验证，并给出 greedy 精确一致的成立条件。 | **解决：** 多模态 token 草拟慢且视觉信息不足。**为何 DFlash 相关：** 官方仓库明确标注 head 是 DFlash 风格并引用原作。**方法：** target hidden fusion + block diffusion + tree verify。**长期路线：** 值得纳入 Beyond text；SGLang 0.5.6、单 RTX A6000、bf16、每轮共 32 候选的五任务几何平均仅比 EAGLE3-VL 快 1.3%，三类低熵 grounding 任务约快 11%，captioning 反而变慢；最高 3.05×是对 AR 的 ChartQA decode-only 对比，不能泛化。 |
-
-完整版本见 [`daily/2026-10-08.md`](daily/2026-10-08.md)。
-
----
 
 ## 2026-09-14
 
