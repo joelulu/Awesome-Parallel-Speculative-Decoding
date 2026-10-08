@@ -685,5 +685,31 @@
     "pdfUrl": "https://arxiv.org/pdf/2609.10715",
     "fetchedAt": "2026-09-28T02:13:34.326Z",
     "thumbnail": "papers/ncp-archpreview.jpg"
+  },
+  "recguide": {
+    "sourceUrl": "https://arxiv.org/abs/2609.34388",
+    "status": "fetched",
+    "title": "Reciprocal Guidance: Orchestrating Draft and Verify Budgets for Advancing the Diffusion-AR Self-Speculation Frontier",
+    "authors": [
+      "Linye Wei",
+      "Shutian Zheng",
+      "Haoyu Zeng",
+      "Meng Li"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.34388",
+    "fetchedAt": "2026-09-30T01:20:02.667Z",
+    "thumbnail": "papers/recguide.jpg"
+  },
+  "longspark": {
+    "sourceUrl": "https://long-spark.github.io/",
+    "status": "fetched",
+    "title": "LongSpark: Drafting at a Fixed Cost",
+    "authors": [
+      "Hao-Yuan He",
+      "Peng-Fei Liu",
+      "Si Shen",
+      "Ming Li"
+    ],
+    "fetchedAt": "2026-09-30T01:22:49.617Z"
   }
 }

@@ -1157,5 +1157,68 @@
     "citationStatus": "confirmed",
     "pinned": false,
     "updatedAt": "2026-09-28"
+  },
+  {
+    "id": "recguide",
+    "name": "RecGuide",
+    "title": "Reciprocal Guidance: Orchestrating Draft and Verify Budgets for Advancing the Diffusion-AR Self-Speculation Frontier",
+    "date": "2026-09-28",
+    "dateLabel": "2026-09-28",
+    "category": "systems",
+    "tags": [
+      "self-speculation",
+      "draft–verify overlap",
+      "adaptive block size",
+      "verification feedback",
+      "SGLang"
+    ],
+    "summary": "按并发负载联合调度 diffusion 草拟与 AR 验证，改善固定草稿预算的效率。",
+    "problem": "低并发时两阶段串行，高并发时统一长块增加计算成本。",
+    "solution": "低负载预测纠错/续写分支并与验证合批；高负载结合验证历史和硬件成本选择块长并分桶调度。",
+    "paperUrl": "https://arxiv.org/abs/2609.34388",
+    "sourceUrl": "https://arxiv.org/abs/2609.34388",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "pinned": false,
+    "reason": "值得加入 Verification Cost 长期路线。基于共享骨干自投机，非 DFlash 直接扩展；预算调度对 DFlash 的适用性仍需独立验证。",
+    "updatedAt": "2026-09-30"
+  },
+  {
+    "id": "longspark",
+    "name": "LongSpark",
+    "title": "LongSpark: Drafting at a Fixed Cost",
+    "date": "2026-09-28",
+    "dateLabel": "2026-09-28 · 官方博客",
+    "category": "architecture",
+    "tags": [
+      "fixed-cost drafting",
+      "long context",
+      "target KV",
+      "global summary",
+      "DSpark",
+      "官方博客"
+    ],
+    "summary": "用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。",
+    "problem": "DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。",
+    "solution": "融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。",
+    "sourceUrl": "https://long-spark.github.io/",
+    "code": [
+      {
+        "url": "https://github.com/Hao-Yuan-He/LongSpark",
+        "repo": "Hao-Yuan-He/LongSpark",
+        "kind": "official",
+        "evidenceUrl": "https://long-spark.github.io/",
+        "checkedAt": "2026-09-30",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "值得纳入 Draft Quality 的长上下文条件化路线；固定的是 drafter 状态与每轮草拟成本，target KV 仍增长。实验额外使用专用 drafter GPU；目前核实为官方博客与代码，未核实独立 arXiv/PDF。",
+    "updatedAt": "2026-09-30"
   }
 ]

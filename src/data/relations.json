@@ -190,5 +190,37 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/pdf/2609.10715",
     "note": "§5.3：基线同时使用 DFlare 的逐层五个 target hidden states 加权融合。"
+  },
+  {
+    "source": "dflash",
+    "target": "recguide",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.34388v1#S6.SS1",
+    "note": "§2 引用 DFlash，§6.1 使用 DFlash 比较；方法本身面向共享骨干自投机。"
+  },
+  {
+    "source": "dspark",
+    "target": "recguide",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.34388v1#S5.SS2",
+    "note": "§5.2 明确借鉴 DSpark 的硬件感知成本建模；不表示采用其 drafter 架构。"
+  },
+  {
+    "source": "dflash",
+    "target": "longspark",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://long-spark.github.io/",
+    "note": "官方博客引用并比较 DFlash，针对完整前缀条件化的草拟开销；不据此宣称直接继承。"
+  },
+  {
+    "source": "dspark",
+    "target": "longspark",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://long-spark.github.io/",
+    "note": "Parallel draft, sequential polish 部分明确采用 DSpark-style low-rank correction。"
   }
 ]

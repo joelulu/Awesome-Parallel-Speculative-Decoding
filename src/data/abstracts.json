@@ -238,5 +238,17 @@
     "sourceUrl": "https://arxiv.org/abs/2609.10715",
     "translatedAt": "2026-09-28",
     "kind": "translated-summary"
+  },
+  "recguide": {
+    "text": "RecGuide 针对共享骨干 diffusion–AR 自投机的负载相关瓶颈，联合利用草稿分布与验证反馈安排后续计算。低负载准备可能的后续草稿，高负载按请求调整预算。论文报告相对普通自投机最高 1.8× 吞吐提升；实验使用单张 B200、NLD-8B/14B 与 greedy decoding，不能外推为 DFlash 的实测增益。",
+    "sourceUrl": "https://arxiv.org/abs/2609.34388",
+    "translatedAt": "2026-09-30",
+    "kind": "translated-summary"
+  },
+  "longspark": {
+    "text": "LongSpark 从 target 验证过程提取边界状态、近期 KV 与全局压缩摘要，减少长前缀重复读取。学习到的固定 query 通过合并新提交 token 的注意力统计量更新摘要，不重读历史前缀。并行草稿经 DSpark 式低秩修正后按真实 proposal 分布验证。官方博客报告 Qwen3-4B/8B/14B 相对 AR 吞吐提升 1.88×/1.99×/2.13×；所有投机配置比 AR 多一张专用 drafter GPU。固定成本仅针对 drafter，不代表 target KV 或整轮计算恒定。",
+    "sourceUrl": "https://long-spark.github.io/",
+    "translatedAt": "2026-09-30",
+    "kind": "source-summary"
   }
 }

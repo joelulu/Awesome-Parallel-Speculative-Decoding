@@ -68,6 +68,8 @@
 | **2026-09-21** | **H-Spec — H-Spec: Parallel Speculative Decoding Without a Drafter-Side KV Cache** | 用末位 target hidden state 与原位 target KV 共同条件化并行 drafter，消除独立 drafter KV cache。 | DFlash 为每个输入位置投影并维护额外 draft KV，并发时显存与写入成本累积；仅直接复用 target KV 又削弱块后部接受率。 | Mamba 以末位 target hidden states 初始化，attention 原位读取 target KV；parallel scan 保持块并行，并采用 DSpark Markov head 补偿因果依赖。 ([arXiv](https://arxiv.org/abs/2609.24197)) |
 | **2026-09-22** | **GravityOCR — Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding** | 共享参数的 block-diffusion 草稿与 AR 验证，让 OCR 并行生成后再提交可信前缀。 | OCR 并行预测的 token 可能各自合理但组合破坏文本顺序或表格、公式结构；独立 drafter 又增加模型维护成本。 | 联合训练同一模型的 AR 与 block-diffusion 路径，先并行草拟再因果验证；在 AR 路径做 GRPO，同步更新共享参数。 ([arXiv](https://arxiv.org/abs/2609.26638)) |
 | **2026-09-23** | **DPara — When Parallel Drafter Meets Parallel Speculative Decoding** | 预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。 | 块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。 | 从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。 ([arXiv](https://arxiv.org/abs/2609.27396)) |
+| **2026-09-28** | **RecGuide — Reciprocal Guidance** | 按并发负载联合调度 diffusion 草拟与 AR 验证，改善固定草稿预算的效率。 | 低并发时两阶段串行，高并发时统一长块增加计算成本。 | 低负载预测纠错/续写分支并与验证合批；高负载结合验证历史和硬件成本选择块长并分桶调度。 ([arXiv](https://arxiv.org/abs/2609.34388))；共享骨干相关路线，非 DFlash 直接扩展。 |
+| **2026-09-28（官方博客）** | **LongSpark — Drafting at a Fixed Cost** | 用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。 | DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。 | 融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。 ([项目页](https://long-spark.github.io/))；额外 drafter GPU，尚无已核实独立 PDF。 |
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
@@ -76,6 +78,15 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+## 2026-09-30
+
+| 时间 | 论文/动态 | 一句话摘要 | 核心问题 | 方法 | 与 DFlash 关系 |
+|---|---|---|---|---|---|
+| 2026-09-28（今日补收） | [RecGuide](https://arxiv.org/abs/2609.34388) | 按并发负载联合调度 diffusion 草拟与 AR 验证，改善固定草稿预算的效率。 | 低并发时两阶段串行，高并发时统一长块增加计算成本。 | 低负载预测纠错/续写分支并与验证合批；高负载结合验证历史和硬件成本选择块长并分桶调度。 | 值得加入 Verification Cost 长期路线。基于共享骨干自投机，非 DFlash 直接扩展；预算调度对 DFlash 的适用性仍需独立验证。 |
+| 2026-09-28（官方博客，用户补充） | [LongSpark](https://long-spark.github.io/) | 用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。 | DFlash/DSpark 每轮读取完整前缀，长上下文下草拟延迟和独立状态持续增长。 | 融合边界 hidden state、原位近期 KV 窗口与可增量更新的全局注意力摘要；并行 backbone 后接 DSpark 式低秩因果修正。 | 值得纳入 Draft Quality 的长上下文条件化路线；固定的是 drafter 状态与每轮草拟成本，target KV 仍增长。实验额外使用专用 drafter GPU；目前核实为官方博客与代码，未核实独立 arXiv/PDF。 |
+
+原始证据、实验边界与扫描记录见 [`daily/2026-09-30.md`](daily/2026-09-30.md)。
 
 ## 2026-09-29
 

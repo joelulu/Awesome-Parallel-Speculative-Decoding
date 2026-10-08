@@ -1,5 +1,28 @@
 [
   {
+    "date": "2026-09-30",
+    "title": "RecGuide 负载调度；LongSpark 固定成本草拟",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-30.md",
+    "items": [
+      {
+        "title": "RecGuide",
+        "summary": "按并发负载联合调度 diffusion 草拟与 AR 验证，改善固定草稿预算的效率。",
+        "sourceUrl": "https://arxiv.org/abs/2609.34388",
+        "methodIds": [
+          "recguide"
+        ]
+      },
+      {
+        "title": "LongSpark",
+        "summary": "用固定大小的三种 target 上下文视图，让并行 drafter 成本不再随前缀长度增长。",
+        "sourceUrl": "https://long-spark.github.io/",
+        "methodIds": [
+          "longspark"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-09-29",
     "title": "暂无重要新增：近期论文与历史方向补查完成",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-29.md",
