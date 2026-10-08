@@ -68,12 +68,36 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Check deployed Pages in Chromium
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+          PAGES_AUDIT_OUTPUT: ${{ github.workspace }}/.cache/pages-audit
+        run: |
+          mkdir -p "$RUNNER_TEMP/pages-audit"
+          cp scripts/check-pages.mjs "$RUNNER_TEMP/pages-audit/check-pages.mjs"
+          cd "$RUNNER_TEMP/pages-audit"
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node check-pages.mjs
+      - name: Save Pages screenshots and check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-browser-audit
+          path: .cache/pages-audit
+          if-no-files-found: ignore

@@ -1466,7 +1466,7 @@
       }
     ],
     "status": "verified",
-    "citationStatus": "confirmed",
+    "citationStatus": "unconfirmed",
     "importance": 4,
     "pinned": false,
     "updatedAt": "2026-10-08"
