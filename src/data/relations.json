@@ -222,5 +222,21 @@
     "status": "verified",
     "evidenceUrl": "https://long-spark.github.io/",
     "note": "Parallel draft, sequential polish 部分明确采用 DSpark-style low-rank correction。"
+  },
+  {
+    "source": "dflash",
+    "target": "dscale",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.37532v1",
+    "note": "§III-A 明确复用 DFlash drafter，保持架构、权重和完整草稿长度不变，仅优化高并发验证 tile、预算分配与 graph 工作区。"
+  },
+  {
+    "source": "dflash",
+    "target": "glance",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://github.com/js-lee-AI/GLANCE",
+    "note": "论文及官方仓库明确说明 GLANCE 将 DFlash 风格 block-diffusion draft head 用于冻结 VLM target 的融合视觉语言状态，并增加一次性候选树验证；代码 README 明确引用而非重新声称 DFlash 的 block-diffusion head。"
   }
 ]

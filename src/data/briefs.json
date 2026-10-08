@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-10-08",
+    "title": "DScale 高并发验证 + GLANCE 多模态块扩散",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-08.md",
+    "items": [
+      {
+        "title": "GLANCE：把 DFlash 风格块扩散草稿用于视觉语言模型",
+        "summary": "直接读取 VLM target 已融合视觉语言状态，一次并行生成块草稿并在一次 target pass 中验证候选树；grounded 视觉任务优于 EAGLE3-VL，但 captioning 会更慢。",
+        "sourceUrl": "https://arxiv.org/abs/2609.00355",
+        "methodIds": ["glance"]
+      },
+      {
+        "title": "DScale: Scaling Block-Diffusion Speculative Decoding with Adaptive Verification",
+        "summary": "保留 DFlash drafter 不变，以 tile 路由、预测接受前缀和跨请求动态预算缓解高并发验证成本；单张 A100 上并发 8–32 相比 DFlash 报告 43.9%/48.8% 几何平均吞吐提升。",
+        "sourceUrl": "https://arxiv.org/abs/2609.37532",
+        "methodIds": ["dscale"]
+      }
+    ]
+  },
+  {
     "date": "2026-09-30",
     "title": "RecGuide 负载调度；LongSpark 固定成本草拟",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-09-30.md",

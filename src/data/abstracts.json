@@ -156,9 +156,9 @@
     "kind": "translated-summary"
   },
   "glance": {
-    "text": "视觉语言模型中的自回归草稿需要保持较小规模，因而常压缩或忽略图像，却会在视觉信息最有助于预测的场景中变得不可靠。GLANCE 以块扩散 head 读取目标模型已经融合的视觉语言状态，无需额外重复处理视觉输入，并通过一次前向生成整块候选，再在目标模型的一次计算中验证宽候选树。对审计的每个请求，它都精确复现贪心解码输出。在相同引擎和单轮预算下，GLANCE 相比自回归最高快 2.93 倍；每轮只需一次起草前向，而生产 EAGLE3-VL head 需要八次，其接受块长度也达到同语料训练 EAGLE-3 的 2.7 倍。研究发现接受长度与目标模型的下一 token 熵相关，视觉 grounding 越强，该关系越明显；而自由文本生成仍可能更适合单链起草。",
+    "text": "GLANCE 针对多模态 speculative decoding 的反馈困境：自回归 drafter 受逐 token 成本限制，难以在每一步读取完整图像证据；视觉信息被压缩或隐藏后，drafter 又在图像能确定答案的文本上缺少依据。它在冻结 VLM target 上连接 DFlash 风格 block-diffusion head，读取 target 已融合的视觉语言 hidden states，一次前向预测整块文本，再由单次 target 前向验证 prefix-closed 候选树。论文给出 greedy 一致性的精确成立条件，并验证 audited prompts；近似平局时浮点扰动仍是需考虑的边界。在 SGLang 0.5.6、单张 RTX A6000、bf16、双方每轮 32 候选预算一致的比较中，GLANCE 对生产 EAGLE3-VL 五任务几何平均解码仅快 1.3%，InfographicVQA、DocVQA、ChartQA 等 grounded 任务约快 11%，captioning 更慢；相对 AR 的最高 3.05×为 ChartQA decode-only 结果，收益依赖任务与口径。",
     "sourceUrl": "https://arxiv.org/abs/2609.00355",
-    "translatedAt": "2026-09-09",
+    "translatedAt": "2026-10-08",
     "kind": "translated-summary"
   },
   "dblast": {
@@ -250,5 +250,11 @@
     "sourceUrl": "https://long-spark.github.io/",
     "translatedAt": "2026-09-30",
     "kind": "source-summary"
+  },
+  "dscale": {
+    "text": "DScale 针对高并发 block-diffusion 投机解码中的验证 padding、请求间接受前缀差异和固定形状 CUDA Graph 约束，直接复用 DFlash 原有 drafter，不改架构、权重或完整草稿长度。它以 path-aware tile 分开处理 prefill 与 verification；使用每个 target–drafter 对单独训练的 112K 参数接受长度预测器，为各请求打分，并由动态验证长度（DVL）在一半的原生验证槽位预算内跨请求分配前缀；固定地址工作区使变化的边界可在 GPU 上贯穿验证和接受，避免 CPU 重新切片并继续复用已捕获图。在单张 A100-40GB、TP1、Qwen3-4B/8B、四项数学与代码基准以及并发 8–32 的实验中，论文报告几何平均吞吐相对 DFlash 提升 43.9%/48.8%，平均端到端延迟下降 31.4%/33.1%。结果支持其对 DFlash 高并发验证成本的直接价值，但不代表其他硬件与负载也有相同收益。尚未核实到作者官方代码链接。",
+    "sourceUrl": "https://arxiv.org/abs/2609.37532",
+    "translatedAt": "2026-10-08",
+    "kind": "translated-summary"
   }
 }

@@ -797,14 +797,14 @@
   {
     "id": "glance",
     "name": "GLANCE",
-    "title": "GLANCE — Vision Is Not Overhead",
-    "date": "2026-09",
-    "dateLabel": "2026-09-01 左右",
+    "title": "Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in Vision-Language Models",
+    "date": "2026-08-31",
+    "dateLabel": "2026-08-31",
     "category": "extensions",
-    "tags": [],
-    "summary": "复用视觉语言特征，为多模态模型并行起草并验证。",
-    "problem": "多模态 drafter 若忽略/压缩视觉信息，会导致视觉密集任务 acceptance 低",
-    "solution": "读取 target 已算好的 fused vision-language hidden states 做 one-pass block drafting，再构造 wide candidate tree 验证。",
+    "tags": ["vision-language", "multimodal", "block diffusion", "candidate tree", "lossless greedy"],
+    "summary": "让 DFlash 风格的块扩散 drafter 直接读取 VLM 融合视觉语言状态，一次并行提议整块文本。",
+    "problem": "VLM 自回归 drafter 受逐 token 成本限制，常压缩或隐藏图像输入，导致它在最受图像约束的 grounded 文本上缺少关键证据。",
+    "solution": "将 DFlash 风格 block-diffusion head 接到冻结 VLM target 已融合的视觉语言 hidden states，从一次块分布构造 prefix-closed candidate tree，并用一次 ancestor-masked target pass 验证。论文给出 greedy 输出一致性的精确成立条件；每个 audited prompt 均验证复现 target greedy 输出。",
     "paperUrl": "https://arxiv.org/abs/2609.00355",
     "sourceUrl": "https://arxiv.org/abs/2609.00355",
     "code": [
@@ -812,17 +812,17 @@
         "url": "https://github.com/js-lee-AI/GLANCE",
         "repo": "js-lee-AI/GLANCE",
         "kind": "official",
-        "evidenceUrl": "https://arxiv.org/abs/2609.00355",
-        "checkedAt": "2026-09-09",
+        "evidenceUrl": "https://github.com/js-lee-AI/GLANCE",
+        "checkedAt": "2026-10-08",
         "availability": "available"
       }
     ],
-    "status": "imported",
-    "citationStatus": "unconfirmed",
+    "status": "verified",
+    "citationStatus": "confirmed",
     "importance": 5,
     "pinned": false,
-    "reason": "编辑关注 · 多模态与扩展",
-    "updatedAt": "2026-09-09"
+    "reason": "目前检索到最直接的多模态 DFlash-like 工作：明确以 DFlash 风格 block-diffusion head 为基础，将 target hidden fusion、整块并行 draft 与树验证迁移到 VLM，并提供官方代码。SGLang 0.5.6、单 RTX A6000、bf16、每轮 32 候选共预算下，相对 EAGLE3-VL 的五任务几何平均端到端解码收益为 1.3%；grounded 子集约快 11%，captioning 更慢；对 AR 的最高 3.05×仅在 ChartQA decode-only 比较中出现。",
+    "updatedAt": "2026-10-08"
   },
   {
     "id": "asd",
@@ -1220,5 +1220,32 @@
     "pinned": false,
     "reason": "值得纳入 Draft Quality 的长上下文条件化路线；固定的是 drafter 状态与每轮草拟成本，target KV 仍增长。实验额外使用专用 drafter GPU；目前核实为官方博客与代码，未核实独立 arXiv/PDF。",
     "updatedAt": "2026-09-30"
+  },
+  {
+    "id": "dscale",
+    "name": "DScale",
+    "title": "DScale: Scaling Block-Diffusion Speculative Decoding with Adaptive Verification",
+    "date": "2026-09-29",
+    "dateLabel": "2026-09-29",
+    "category": "systems",
+    "tags": [
+      "block diffusion",
+      "adaptive verification",
+      "high concurrency",
+      "verification cost",
+      "DFlash"
+    ],
+    "summary": "保留 DFlash 草稿长度与权重，跨请求分配一半验证槽位并消除 padding。",
+    "problem": "高并发时 DFlash 的固定宽度验证产生大量 padding；各请求接受长度不同，统一缩短又会丢失有价值的候选，动态前缀还难以兼容固定形状 CUDA Graph。",
+    "solution": "用 path-aware tiles 区分 prefill 与 verify；112K 参数接受长度预测器估计每请求前缀收益，并以 DVL 在总验证预算减半时重分配候选；固定地址工作区把动态边界贯穿验证和接受步骤，复用已捕获 Graph。drafter 架构、权重和完整草稿长度均不变。",
+    "paperUrl": "https://arxiv.org/abs/2609.37532",
+    "sourceUrl": "https://arxiv.org/abs/2609.37532",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "直接复用 DFlash drafter，解决其高并发验证成本；值得纳入 Verification Cost 长期路线。论文在单张 A100、TP1、Qwen3-4B/8B、并发 8–32 上评测，报告相对 DFlash 的几何平均吞吐提升 43.9%/48.8%，不是跨模型或硬件的通用保证。未核实到作者官方代码仓库。",
+    "updatedAt": "2026-10-08"
   }
 ]

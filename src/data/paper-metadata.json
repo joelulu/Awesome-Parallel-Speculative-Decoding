@@ -473,7 +473,7 @@
       "Lim, Heuiseok"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.00355",
-    "fetchedAt": "2026-09-09T07:41:36.325881+00:00",
+    "fetchedAt": "2026-10-08T00:00:00.000Z",
     "thumbnail": "papers/glance.jpg"
   },
   "asd": {
@@ -711,5 +711,20 @@
       "Ming Li"
     ],
     "fetchedAt": "2026-09-30T01:22:49.617Z"
+  },
+  "dscale": {
+    "sourceUrl": "https://arxiv.org/abs/2609.37532",
+    "status": "fetched",
+    "title": "DScale: Scaling Block-Diffusion Speculative Decoding with Adaptive Verification",
+    "authors": [
+      "Chen, Rongjian",
+      "Xu, Minxian",
+      "Fang, Zhengxin",
+      "Ye, Kejiang",
+      "Xu, Chengzhong"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.37532",
+    "fetchedAt": "2026-10-08T00:00:00.000Z",
+    "thumbnail": "papers/dscale.jpg"
   }
 }
