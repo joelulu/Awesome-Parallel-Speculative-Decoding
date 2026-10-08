@@ -1,8 +1,10 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 export async function updateStars(methods,previous,request=fetch,token=process.env.GITHUB_TOKEN){
-  const output={...previous};const failures=[];
-  const repos=[...new Set(methods.flatMap(m=>m.code.map(c=>c.repo)))];
+  const repos=[...new Set(methods.flatMap(m=>m.code.filter(c=>c.availability!=='unavailable').map(c=>c.repo)))];
+  const eligible=new Set(repos);
+  const output=Object.fromEntries(Object.entries(previous).filter(([repo])=>eligible.has(repo)));
+  const failures=[];
   for(const repo of repos){
     try{
       const response=await request(`https://api.github.com/repos/${repo}`,{headers:{Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(token?{Authorization:`Bearer ${token}`}:{})},signal:AbortSignal.timeout(15000)});
