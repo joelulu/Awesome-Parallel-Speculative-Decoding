@@ -856,5 +856,170 @@
     "pdfUrl": "https://arxiv.org/pdf/2605.23163",
     "fetchedAt": "2026-10-08",
     "thumbnail": "papers/fast-ddrive.jpg"
+  },
+  "d-loop": {
+    "sourceUrl": "https://arxiv.org/abs/2610.06011",
+    "status": "fetched",
+    "title": "D-Loop: Looped Diffusion Drafting for Speculative Decoding",
+    "authors": [
+      "Kecheng Chen",
+      "Yuyang He",
+      "Cheng Gong",
+      "Hui Liu",
+      "Guoping Long",
+      "Jiajun Li",
+      "Shi Wu",
+      "Suiyun Zhang",
+      "Haoliang Li",
+      "Ziru Liu",
+      "Rui Liu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.06011",
+    "fetchedAt": "2026-10-17"
+  },
+  "dloop": {
+    "sourceUrl": "https://arxiv.org/abs/2610.07659",
+    "status": "fetched",
+    "title": "DLoop: Looped Speculative Decoding",
+    "authors": [
+      "Geonmo Gu",
+      "Byeongho Heo",
+      "HeeJae Jun",
+      "Yoohoon Kang",
+      "Sangmin Lee",
+      "Sangdoo Yun",
+      "Dongyoon Han"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.07659",
+    "fetchedAt": "2026-10-17"
+  },
+  "dcoco": {
+    "sourceUrl": "https://arxiv.org/abs/2610.12570",
+    "status": "fetched",
+    "title": "Contextual Correction of Parallel Drafts for Speculative Decoding",
+    "authors": [
+      "Roy Eisenstadt",
+      "Harel Lidar",
+      "Tal Gonen",
+      "Omer Luxembourg",
+      "Itamar Zimerman",
+      "Lior Wolf",
+      "Eli David",
+      "Ilan Naiman"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.12570",
+    "fetchedAt": "2026-10-17"
+  },
+  "jetspec-plus": {
+    "sourceUrl": "https://arxiv.org/abs/2610.19792",
+    "status": "fetched",
+    "title": "JetSpec++: Foresight Parallel Drafting with Self Refinements",
+    "authors": [
+      "Zhaoxiang Feng",
+      "Lanxiang Hu",
+      "Haoran Yuan",
+      "Yu-Yang Qian",
+      "Jihui Yang",
+      "Peng Zhao",
+      "Yibo Zhu",
+      "Tajana Rosing",
+      "Hao Zhang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.19792",
+    "fetchedAt": "2026-10-17"
+  },
+  "treespark": {
+    "sourceUrl": "https://arxiv.org/abs/2610.20175",
+    "status": "fetched",
+    "title": "TreeSpark: Learning to Draft the Trees You Verify for Speculative Decoding",
+    "authors": [
+      "Jihao Zhao",
+      "Qianyu Jiang",
+      "Shuaishuai Zu",
+      "Pengfei Li",
+      "Guanghuan Fang",
+      "Ben Feng",
+      "Biao Qin",
+      "Zhibin Wang",
+      "Baochuan Yang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.20175",
+    "fetchedAt": "2026-10-17"
+  },
+  "fold": {
+    "sourceUrl": "https://arxiv.org/abs/2610.20392",
+    "status": "fetched",
+    "title": "FOLD: Position-Free Far Memory with Local Order for Long-Context Speculative Decoding",
+    "authors": [
+      "Shuxuan Li",
+      "Jialiang Kang",
+      "Yanghao Zhou",
+      "Ziye Zhu",
+      "Xiao Yang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.20392",
+    "fetchedAt": "2026-10-17"
+  },
+  "ready": {
+    "sourceUrl": "https://arxiv.org/abs/2610.20503",
+    "status": "fetched",
+    "title": "ReaDy: Recurrent States as Dynamic Context for Speculative Drafting in Hybrid Linear Attention Large Language Models",
+    "authors": [
+      "Bohan Sun",
+      "Zunhai Su",
+      "Xialie Zhuang",
+      "Jianjin Li",
+      "Ngai Wong",
+      "Chuan-Wei Kuo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.20503",
+    "fetchedAt": "2026-10-17"
+  },
+  "short-context-long-drafting": {
+    "sourceUrl": "https://arxiv.org/abs/2610.20865",
+    "status": "fetched",
+    "title": "Long-Context Drafting Does Not Require Long-Context Drafters",
+    "authors": [
+      "Aref Jafari",
+      "Vansh Bhatia",
+      "Matt Qin",
+      "Subhajit Dutta Chowdhury",
+      "Ben Lee",
+      "Vikram Appia",
+      "Ali Ghodsi",
+      "Mehdi Rezagholizadeh"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.20865",
+    "fetchedAt": "2026-10-17"
+  },
+  "loopahead": {
+    "sourceUrl": "https://arxiv.org/abs/2610.21594",
+    "status": "fetched",
+    "title": "LoopAhead: Speculating Ahead for Faster Decoding in Looped Language Models",
+    "authors": [
+      "Zixuan Liu",
+      "Nan Xue",
+      "Rui Bao",
+      "Yuhang Xu",
+      "Xiaofeng Cao",
+      "Jiangchao Yao",
+      "Zhiyong Chen"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.21594",
+    "fetchedAt": "2026-10-17"
+  },
+  "loopspec": {
+    "sourceUrl": "https://arxiv.org/abs/2609.17184",
+    "status": "fetched",
+    "title": "LoopSpec: Pipelined Self-Speculative Decoding for Looped Transformers",
+    "authors": [
+      "SangLyul Cho",
+      "Langqing Cui",
+      "Sehoon Kim",
+      "Dongsu Han",
+      "Insu Han"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.17184",
+    "fetchedAt": "2026-10-17"
   }
 }

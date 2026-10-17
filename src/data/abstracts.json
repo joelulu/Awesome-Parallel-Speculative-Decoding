@@ -298,5 +298,65 @@
     "sourceUrl": "https://arxiv.org/abs/2605.23163",
     "translatedAt": "2026-10-08",
     "kind": "translated-summary"
+  },
+  "d-loop": {
+    "text": "D-Loop 指出 DFlash 一次性预测的块内 token 缺少实际前缀条件，常出现相邻位置重复词的 repetition trap。其第一遍 diffusion drafter 产生整块预测，按置信度选取可能的分割位置；第二遍在同一骨干上暴露已选前缀，并行重生成后缀。配合互补的前缀／后缀监督，不增加独立修正器或第二套权重。论文在 Qwen3-4B/8B 的数学、代码和聊天任务中报告接受率与端到端速度改善，但需要额外一次草稿前向，需结合真实 draft/verify 成本判断收益。",
+    "sourceUrl": "https://arxiv.org/abs/2610.06011",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "dloop": {
+    "text": "DLoop 关注草稿整块常被全部接受却仍不得不执行 target verification 的浪费。它让强草稿模型在高置信度时连续完成多次草拟，并用专门训练的 loop-aware hidden-state conditioning 在未验证的位置继续提供上下文，最后对累计多个块进行统一 target 验证。论文称其适用于 EAGLE-3、DFlash、Domino、DSpark 等，端到端加速相对原方法额外提升 5%–41%。它换取更少 target forward 的代价是更多 draft forward，不同于块内再次 mask 后缀的 D-Loop。",
+    "sourceUrl": "https://arxiv.org/abs/2610.07659",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "dcoco": {
+    "text": "DCOCO 是针对 DFlash 的轻量上下文修正器。论文指出块后部 top-k 的正确候选覆盖远高于 top-1，困难在于从并行边缘预测中选出连续相容的路径。DCOCO 根据隐藏状态、候选 token embedding 与 logits 对全部相邻位置候选对并行计算转移分数，再依照前缀优先规则做一次便宜的顺序路径遍历。训练同时更新 DFlash 与修正器。四种 target、十个任务上报告性能改善，4–32 并发下相对最强对手提升 6%–23% 吞吐；批量评分并行不代表路径选择完全并行。",
+    "sourceUrl": "https://arxiv.org/abs/2610.12570",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "jetspec-plus": {
+    "text": "JetSpec++ 在并行因果树草稿基础上提出三个结合的优化：同块自修复草稿、提前推测下一块 continuation 的 foresight drafting，以及草稿与 target 验证的流水线重叠。目标不只是提高接受长度，而是让高质量 drafter 的增量耗时尽量隐藏在验证阶段。论文在 GB200 的实验报告最高 7.45 倍相对普通 AR 的速度、1.54 倍相对 DSpark 的速度，七任务平均接受长度 8.94；异步调度和推测错误引起的冗余工作仍需针对实际服务负载测试。",
+    "sourceUrl": "https://arxiv.org/abs/2610.19792",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "treespark": {
+    "text": "TreeSpark 直接扩展 DSpark 的半自回归骨干，训练时不仅对单一参考 continuation 施加监督，还重放推理实际执行的建树、枝条裁剪和有限验证预算打包过程。Survival NLL 依照路径质量为存活边加权，coverage hinge 帮助保留 target 高价值的替代选项。两项训练信号使用已有参考链 target 分布，不额外执行 target forward。Qwen3-4B/8B 的 greedy 实验中，相对 DSpark 平均接受长度提高 23.4%–31.6%，单请求吞吐提高 15.1%–25.0%，批量 Qwen3-4B 提高 12.6%–17.2%。",
+    "sourceUrl": "https://arxiv.org/abs/2610.20175",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "fold": {
+    "text": "FOLD 提出一种免训练的长上下文草稿 attention 改造。最近窗口保留原始相对位置，所有更远的历史 KV 被视为共享远端位置的记忆；远端注意力单独归一化和锐化，并调节与局部窗口的融合权重。这样保留旧内容却减少外推失配和注意力质量稀释。论文在 DFlash/DSpark 等六套 target-drafter 组合与最长 256K 任务中比较，最好的一项从 2.08 倍提升至 4.22 倍相对 AR 的速度。公开仓库提供 vLLM plugin 参考实现，收益依赖序列、窗口和模型配置。",
+    "sourceUrl": "https://arxiv.org/abs/2610.20392",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "ready": {
+    "text": "ReaDy 针对 Qwen3.8 等 hybrid linear attention 目标模型，利用 target 已提交历史所累积的 recurrent state，为 draft block 中每个未来位置提供额外上下文。通过可训练位置 query 从 state 中读取信息，用轻量 reader 形成对 DSpark draft hidden 的残差更新；低秩读出和 Triton kernel 控制计算与访存。单 B200、Qwen3.8-27B 七任务平均实现 3.16 倍相对 AR 加速，比 DSpark 平均吞吐提高 7.97%、接受长度提高 8.50%。代码与模型公开，但方法依赖 target 具有可读取的 recurrent state。",
+    "sourceUrl": "https://arxiv.org/abs/2610.20503",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "short-context-long-drafting": {
+    "text": "这项工作认为 target-conditioned drafter 已从 target hidden states 间接获取远距离信息，不一定需要维护与 target 一样长的自身 KV。作者冻结已有短上下文草稿模型，推理时限制可读 attention cache 长度，并把 rotary 位置索引重新映射到训练范围，使一组配置从 4K 扩展至 200 万 token，而不进行长上下文重训。论文的重点是维持原有短上下文的加速倍率，而不是保证任意模型的绝对吞吐；短文本配置可能带来至多 0.16 倍速度倍率损失，且要求草拟单位产出成本仍低于 target。",
+    "sourceUrl": "https://arxiv.org/abs/2610.20865",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "loopahead": {
+    "text": "LoopAhead 面向 Looped Transformer 推理，针对 LoopSpec 在浅层仅草拟短前瞻、错误分支仍被后续 loop 计算的限制，训练一个轻量 lookahead drafter 从 early-loop hidden states 预测多步候选，再以深层 loop 的反馈决定分支继续或暂停，最终完整深度模型负责验证输出。论文报告最高 7.82 倍相对普通自回归解码的加速，并维持 target 分布。它需要训练新的 LAD，不应与不额外训练的 LoopSpec 混为一谈；对共享权重 Looped DFlash 的流水线设计有启发，但并非直接移植。",
+    "sourceUrl": "https://arxiv.org/abs/2610.21594",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
+  },
+  "loopspec": {
+    "text": "LoopSpec 利用 Looped Transformer 在不同迭代深度的中间预测，把较浅 loop 的输出用作无训练 draft，同时对同一共享权重骨干分批流水推进未来 token 和当前 token 的深层验证。它可在较深 recurrent depth 选择性追加第二提议，用门控避免无谓分支，并以标准接受规则保留 greedy 与 sampling 下的 target 输出分布。论文在 Ouro、Raven 等模型上报告最高 6.83 倍相对常规自回归的解码加速。该工作不是 DFlash 自身的直接后继，但与共享层数和 draft/verify 重叠研究有关。",
+    "sourceUrl": "https://arxiv.org/abs/2609.17184",
+    "translatedAt": "2026-10-17",
+    "kind": "translated-summary"
   }
 }
