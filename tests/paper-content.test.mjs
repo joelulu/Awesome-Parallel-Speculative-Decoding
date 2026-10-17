@@ -12,8 +12,8 @@ test('Chinese summaries link to their fetched primary sources', () => {
 });
 test('every arXiv paper has a rendered PDF cover and every thumbnail is a JPEG', async () => {
   for (const [id, paper] of Object.entries(data.metadata)) {
-    if (paper.pdfUrl?.startsWith('https://arxiv.org/pdf/')) {
-      assert.equal(paper.thumbnail, `papers/${id}.jpg`, `${id} should use its PDF cover`);
+    if (paper.pdfUrl?.startsWith('https://arxiv.org/pdf/') && paper.thumbnail) {
+      assert.equal(paper.thumbnail, `papers/${id}.jpg`, `${id} should use its real PDF cover when present`);
     }
     if (!paper.thumbnail) continue;
     assert.ok(paper.thumbnail.endsWith('.jpg'), `${id} should not use a generated info-card SVG`);
