@@ -310,5 +310,69 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/html/2605.23163v2",
     "note": "§1/§3 基于 Fast-dVLM 双模式架构扩展 section-aware scaffold 训练与自投机，未核实直接继承 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "d-loop",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.06011",
+    "note": "D-Loop 在两遍草拟中复用 DFlash 的 target-conditioned diffusion drafter，并直接比较 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "dloop",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.07659",
+    "note": "DLoop 将多轮延长草拟和统一验证用于包括 DFlash 在内的多种 drafter。"
+  },
+  {
+    "source": "dflash",
+    "target": "dcoco",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.12570",
+    "note": "DCOCO 直接消费单次 DFlash 的 hidden states、top-k logits 来做并行相邻候选评分。"
+  },
+  {
+    "source": "jetspec",
+    "target": "jetspec-plus",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.19792",
+    "note": "JetSpec++ 延展原 JetSpec parallel drafting，引入自修复、前瞻和 draft/verify 流水。"
+  },
+  {
+    "source": "dspark",
+    "target": "treespark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20175",
+    "note": "TreeSpark 明确基于 DSpark backbone，改为训练与实际建树、裁剪一致的候选树。"
+  },
+  {
+    "source": "dspark",
+    "target": "ready",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20503",
+    "note": "ReaDy 将位置相关 recurrent-state reader 接入 DSpark 半自回归草稿骨干。"
+  },
+  {
+    "source": "dflash",
+    "target": "fold",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20392",
+    "note": "FOLD 对 DFlash 与 DSpark 的既有草稿注意力进行免训练长上下文位置和归一化改造。"
+  },
+  {
+    "source": "loopspec",
+    "target": "loopahead",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.21594",
+    "note": "LoopAhead 在论文中明确讨论 LoopSpec 的提前草拟和错误分支成本限制，并加入 LAD 与反馈调度。"
   }
 ]
