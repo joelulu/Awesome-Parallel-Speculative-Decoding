@@ -6,6 +6,7 @@ import categories from './data/categories.json';
 import relations from './data/relations.json';
 import starsJson from './data/stars.json';
 import briefsJson from './data/briefs.json';
+import engineeringJson from './data/engineering.json';
 import { recommend, filterMethods, scoreMethod, dateValue, todayInShanghai, chooseBrief } from './lib/catalog.mjs';
 import type { Method, Stars, Brief } from './types';
 const ResearchMap=lazy(()=>import('./ResearchMap'));
@@ -17,6 +18,9 @@ class MapBoundary extends Component<{children:React.ReactNode},{failed:boolean}>
 const methods=methodsJson as Method[];
 const stars=starsJson as Stars;
 const briefs=briefsJson as Brief[];
+type RadarProject = {id:string;name:string;url:string;focus:string};
+type RadarEvent = {id:string;repo:string;kind:string;status:string;topic:string;priority:string;date:string;title:string;summary:string;caveat:string;url:string};
+const radar=engineeringJson as {asOf:string;timezone:string;editorial:string;projects:RadarProject[];events:RadarEvent[]};
 const repository='https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding';
 const categoryMap=Object.fromEntries(categories.map(c=>[c.id,c]));
 const lastUpdated=methods.map(m=>m.updatedAt).sort().at(-1);
@@ -37,6 +41,9 @@ export default function App(){
   const [unknown,setUnknown]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [today,setToday]=useState(todayInShanghai());
+  const [radarRepo,setRadarRepo]=useState('all');
+  const [radarExpanded,setRadarExpanded]=useState(false);
+  const radarEntries=radar.events.filter(item=>radarRepo==='all'||item.repo===radarRepo).slice(0,radarExpanded?radar.events.length:9);
   useEffect(()=>{const timer=setInterval(()=>setToday(todayInShanghai()),60000);return()=>clearInterval(timer);},[]);
   const brief=chooseBrief(briefs,today) as Brief|null;
   const isToday=brief?.date===today;
@@ -67,7 +74,7 @@ export default function App(){
   const searchMatches=query.trim()?filterMethods(methods,query).slice(0,5) as Method[]:[];
   return <>
     <a className="skip-link" href="#featured">跳至方法卡片</a>
-    <header className="site-header"><a className="brand" href="#"><span className="brand-mark"><GitBranch size={23}/></span><span>DFlash <b>Atlas</b><small>PARALLEL SPECULATIVE DECODING</small></span></a><nav aria-label="主导航"><a className="nav-active" href="#research-map">研究地图</a><a href="#featured">方法卡片</a><a href="#daily">每日简报</a></nav><External href={repository} className="repo-link"><Github size={18}/><span>GitHub</span><ArrowUpRight size={14}/></External></header>
+    <header className="site-header"><a className="brand" href="#"><span className="brand-mark"><GitBranch size={23}/></span><span>DFlash <b>Atlas</b><small>PARALLEL SPECULATIVE DECODING</small></span></a><nav aria-label="主导航"><a className="nav-active" href="#research-map">研究地图</a><a href="#featured">方法卡片</a><a href="#daily">每日简报</a><a href="#engineering">工程动态</a></nav><External href={repository} className="repo-link"><Github size={18}/><span>GitHub</span><ArrowUpRight size={14}/></External></header>
     <main>
       <section className="intro"><div><div className="eyebrow"><span className="live-dot"/> PAPERS · METHODS · OPEN SOURCE</div><h1>Parallel Speculative Decoding</h1><p>从 DFlash 出发，沿着时间阅读并行投机解码的新方法。</p></div><div className="intro-meta"><span><b>{methods.length.toString().padStart(2,'0')}</b> 方法记录</span><span><b>{categories.length.toString().padStart(2,'0')}</b> 研究方向</span><small>资料更新于 {lastUpdated}</small></div></section>
       <section id="research-map" className="map-section" tabIndex={-1} aria-labelledby="map-title"><div className="section-heading"><div className="section-title"><span className="section-number">01</span><h2 id="map-title">探索研究脉络</h2><span className="quiet-label">交互地图</span></div><div className="search-wrap"><Search size={17}/><input aria-label="搜索方法、问题或关键词" placeholder="搜索方法、问题或关键词…" value={query} onFocus={()=>setSearchOpen(true)} onChange={e=>{setQuery(e.target.value);setAll(true);setSearchOpen(true);}} onKeyDown={e=>{if(e.key==='Escape')setSearchOpen(false);if(e.key==='Enter'&&searchMatches[0])locate(searchMatches[0].id);}}/>{query&&<button className="icon-button" aria-label="清空搜索" onClick={()=>setQuery('')}><X size={15}/></button>}{query&&searchOpen&&<div className="search-results">{searchMatches.length?searchMatches.map(m=><button key={m.id} onClick={()=>locate(m.id)}><span>{m.name}<small>{categoryMap[m.category].name}</small></span><LocateFixed size={15}/></button>):<p>未找到匹配方法</p>}</div>}</div></div>
@@ -86,6 +93,25 @@ export default function App(){
       {!isToday&&<p className="brief-empty">今日暂无值得单独收录的新论文。{brief?`以下为最近一期：${brief.date}。`:'新的 DFlash 后续研究会出现在这里。'}</p>}
       {brief&&<div className="brief-layout"><div className="brief-intro"><span className="eyebrow">{isToday?'TODAY’S BRIEF':'LATEST BRIEF'}</span><h3>{brief.title}</h3><p>只追踪 DFlash 及直接后续研究；新论文优先。</p><External href={brief.archiveUrl}>新窗口阅读完整简报 <ArrowUpRight size={15}/></External></div><ol className="brief-list">{brief.items.slice(0,5).map((item,i)=><li key={`${brief.date}-${i}`}><span className="brief-number">{String(i+1).padStart(2,'0')}</span><div><h4>{item.title}</h4><p>{item.summary}</p><div className="brief-links">{item.sourceUrl?<External href={item.sourceUrl}>来源 <ArrowUpRight size={12}/></External>:<span>来源链接待补充</span>}{item.methodIds.map(id=><button key={id} onClick={()=>readMethod(id)}>{methods.find(m=>m.id===id)?.name} <ArrowRight size={12}/></button>)}</div></div></li>)}</ol></div>}
       {previousBriefs.length>0&&<div className="brief-archive"><div className="brief-archive-heading"><span>往期简报</span><small>点击后在新窗口打开</small></div><div className="brief-archive-links">{previousBriefs.map(item=><External key={item.date} href={item.archiveUrl} title={item.title}><time>{item.date}</time><span>{item.title}</span><ArrowUpRight size={13}/></External>)}</div></div>}
+      </section>
+
+      <section id="engineering" className="engineering-section" tabIndex={-1} aria-labelledby="engineering-title">
+        <div className="section-heading"><div className="section-title"><span className="section-number">04</span><h2 id="engineering-title">投机解码工程动态</h2><span className="quiet-label">PR · ISSUES · SERVING</span></div><External className="text-button" href={`${repository}/blob/main/engineering/2026-10-17.md`}>完整调查报告 <ArrowUpRight size={16}/></External></div>
+        <p className="radar-description">独立追踪 vLLM、Speculators、SGLang、SpecForge 与 TensorRT-LLM 的模型适配、训练、KV 管理和 Verify 性能。状态为 {radar.asOf} 快照；PR 自报加速不代表主分支效果。</p>
+        <div className="radar-controls" aria-label="按工程仓库筛选">
+          <button className={radarRepo==='all'?'selected':''} onClick={()=>{setRadarRepo('all');setRadarExpanded(false);}}>全部 ({radar.events.length})</button>
+          {radar.projects.map(project=><button key={project.id} className={radarRepo===project.id?'selected':''} onClick={()=>{setRadarRepo(project.id);setRadarExpanded(true);}}>{project.name}</button>)}
+        </div>
+        <div className="radar-grid">{radarEntries.map(item=>{
+          const project=radar.projects.find(p=>p.id===item.repo);
+          return <article className="radar-card" key={item.id}>
+            <div className="radar-card-meta"><span>{project?.name ?? item.repo}</span><span>{item.kind==='issue'?'Issue':item.status==='merged'?'PR · 已合并':item.status==='open'?'PR · 审查中':'PR · 待核验'}</span><time>{item.date}</time></div>
+            <h3><External href={item.url}>{item.title} <ArrowUpRight size={14}/></External></h3>
+            <p>{item.summary}</p>
+            <p className="radar-caveat">核验边界：{item.caveat}</p>
+          </article>;
+        })}</div>
+        <div className="radar-footer"><button className="text-button" onClick={()=>setRadarExpanded(v=>!v)}>{radarExpanded?'收起工程条目':`查看全部 ${radarRepo==='all'?radar.events.length:radar.events.filter(item=>item.repo===radarRepo).length} 条记录`} <ArrowRight size={16}/></button><External href={`${repository}/tree/main/engineering`}>维护规则与历次快照 <ArrowUpRight size={14}/></External></div>
       </section>
     </main><footer><a className="footer-brand" href="#">DFlash Atlas</a><span>沿着问题，持续阅读。<span className="footer-divider"> / </span>由开放研究连接起来。</span><External href={repository}>在 GitHub 上参与整理 <ArrowUpRight size={14}/></External></footer>
   </>;
