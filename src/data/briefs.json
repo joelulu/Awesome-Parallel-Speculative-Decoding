@@ -1,5 +1,57 @@
 [
   {
+    "date": "2026-10-17",
+    "title": "Looped drafting、候选纠正与长上下文草稿的十篇新近/补收工作",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-17.md",
+    "items": [
+      {
+        "title": "LoopAhead · LoopSpec",
+        "summary": "LoopAhead 训练 LAD 并用深层 loop 反馈控制分支；LoopSpec 则无需附加 drafter 训练，作为历史补收。",
+        "sourceUrl": "https://arxiv.org/abs/2610.21594",
+        "methodIds": [
+          "loopahead",
+          "loopspec"
+        ]
+      },
+      {
+        "title": "JetSpec++ · TreeSpark",
+        "summary": "前者把自修复、跨块预投机与流水重叠合并；后者将 DSpark 的树搜索和预算直接纳入训练。",
+        "sourceUrl": "https://arxiv.org/abs/2610.19792",
+        "methodIds": [
+          "jetspec-plus",
+          "treespark"
+        ]
+      },
+      {
+        "title": "ReaDy · FOLD",
+        "summary": "ReaDy 从 hybrid attention recurrent state 按位置读取上下文；FOLD 为 DFlash/DSpark 分离局部和远端记忆。",
+        "sourceUrl": "https://arxiv.org/abs/2610.20503",
+        "methodIds": [
+          "ready",
+          "fold"
+        ]
+      },
+      {
+        "title": "DCOCO · D-Loop",
+        "summary": "DCOCO 用并行相邻 top-k 转移评分选路径；D-Loop 以同权重二次前向完成块内 suffix 修复。",
+        "sourceUrl": "https://arxiv.org/abs/2610.12570",
+        "methodIds": [
+          "dcoco",
+          "d-loop"
+        ]
+      },
+      {
+        "title": "DLoop · Frozen Short Drafter",
+        "summary": "DLoop 在验证前继续草拟多个 block；超长上下文方案通过有界 KV 和位置重映射保留短上下文 drafter。",
+        "sourceUrl": "https://arxiv.org/abs/2610.07659",
+        "methodIds": [
+          "dloop",
+          "short-context-long-drafting"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-10-08",
     "title": "DSpine / DRelay 因果修复、UBTree / PRESTO 候选树与多模态补漏",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-08.md",
