@@ -1,5 +1,13 @@
 # Awesome Parallel Speculative Decoding
 
+## 工程动态 · Speculative Decoding Engineering Radar
+
+**两条独立维护主线**：新论文与 DFlash 后续方法继续保存在下方论文地图和 `daily/`；新增的真实工程 PR / Issues 则在 [工程雷达快照（2026-10-17）](engineering/2026-10-17.md) 与网站首页 **「工程动态」** 独立显示。
+
+- [工程更新规范、重点项目与复现指标](engineering/README.md) · [结构化数据（5 个项目、23 条 PR/Issue）](src/data/engineering.json)
+- 首批关注：**vLLM、vLLM Speculators、SGLang、SpecForge、TensorRT-LLM**；针对 **DeepSeek V4 / V4.1、Kimi K3** 的 Draft/Verify、MLA/KV、长上下文、高并发，以及 **多模态 Draft 训练与 Target KV/Hidden 条件选择**。
+- 状态为核查日的 GitHub 快照；必须区分已合并、未合并 PR、Issue/RFC 和 PR 提供的性能数字。历史论文数据保持原状。
+
 ## 交互研究地图
 
 本仓库现包含 **DFlash Atlas** 静态网站：首页为可交互脉络图、重点方法卡片和论文优先的每日简报。DFlash 位于脉络图最左侧，所有方法按研究方向和月份从左向右排列；最新 3 篇会显示 `NEW`，可一键定位最新论文，悬停节点查看日期、方向和摘要，并可叠加已核验研究关系。方法卡片展示论文预览、作者、中文摘要和 GitHub Star；支持搜索、月份跳转、方向聚焦、缩放／全屏及卡片—地图双向定位。
