@@ -9,7 +9,8 @@ await mkdir(output, { recursive: true });
 const read = async name => JSON.parse(await readFile(path.join(workspace, 'src/data', name + '.json'), 'utf8'));
 const [methods, metadata, briefs] = await Promise.all(['methods', 'paper-metadata', 'briefs'].map(read));
 const brief = [...briefs].sort((a, b) => b.date.localeCompare(a.date))[0];
-const ids = [...new Set(brief.items.flatMap(item => item.methodIds))];
+const recentPapers = [...briefs].sort((a, b) => b.date.localeCompare(a.date)).find(item => item.items.length > 0);
+const ids = [...new Set((recentPapers?.items ?? []).flatMap(item => item.methodIds))];
 const base = process.env.PAGES_URL || 'https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/';
 const url = new URL(base);
 url.searchParams.set('deployment', process.env.GITHUB_SHA);
@@ -33,10 +34,11 @@ try {
   assert.equal(await page.locator('#daily .brief-list > li').count(), Math.min(5, brief.items.length));
   await page.locator('#daily').screenshot({ path: path.join(output, 'daily.png') });
 
+  await page.getByRole('button', { name: '查看全部方法' }).click();
   for (const id of ids) {
     const method = methods.find(method => method.id === id);
     const card = page.locator('#method-' + id);
-    assert.equal(await card.count(), 1, id + ' must be featured');
+    assert.equal(await card.count(), 1, id + ' must have a paper card');
     assert.equal(await card.locator('h3 a').getAttribute('href'), method.paperUrl || metadata[id].sourceUrl);
     const image = card.locator('.paper-preview img');
     await image.scrollIntoViewIfNeeded();

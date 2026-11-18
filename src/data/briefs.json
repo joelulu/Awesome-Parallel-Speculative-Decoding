@@ -1,5 +1,272 @@
 [
   {
+    "date": "2026-11-18",
+    "title": "补录 MMFlash：视觉依赖感知的 DFlash 草拟",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-18.md",
+    "items": [
+      {
+        "title": "MMFlash · Faster Speculative Decoding for Vision-Language Models",
+        "summary": "按视觉依赖和草稿错误率重加权 DFlash 训练，改善视觉语言模型的块草稿接受率。",
+        "sourceUrl": "https://arxiv.org/abs/2611.18482",
+        "methodIds": [
+          "mmflash"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-16",
+    "title": "补录 D3Tree：高并发候选树验证预算",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-16.md",
+    "items": [
+      {
+        "title": "D3Tree · Learning to Prune Block-Diffusion Draft Trees for Efficient Verification",
+        "summary": "学习候选节点存活率，按并发负载分配全批验证预算。",
+        "sourceUrl": "https://arxiv.org/abs/2611.11371",
+        "methodIds": [
+          "d3tree"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-13",
+    "title": "补录 DForkTree 与 Multi-Future Drafting：修正候选树预算",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-13.md",
+    "items": [
+      {
+        "title": "DForkTree · Accelerating Speculative Decoding with Fork-Aware Block Diffusion Draft Trees",
+        "summary": "用目标输出的 n-gram 路径统计修正分叉后草稿分布，并精确构造预算内候选树。",
+        "sourceUrl": "https://arxiv.org/abs/2611.12356",
+        "methodIds": [
+          "dforktree"
+        ]
+      },
+      {
+        "title": "Multi-Future Drafting · Mixture Block Drafters for Tree-Verified Speculative Decoding",
+        "summary": "单次前向生成多种连贯未来，用混合树避免候选预算消耗在拼接假路径上。",
+        "sourceUrl": "https://arxiv.org/abs/2611.13017",
+        "methodIds": [
+          "mfd"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-12",
+    "title": "暂无重要新增：复查 DFlash 论文与官方实现",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-12.md",
+    "items": []
+  },
+  {
+    "date": "2026-11-10",
+    "title": "补录 ChainFlow：目标特征流草拟与候选树",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-10.md",
+    "items": [
+      {
+        "title": "ChainFlow · Few-Step Latent Flow Matching for Speculative Decoding",
+        "summary": "一步 latent flow、token feedback 和候选树提高单请求速度，高并发受验证成本制约。",
+        "sourceUrl": "https://arxiv.org/abs/2611.08669",
+        "methodIds": [
+          "chainflow"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-09",
+    "title": "补录 MDraft：DFlash 多草稿 on-policy 蒸馏",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-09.md",
+    "items": [
+      {
+        "title": "MDraft · Multi-Draft On-Policy Distillation for Diffusion Drafters",
+        "summary": "聚合多个草稿前缀下的 target 全词表分布，改善 DFlash 的 on-policy 蒸馏。",
+        "sourceUrl": "https://arxiv.org/abs/2610.37778",
+        "methodIds": [
+          "mdraft"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-06",
+    "title": "补录三篇 DFlash 直接相关论文：训练、验证与异步草拟",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-06.md",
+    "items": [
+      {
+        "title": "SpecOPD · Branch-Parallel On-Policy Distillation for Speculative Decoding",
+        "summary": "并行采集 on-policy 分支并批量获取 target 监督，优化连续接受长度。",
+        "sourceUrl": "https://arxiv.org/abs/2611.02846",
+        "methodIds": [
+          "specopd"
+        ]
+      },
+      {
+        "title": "HybridSpec · Throughput-Aware Speculative Decoding for Hybrid GDN-MoE Models",
+        "summary": "按收益和 GDN–MoE 验证成本动态选长度，并在路由边界修正。",
+        "sourceUrl": "https://arxiv.org/abs/2611.04055",
+        "methodIds": [
+          "hybridspec"
+        ]
+      },
+      {
+        "title": "D3D · Decoupled Diffusion Drafting for Asynchronous Speculative Decoding",
+        "summary": "去掉跨轮 target hidden 依赖，在验证期间异步准备后续扩散草稿。",
+        "sourceUrl": "https://arxiv.org/abs/2611.06425",
+        "methodIds": [
+          "d3d"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-05",
+    "title": "补录 SGLang DFlash 数据并行 CUDA Graph 提案",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-05.md",
+    "items": [
+      {
+        "title": "SGLang PR #47770 · DFlash DP CUDA Graph",
+        "summary": "待合并提案：空闲数据并行副本下保持 draft 与 verify 的 CUDA Graph 回放；性能待独立复测。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/pull/47770",
+        "methodIds": [
+          "dflash",
+          "dflash-2"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-04",
+    "title": "暂无重要新增：复查 DFlash 研究与官方实现",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-04.md",
+    "items": []
+  },
+  {
+    "date": "2026-11-03",
+    "title": "补录 DFlash 验证能耗研究；vLLM 0.33.0 发布",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-03.md",
+    "items": [
+      {
+        "title": "Only Accepted Tokens Count · DFlash 验证能耗",
+        "summary": "实测 DFlash-16 在高并发的验证成本与能耗转折。",
+        "sourceUrl": "https://arxiv.org/abs/2610.40287",
+        "methodIds": [
+          "only-accepted-tokens-count"
+        ]
+      },
+      {
+        "title": "vLLM v0.33.0 · DFlash/DSpark 服务改进",
+        "summary": "发布 XPress refiner、草稿 token 预算修正与相关模型支持。",
+        "sourceUrl": "https://github.com/vllm-project/vllm/releases/tag/v0.33.0",
+        "methodIds": [
+          "dflash",
+          "dspark"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-02",
+    "title": "补录 TableTune：DFlash 负载感知草稿长度",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-02.md",
+    "items": [
+      {
+        "title": "TableTune · Measured, Self-Correcting Draft-Length Tables",
+        "summary": "vLLM 负载感知草稿长度表；DFlash 任务切换后恢复 96% 的旧表损失。",
+        "sourceUrl": "https://arxiv.org/abs/2610.38968",
+        "methodIds": [
+          "tabletune"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-28",
+    "title": "补录 DScout：接受率感知训练与吞吐配置",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-28.md",
+    "items": [
+      {
+        "title": "DScout · Factorization-Guided Training and Inference",
+        "summary": "沿用 DFlash 骨干，以前缀接受率指导训练，并联合优化 MAT 与每轮延迟。",
+        "sourceUrl": "https://arxiv.org/abs/2610.23935",
+        "methodIds": [
+          "dscout"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-26",
+    "title": "补录 DStill 与 FlashMap：一步草拟中的块内依赖",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-26.md",
+    "items": [
+      {
+        "title": "DStill · Trajectory Consistency Distillation",
+        "summary": "离线蒸馏多步细化轨迹，推理保持一步；相对 DFlash 最高 +25% 墙钟加速。",
+        "sourceUrl": "https://arxiv.org/abs/2610.27379",
+        "methodIds": [
+          "dstill"
+        ]
+      },
+      {
+        "title": "FlashMap · Flow Map Speculative Decoding",
+        "summary": "连续 flow map 一次生成相关的 token 块；同设置 DFlash 基线下平均加速高 7.4%。",
+        "sourceUrl": "https://arxiv.org/abs/2610.24365",
+        "methodIds": [
+          "flashmap"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-23",
+    "title": "补录 DLite：无历史草稿应对 agentic 长上下文",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-23.md",
+    "items": [
+      {
+        "title": "DLite · History-free Speculative Decoding",
+        "summary": "复用 target 隐状态，免维护草稿历史 KV；顺序头恢复块内因果关系。",
+        "sourceUrl": "https://arxiv.org/abs/2610.23787",
+        "methodIds": [
+          "dlite"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-22",
+    "title": "暂无重要新增；复核 DFlash 后续论文与官方实现",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-22.md",
+    "items": []
+  },
+  {
+    "date": "2026-10-21",
+    "title": "论文暂无重要新增；vLLM TorchTPU 发布 DFlash 支持",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-21.md",
+    "items": [
+      {
+        "title": "vLLM TorchTPU · DFlash 支持",
+        "summary": "官方 TPU 后端给出 DFlash 配置示例和 Qwen3-4B 测试覆盖；尚无同条件性能结论。",
+        "sourceUrl": "https://vllm-project.github.io/2026/10/20/vllm-torchtpu.html",
+        "methodIds": [
+          "dflash"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-20",
+    "title": "暂无重要新增；复核 DFlash 后续论文与 SGLang 实现",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-20.md",
+    "items": []
+  },
+  {
+    "date": "2026-10-19",
+    "title": "暂无重要新增；完成 DFlash 后续论文定向补查",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-19.md",
+    "items": []
+  },
+  {
     "date": "2026-10-17",
     "title": "Looped drafting、候选纠正与长上下文草稿的十篇新近/补收工作",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-17.md",

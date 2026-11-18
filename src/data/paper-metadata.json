@@ -875,7 +875,8 @@
       "Rui Liu"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.06011",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/d-loop.jpg"
   },
   "dloop": {
     "sourceUrl": "https://arxiv.org/abs/2610.07659",
@@ -891,7 +892,8 @@
       "Dongyoon Han"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.07659",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/dloop.jpg"
   },
   "dcoco": {
     "sourceUrl": "https://arxiv.org/abs/2610.12570",
@@ -908,7 +910,8 @@
       "Ilan Naiman"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.12570",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/dcoco.jpg"
   },
   "jetspec-plus": {
     "sourceUrl": "https://arxiv.org/abs/2610.19792",
@@ -926,7 +929,8 @@
       "Hao Zhang"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.19792",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/jetspec-plus.jpg"
   },
   "treespark": {
     "sourceUrl": "https://arxiv.org/abs/2610.20175",
@@ -944,7 +948,8 @@
       "Baochuan Yang"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.20175",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/treespark.jpg"
   },
   "fold": {
     "sourceUrl": "https://arxiv.org/abs/2610.20392",
@@ -958,7 +963,8 @@
       "Xiao Yang"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.20392",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/fold.jpg"
   },
   "ready": {
     "sourceUrl": "https://arxiv.org/abs/2610.20503",
@@ -973,7 +979,8 @@
       "Chuan-Wei Kuo"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.20503",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/ready.jpg"
   },
   "short-context-long-drafting": {
     "sourceUrl": "https://arxiv.org/abs/2610.20865",
@@ -990,7 +997,8 @@
       "Mehdi Rezagholizadeh"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.20865",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/short-context-long-drafting.jpg"
   },
   "loopahead": {
     "sourceUrl": "https://arxiv.org/abs/2610.21594",
@@ -1006,7 +1014,8 @@
       "Zhiyong Chen"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2610.21594",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/loopahead.jpg"
   },
   "loopspec": {
     "sourceUrl": "https://arxiv.org/abs/2609.17184",
@@ -1020,6 +1029,245 @@
       "Insu Han"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2609.17184",
-    "fetchedAt": "2026-10-17"
+    "fetchedAt": "2026-10-17",
+    "thumbnail": "papers/loopspec.jpg"
+  },
+  "dlite": {
+    "sourceUrl": "https://arxiv.org/abs/2610.23787",
+    "status": "fetched",
+    "title": "DLite: History-free Speculative Decoding for Agentic AI",
+    "authors": [
+      "Jiaming Xu",
+      "Hanzhen Wang",
+      "Tianlang Zhao",
+      "Jiewen Xiao",
+      "Chengze Yuan",
+      "Jiayi Pan",
+      "Yongkang Zhou",
+      "Jiancai Ye",
+      "Yu Wang",
+      "Guohao Dai"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.23787",
+    "fetchedAt": "2026-10-23"
+  },
+  "flashmap": {
+    "sourceUrl": "https://arxiv.org/abs/2610.24365",
+    "status": "fetched",
+    "title": "FlashMap: Flow Map Speculative Decoding",
+    "authors": [
+      "Jeff Shen",
+      "Zhejian Zhou",
+      "Ryan Lee",
+      "Jonathan May",
+      "Shirley Ho"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.24365",
+    "fetchedAt": "2026-10-26",
+    "thumbnail": "papers/flashmap.jpg"
+  },
+  "dstill": {
+    "sourceUrl": "https://arxiv.org/abs/2610.27379",
+    "status": "fetched",
+    "title": "DStill: Trajectory Consistency Distillation for Accelerated One-Step Drafting in Block Diffusion Speculative Decoding",
+    "authors": [
+      "Shreyas Kulkarni",
+      "Uttam Gurram",
+      "Madhav Kanda",
+      "Krishna Teja Chitty Venkata",
+      "Shichu Chen",
+      "Kartik Balasubramaniam",
+      "Supriyo Chakraborty",
+      "Sambit Sahu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.27379",
+    "fetchedAt": "2026-10-26",
+    "thumbnail": "papers/dstill.jpg"
+  },
+  "dscout": {
+    "sourceUrl": "https://arxiv.org/abs/2610.23935",
+    "status": "fetched",
+    "title": "Factorization-Guided Training and Inference for Diffusion-Drafted Speculative Decoding",
+    "authors": [
+      "Jiakun Fan",
+      "Min Xiao",
+      "Qiang Wang",
+      "Neiwen Ling",
+      "Zhichao Liu",
+      "Zhihao Jia",
+      "Dimitrios S. Nikolopoulos",
+      "Zijun Wei"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.23935",
+    "fetchedAt": "2026-10-28",
+    "thumbnail": "papers/dscout.jpg"
+  },
+  "tabletune": {
+    "sourceUrl": "https://arxiv.org/abs/2610.38968",
+    "status": "fetched",
+    "title": "TableTune: Measured, Self-Correcting Draft-Length Tables for Dynamic Speculative Decoding",
+    "authors": [
+      "Abhishek Malvankar",
+      "Paul Castro",
+      "Nick Mitchell",
+      "Lionel Villard"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.38968",
+    "fetchedAt": "2026-11-02",
+    "thumbnail": "papers/tabletune.jpg"
+  },
+  "only-accepted-tokens-count": {
+    "sourceUrl": "https://arxiv.org/abs/2610.40287",
+    "status": "fetched",
+    "title": "Only Accepted Tokens Count: An Energy Accounting of Speculative Decoding Under Latency Targets",
+    "authors": [
+      "Bole Ma",
+      "Ayesha Afzal",
+      "Jan Eitzinger",
+      "Harald Koestler",
+      "Gerhard Wellein"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.40287",
+    "fetchedAt": "2026-11-03",
+    "thumbnail": "papers/only-accepted-tokens-count.jpg"
+  },
+  "specopd": {
+    "sourceUrl": "https://arxiv.org/abs/2611.02846",
+    "status": "fetched",
+    "title": "SpecOPD: Branch-Parallel On-Policy Distillation for Speculative Decoding",
+    "authors": [
+      "Tianyu Liu",
+      "Jun Zhang",
+      "Wenjie Huang",
+      "Yuhao Shen",
+      "Tianqi Xu",
+      "Xinyue Hao",
+      "Hongyaoxing Gu",
+      "Xuyang Liu",
+      "Baolin Zhang",
+      "Yating Zhu",
+      "Shuang Ge",
+      "Jun Dai",
+      "Lei Chen",
+      "Yue Li",
+      "Mingchen Wan"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.02846",
+    "fetchedAt": "2026-11-06"
+  },
+  "hybridspec": {
+    "sourceUrl": "https://arxiv.org/abs/2611.04055",
+    "status": "fetched",
+    "title": "HybridSpec: Throughput-Aware Speculative Decoding for Hybrid GDN-MoE Models",
+    "authors": [
+      "Haiyu Wang",
+      "Sai Qian Zhang",
+      "Zechun Liu",
+      "Steven Li"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.04055",
+    "fetchedAt": "2026-11-06"
+  },
+  "d3d": {
+    "sourceUrl": "https://arxiv.org/abs/2611.06425",
+    "status": "fetched",
+    "title": "D3D: Decoupled Diffusion Drafting for Asynchronous Speculative Decoding",
+    "authors": [
+      "Baoyou Chen",
+      "Ruiqiao Mei",
+      "Guancong Lin",
+      "Tao Song",
+      "Weihao Yuan",
+      "Qun Liu",
+      "Siyu Zhu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.06425",
+    "fetchedAt": "2026-11-06"
+  },
+  "mdraft": {
+    "sourceUrl": "https://arxiv.org/abs/2610.37778",
+    "status": "fetched",
+    "title": "Multi-Draft On-Policy Distillation for Diffusion Drafters",
+    "authors": [
+      "Petr Molodyk",
+      "Yuchen Zhu",
+      "Jaemoo Choi",
+      "Molei Tao",
+      "Yongxin Chen"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.37778",
+    "fetchedAt": "2026-11-09",
+    "thumbnail": "papers/mdraft.jpg"
+  },
+  "chainflow": {
+    "sourceUrl": "https://arxiv.org/abs/2611.08669",
+    "status": "fetched",
+    "title": "ChainFlow: Few-Step Latent Flow Matching for Speculative Decoding",
+    "authors": [
+      "Selim Aktas",
+      "Yusuf Erdem Erdem",
+      "Ahmed Zeer",
+      "Himmet Toprak Kesgin",
+      "Muzaffer Kaan Yuce",
+      "Mehmet Fatih Amasyali"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.08669",
+    "fetchedAt": "2026-11-10"
+  },
+  "dforktree": {
+    "sourceUrl": "https://arxiv.org/abs/2611.12356",
+    "status": "fetched",
+    "title": "DForkTree: Accelerating Speculative Decoding with Fork-Aware Block Diffusion Draft Trees",
+    "authors": [
+      "Zhicheng Zheng",
+      "Cheng Zhang",
+      "Chenkai Tang",
+      "Tianxiang Zhao"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.12356",
+    "fetchedAt": "2026-11-16"
+  },
+  "mfd": {
+    "sourceUrl": "https://arxiv.org/abs/2611.13017",
+    "status": "fetched",
+    "title": "Multi-Future Drafting: Mixture Block Drafters for Tree-Verified Speculative Decoding",
+    "authors": [
+      "Haoyu Huang",
+      "Jialiang Kang",
+      "Linlin Yang",
+      "Xiao Yang",
+      "Baochang Zhang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.13017",
+    "fetchedAt": "2026-11-13"
+  },
+  "d3tree": {
+    "sourceUrl": "https://arxiv.org/abs/2611.11371",
+    "status": "fetched",
+    "title": "D3Tree: Learning to Prune Block-Diffusion Draft Trees for Efficient Verification",
+    "authors": [
+      "Hong Nie",
+      "Zhangchi Gao",
+      "Jun Yu",
+      "Bo Wang",
+      "Jianqing Sun",
+      "Shengping Liu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.11371",
+    "fetchedAt": "2026-11-16"
+  },
+  "mmflash": {
+    "sourceUrl": "https://arxiv.org/abs/2611.18482",
+    "status": "fetched",
+    "title": "MMFlash: Faster Speculative Decoding for Vision-Language Models",
+    "authors": [
+      "Sicheng Feng",
+      "Zigeng Chen",
+      "Song Wang",
+      "Gongfan Fang",
+      "Xinchao Wang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.18482",
+    "fetchedAt": "2026-11-18"
   }
 }

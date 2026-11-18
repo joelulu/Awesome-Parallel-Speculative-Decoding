@@ -374,5 +374,173 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/abs/2610.21594",
     "note": "LoopAhead 在论文中明确讨论 LoopSpec 的提前草拟和错误分支成本限制，并加入 LAD 与反馈调度。"
+  },
+  {
+    "source": "dflash",
+    "target": "dlite",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.23787v1",
+    "note": "DLite 原文以 DFlash 为长上下文和 agentic 基线，针对其历史上下文和草稿侧 KV 负担提出替代架构。"
+  },
+  {
+    "source": "dspark",
+    "target": "dlite",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.23787v1",
+    "note": "DLite 与 DSpark 均用顺序头补偿块内因果关系；原文直接比较二者，但并未声称继承 DSpark 权重。"
+  },
+  {
+    "source": "dflash",
+    "target": "flashmap",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.24365",
+    "note": "FlashMap 保留 DFlash 的 target hidden 条件化和整块单次草拟，并以连续 flow map 替代独立位置的离散扩散预测；原文直接重训并比较 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "dstill",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2610.27379",
+    "note": "DStill 保留 DFlash 的 target-conditioned block drafter 与一步推理骨干，通过训练期多步轨迹蒸馏改进其根状态草拟。"
+  },
+  {
+    "source": "dflash",
+    "target": "dscout",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2610.23935",
+    "note": "DScout 原文第 2.2 节明确采用 DFlash 的 target-conditioned block-diffusion 架构，并改变训练监督及推理配置选择。"
+  },
+  {
+    "source": "dflash",
+    "target": "tabletune",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.38968",
+    "note": "TableTune 原文第 6.4、6.7 节分别以 DFlash 测试任务切换后的动态长度控制及画像误差；是 DFlash 服务配置相关工作，并非 drafter 架构继承。"
+  },
+  {
+    "source": "dflash",
+    "target": "only-accepted-tokens-count",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.40287",
+    "note": "原文第 2、6、9 节直接测量 DFlash-16/7 的验证能耗与并发转折点；是成本分析，不继承 drafter 架构。"
+  },
+  {
+    "source": "dflash",
+    "target": "specopd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.02846",
+    "note": "直接训练 DFlash、DFlash V2、DSpark；Qwen3-8B 的 DFlash 五任务平均接受长度最高 +41.45%。值得加入 Training 路线；16.09× 是特定 27B 八 GPU 配置的训练吞吐，不是生成加速。"
+  },
+  {
+    "source": "dflash",
+    "target": "hybridspec",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.04055",
+    "note": "直接使用相同 DFlash drafter；三种 GDN–MoE target 单请求 greedy 吞吐为原 DFlash 的 1.30–1.33×。值得加入 Verification Cost，需核查高并发泛化。"
+  },
+  {
+    "source": "dflash",
+    "target": "d3d",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.06425",
+    "note": "借鉴 DFlash 位置权重并重训同数据基线；接受长度更高。速度表 D3D 用双 H800、DFlash 用单 H800，不是等资源比较。值得加入异步 Draft Quality 路线，优先等资源复测。"
+  },
+  {
+    "source": "draft-opd",
+    "target": "specopd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.02846",
+    "note": "论文以顺序 rollout Draft-OPD 为训练吞吐对照，改用参考锚点上的并行 on-policy 分支。"
+  },
+  {
+    "source": "dflash",
+    "target": "mdraft",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.37778",
+    "note": "原文第 4 节直接微调 DFlash checkpoint，所有方法保持 DFlash 架构和推理流程，只改变训练目标。"
+  },
+  {
+    "source": "dflash",
+    "target": "chainflow",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.08669",
+    "note": "论文直接对比 DFlash；flow drafter 为替代架构，不属于直接扩展。"
+  },
+  {
+    "source": "dflash",
+    "target": "dforktree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.12356",
+    "note": "直接复用 DFlash drafter，与 DDTree 共用树流水线和 verifier；论文报告最高比 DFlash 快 41.5%、比 DDTree 快 15.1%。值得加入 Candidate Search，关注离线统计的领域迁移和并发成本。"
+  },
+  {
+    "source": "ddtree",
+    "target": "dforktree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.12356",
+    "note": "DFlash 的逐位置分布按自身主路径预测；树在分叉后仍使用这些分布，条件前缀失配导致预算浪费。"
+  },
+  {
+    "source": "dflash",
+    "target": "mfd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.13017",
+    "note": "直接针对 DFlash 与 DDTree 的路径独立性；论文 batch 1 报告比同训练单模式树快 5–8%，比发布的 DARTree 快 9–16%。值得加入 Draft Quality/Candidate Search，需检验高并发及训练代价。"
+  },
+  {
+    "source": "ddtree",
+    "target": "mfd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.13017",
+    "note": "DFlash 的逐位置边缘分布相乘会把不同合理未来拼成 target 不会生成的路径，浪费 DDTree 节点预算。"
+  },
+  {
+    "source": "dflash",
+    "target": "d3tree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.11371",
+    "note": "使用 DFlash 风格块扩散草稿并直接比较线性验证。"
+  },
+  {
+    "source": "ddtree",
+    "target": "d3tree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.11371",
+    "note": "在 DDTree 候选树上学习节点存活率并动态裁剪。"
+  },
+  {
+    "source": "caddtree",
+    "target": "d3tree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.11371",
+    "note": "比较单请求成本选择与全批负载感知预算。"
+  },
+  {
+    "source": "dflash",
+    "target": "mmflash",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.18482",
+    "note": "直接沿用 DFlash 块扩散 drafter 与位置损失，在视觉依赖 token 上调整训练权重，并以同数据 DFlash 为基线。"
   }
 ]

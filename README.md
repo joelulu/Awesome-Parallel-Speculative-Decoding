@@ -90,12 +90,33 @@
 | **2026-10-05** | **D-Loop — Looped Diffusion Drafting** | 同一 DFlash 骨干先起草整块，再暴露候选前缀重生成后缀。 | 并行边缘预测缺因果信息，容易产生重复词；需要额外一次草拟前向。 | 以置信度挑选分割位置并训练互补 prefix/suffix 目标，复用原权重；关注 draft 耗时能否由接受长度补偿。([arXiv](https://arxiv.org/abs/2610.06011)) |
 | **2026-10-06** | **DLoop — Looped Speculative Decoding** | 自适应连续草拟多块后合并验证。 | 经常整块全收却每轮都执行 target verify；未来块缺少已验证 hidden。 | 用 loop-aware hidden conditioning 继续起草，再统一 target 验证；不同于 D-Loop 的块内修复，适用于 DFlash/DSpark。([arXiv](https://arxiv.org/abs/2610.07659)) |
 | **2026-10-08** | **DCOCO — Contextual Correction** | 并行学习相邻 top-k 候选转移，轻量选择 prefix-first 路径。 | DFlash 的正确 token 常在 top-k，却因各位置独立 top-1 而选错组合。 | 单次 backbone 后并行计算候选对得分，顺序选择前缀；在论文 4–32 并发测试中领先最强对手 6–23%。([arXiv](https://arxiv.org/abs/2610.12570)) |
+| **2026-10-07** | **DScout — Factorization-Guided Training and Inference** | 用前缀接受率指导 DFlash 式块扩散训练，并按吞吐选推理配置。 | 后段预测会因前段拒绝失效；提高 MAT 也可能增加单轮延迟。 | 混合长度、块内部分揭示、接受率加权 loss；按 MAT/每轮延迟选择条件层数、drafter 深度和块长。([arXiv](https://arxiv.org/abs/2610.23935), [PDF](https://arxiv.org/pdf/2610.23935)) |
 | **2026-10-14** | **JetSpec++ — Foresight Parallel Drafting** | 一边提高块内接受长度，一边利用跨块 foresight 和 pipeline 隐藏草拟延迟。 | 草稿越强通常越慢，串行 draft→verify 存在关键路径瓶颈。 | self-refinement + next-block foresight + draft/verify overlap；GB200 单请求论文报告最高 7.45× AR。([arXiv](https://arxiv.org/abs/2610.19792)) |
 | **2026-10-14** | **TreeSpark — Learning to Draft the Trees You Verify** | DSpark 树草拟在训练阶段重放真实搜索与预算打包。 | 只训练 teacher-forced 单路径不能直接优化多父节点树候选。 | survival NLL + coverage hinge 对保留边与 target 重要分支监督；相对 DSpark 报告单请求吞吐提升 15.1–25.0%。([arXiv](https://arxiv.org/abs/2610.20175)) |
 | **2026-10-14** | **FOLD — Position-Free Far Memory** | 局部 KV 保留相对位置，旧 KV 归入共享位置的远端记忆。 | 短上下文 drafter 长度泛化差；远端上下文可能稀释 attention。 | 局部/远端分开归一化并调节远端质量；DFlash/DSpark 最长测到 256K。([arXiv](https://arxiv.org/abs/2610.20392), [code](https://github.com/NuyoahNasuS/FOLD)) |
 | **2026-10-14** | **ReaDy — Recurrent States as Dynamic Context** | 在 hybrid linear attention target 中对已提交 recurrent state 做逐位置读取。 | 单次 target hidden 融合缺乏不同未来 token 所需的历史检索。 | 小型 state reader + 低秩读取 + DSpark 残差融合；Qwen3.8-27B / B200 相对 DSpark 吞吐 +7.97%。([arXiv](https://arxiv.org/abs/2610.20503), [code](https://github.com/StartLuxLabs/ReaDy)) |
 | **2026-10-14** | **Long-Context Drafting Does Not Require Long-Context Drafters** | 冻结短上下文 drafter，限制 KV 读取并重新映射 RoPE 位置。 | drafter 也处理全前缀时，超长上下文的投机净收益消失。 | 有界 draft cache + RoPE rebasing，在论文目标配置中维持 4K–2M 的短上下文 speedup；不等于绝对速度翻倍。([arXiv](https://arxiv.org/abs/2610.20865)) |
 | **2026-10-15** | **LoopAhead — Speculating Ahead in Looped Models** | LAD 从 early-loop 特征草拟多 token，深层 loop 反馈决定继续哪些分支。 | LoopSpec 的早期深度利用和错误分支控制仍不充分。 | 轻量训练 LAD + feedback-gated speculative pipeline；最高 7.82× 为相对 AR，非对 LoopSpec 的倍率。([arXiv](https://arxiv.org/abs/2610.21594)) |
+
+| **2026-10-17** | **FlashMap — Flow Map Speculative Decoding** | 一步联合生成 token 块，保留块内依赖。 | DFlash 单步各位置独立预测，组合可能不一致并截断接受前缀。 | target hidden 条件化连续 flow，蒸馏成一步 flow map；同设置 DFlash 基线下 Qwen3-8B 九任务平均加速高 7.4%，单请求 H200 NVL。([arXiv](https://arxiv.org/abs/2610.24365), [code](https://github.com/al-jshen/flashmap)) |
+
+| **2026-10-19** | **DStill — Trajectory Consistency Distillation** | 把多步块细化蒸馏成一步 drafter，推理保留 DFlash 骨干和延迟。 | DFlash 一步独立预测会组合错误，多步细化则增加前向次数。 | 部分可见块 teacher + 离线细化轨迹 + endpoint CE/top-k KD 与 root-bias 课程；论文报告相对一步 DFlash 墙钟加速最高 +25%。([arXiv](https://arxiv.org/abs/2610.27379)) |
+
+| **2026-10-27** | **MDraft — Multi-Draft On-Policy Distillation for Diffusion Drafters** | 聚合多个草稿前缀的 target 分布，改进 DFlash 的 on-policy 训练。 | 并行草稿的单一位置分布无法同时匹配不同采样前缀下的 target 条件分布。 | 同一上下文采样多个草稿，混合 target 全词表条件分布再蒸馏；保持架构和推理不变。([arXiv](https://arxiv.org/abs/2610.37778)) |
+| **2026-10-28** | **TableTune — Measured, Self-Correcting Draft-Length Tables** | 在 vLLM 中实测批量/草稿长度吞吐表并在线修正。 | 固定长度在负载或任务切换后失准；DFlash 额外验证成本随并发变化。 | 实际服务路径量测 step time 与接受率，按 batch 选长度并用插件修正；H100 的 DFlash 任务切换恢复旧表损失的 96%，但画像仍可落后最佳固定长度最多 16%。([arXiv](https://arxiv.org/abs/2610.38968), [code](https://github.com/asm582/tabletune)) |
+
+| **2026-10-29** | **Only Accepted Tokens Count — Energy Accounting** | 实测 DFlash/DSpark 在并发服务下的能耗，发现长块验证可由节能转为耗能。 | 接受长度无法表达所有被验证、却遭拒绝的 token 成本。 | SGLang/CUDA Graph、H100/H200 配对能耗与算术强度测量；Qwen3-4B 的 DFlash-16 在 H100 batch 16–32、H200 batch 16 附近失去节能优势。([arXiv](https://arxiv.org/abs/2610.40287)) |
+| **2026-11-02** | **SpecOPD — Branch-Parallel On-Policy Distillation for Speculative Decoding** | 并行采集 on-policy 分支并批量获取 target 监督，优化连续接受长度。 | 传统 OPD 的逐轮草拟与验证使训练监督采集串行，逐 token loss 又未对齐连续接受。 | 从参考轨迹多个锚点采样当前 drafter 分支，打包共享前缀树批量获取 target 监督，用 E2E-TV 优化接受长度。 ([arXiv](https://arxiv.org/abs/2611.02846))。 |
+| **2026-11-02** | **HybridSpec — Throughput-Aware Speculative Decoding for Hybrid GDN-MoE Models** | 按收益和 GDN–MoE 验证成本动态选长度，并在路由边界修正。 | GDN–MoE target 的验证长度增加会迅速抬高每轮成本，DFlash 首次拒绝后的计算被浪费。 | GPU 上按接受概率和实测延迟选验证长度，在首个 MoE 路由边界修正，再用并行 GDN kernel 恢复已接受状态。 ([arXiv](https://arxiv.org/abs/2611.04055))。 |
+| **2026-11-04** | **D3D — Decoupled Diffusion Drafting for Asynchronous Speculative Decoding** | 去掉跨轮 target hidden 依赖，在验证期间异步准备后续扩散草稿。 | DFlash 每轮需要等待 target hidden 更新，限制下一块草拟与当前验证的重叠。 | 训练独立扩散 drafter，融合块去噪与 AR 监督；验证期间打包预生成拒绝及全接受分支，按接受长度剪枝层。 ([arXiv](https://arxiv.org/abs/2611.06425))。 |
+
+| **2026-11-05** | **ChainFlow — Few-Step Latent Flow Matching for Speculative Decoding** | 一步目标特征流草拟，配合 token feedback 和候选树。 | DFlash 缺块内依赖，大树在高并发时验证昂贵。 | VAE 压缩 target hidden，条件 flow 草拟并反馈修正；Qwen3.5-4B 单 B300、batch 1 的 8×4 树比 DFlash 快 11%，batch≥8 时慢于无投机。([arXiv](https://arxiv.org/abs/2611.08669), [code](https://github.com/Cosmos-YTU/chain-flow))。 |
+
+
+| **2026-11-13** | **MMFlash — Faster Speculative Decoding for Vision-Language Models** | 用视觉依赖与错误率重加权 DFlash 训练。 | 图像依赖 token 降低接受率。 | 有图/无图 target 分布 KL 引导损失，长视频用稀疏注意力。([arXiv](https://arxiv.org/abs/2611.18482)) |
+| **2026-11-08** | **D3Tree — Learning to Prune Block-Diffusion Draft Trees for Efficient Verification** | 学习候选节点存活率，按并发负载分配全批验证预算。 | DFlash 候选树在高并发时验证低收益节点。 | 冻结 drafter 训练存活率头，按父链裁剪闭合子树，按负载与矩阵乘 tile 分配全批预算。([arXiv](https://arxiv.org/abs/2611.11371)) |
+| **2026-11-09** | **DForkTree — Accelerating Speculative Decoding with Fork-Aware Block Diffusion Draft Trees** | 用目标输出的 n-gram 路径统计修正分叉后草稿分布，并精确构造预算内候选树。 | DFlash 的逐位置分布按自身主路径预测；树在分叉后仍使用这些分布，条件前缀失配导致预算浪费。 | 从 target 生成文本提取 n-gram，将路径 PMI 加入候选分数，分叉后提高权重，用 GPU 分层搜索构造最优树；无需重训 drafter。 ([arXiv](https://arxiv.org/abs/2611.12356)) |
+| **2026-11-09** | **Multi-Future Drafting — Mixture Block Drafters for Tree-Verified Speculative Decoding** | 单次前向生成多种连贯未来，用混合树避免候选预算消耗在拼接假路径上。 | DFlash 的逐位置边缘分布相乘会把不同合理未来拼成 target 不会生成的路径，浪费 DDTree 节点预算。 | 在 drafter 输入加入 K 个可学习模式向量，同一前向生成 K 个连贯草稿块，再用 mixture DDTree 进行无损树验证。 ([arXiv](https://arxiv.org/abs/2611.13017)) |
 
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
@@ -105,9 +126,93 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 
 # Daily Briefs
 
+## 2026-11-13
+
+补录 [DForkTree](https://arxiv.org/abs/2611.12356) 与 [Multi-Future Drafting](https://arxiv.org/abs/2611.13017)：分别修正分叉后条件失配与多未来拼接假路径造成的树预算浪费。
+
+[查看 2026-11-13 日报](daily/2026-11-13.md)。
+
+## 2026-11-12
+
+> **暂无重要新增。** 定向复查近期与历史遗漏的 DFlash、块扩散草稿和并行投机论文；已收录工作去重，未确认直接相关的新论文或重要官方实现。
+
+[查看 2026-11-12 日报与筛选说明](daily/2026-11-12.md)。
+
+## 2026-11-10
+
+补录 [ChainFlow](https://arxiv.org/abs/2611.08669)：一步 latent flow、token feedback 和候选树在单请求下领先 DFlash；高并发时树验证开销成为瓶颈。
+
+[查看 2026-11-10 日报与核查说明](daily/2026-11-10.md)。
+
+## 2026-11-09
+
+补录 [MDraft](https://arxiv.org/abs/2610.37778)：直接微调 DFlash，以多草稿 target 分布聚合缓解块内前缀条件不一致；原文只报告接受长度，尚无端到端速度对照。
+
+[查看 2026-11-09 日报与核查说明](daily/2026-11-09.md)。
+
+## 2026-11-06
+
+补录 [SpecOPD](https://arxiv.org/abs/2611.02846)、[HybridSpec](https://arxiv.org/abs/2611.04055)、[D3D](https://arxiv.org/abs/2611.06425) 三篇直接相关论文，分别研究训练、验证和异步草拟。D3D 速度表使用不同 GPU 数量，需等资源复测。
+
+[查看 2026-11-06 日报与核查说明](daily/2026-11-06.md)。
+
+## 2026-11-05
+
+论文优先复查暂无核验到新的直接后续论文。补录 [SGLang DFlash 数据并行 CUDA Graph 提案（PR #47770，仍待合并）](https://github.com/sgl-project/sglang/pull/47770)：拟在数据并行副本空闲时保持 draft 与 verify 的 CUDA Graph 回放，降低 eager launch 开销；性能数字来自 PR 作者，尚未独立复测。
+
+[查看 2026-11-05 日报与核查说明](daily/2026-11-05.md)。
+
+## 2026-11-04
+
+> **暂无重要新增。** 复查 DFlash 后续论文及 SGLang、vLLM、TensorRT-LLM 官方动态；[SGLang v0.5.23](https://github.com/sgl-project/sglang/releases/tag/v0.5.23) 所列可核验 DFlash 修复对应旧 PR，本期不重复收录。
+
+[查看 2026-11-04 日报与核查说明](daily/2026-11-04.md)。
+
+## 2026-11-03
+
+> **补录 1 篇直接测试 DFlash 的论文。** [Only Accepted Tokens Count](https://arxiv.org/abs/2610.40287)量化高并发下的验证能耗；[vLLM v0.33.0](https://github.com/vllm-project/vllm/releases/tag/v0.33.0)发布 DFlash/DSpark 服务改进。
+
+[查看 2026-11-03 日报与路线判断](daily/2026-11-03.md)。
+
+## 2026-10-28
+
+> **补录 1 篇历史遗漏论文。** [DScout](https://arxiv.org/abs/2610.23935)（10 月 7 日提交）直接沿用 DFlash 骨干，以前缀接受概率指导训练，并按 MAT/每轮延迟选择推理配置；今日定向扫描未核验到其他重要新增。
+
+[查看 2026-10-28 日报与路线判断](daily/2026-10-28.md)。
+
+## 2026-10-23
+
+> **补录 1 篇历史遗漏论文。** [DLite](https://arxiv.org/abs/2610.23787)（10 月 16 日提交）复用 target 隐状态，以无历史并行 drafter 和轻量顺序头应对 agentic 长上下文下的接受长度下降与草稿 KV 开销；[原文](https://arxiv.org/html/2610.23787v1)直接比较 DFlash/DSpark。今日未核验到其他重要新增。
+
+[查看 2026-10-23 日报与路线判断](daily/2026-10-23.md)。
+
+## 2026-10-22
+
+> **暂无重要新增。** 论文优先补查 DFlash 后续草稿质量、候选搜索、验证成本、训练和跨轮复用，并与现有 60 个方法去重；没有找到经原始来源核验、应当新增的条目。扩散模型自身的 PV-Decoding 不属于本仓库的 DFlash 后续范围。
+
+[查看 2026-10-22 日报与扫描范围](daily/2026-10-22.md)。
+
+## 2026-10-21
+
+> **论文暂无重要新增；新增 1 项官方工程动态。** [vLLM TorchTPU](https://vllm-project.github.io/2026/10/20/vllm-torchtpu.html) 发布 TPU 后端，官方指南给出 DFlash 启动示例，支持矩阵列出 Qwen3-4B 的 DFlash/DSpark 测试覆盖。它扩大了 DFlash 的可运行平台；官方资料尚未给出与 GPU 或 target-only 的同条件 DFlash 吞吐对比。
+
+[查看 2026-10-21 日报与扫描范围](daily/2026-10-21.md)。
+
+## 2026-10-20
+
+> **暂无重要新增。** 继续定向检索 DFlash、block diffusion drafting、候选路径、训练、跨轮复用与验证成本；新检索结果未出现经原始来源核验且符合范围的未收录论文。SGLang 的 DFlash 性能 PR 为 10 月初已合并进展，本日不重复记为新增。
+
+[查看 2026-10-20 日报与扫描范围](daily/2026-10-20.md)。
+
+## 2026-10-19
+
+> **暂无重要新增。** 本轮优先补查 DFlash 与块扩散并行草稿论文，并与 10 月 17 日已收录的 D-Loop、DLoop、DCOCO、TreeSpark 等条目去重；没有发现经核验的新论文或值得单列的官方实现进展。
+
+[查看 2026-10-19 日报与扫描范围](daily/2026-10-19.md)。
+
 ## 2026-10-17
 
-> **新增核验：9 篇 10 月论文 + LoopSpec 历史补收。** 本期重点是 D-Loop 与 DLoop 两种不同的 loop、DCOCO/TreeSpark 的候选修复与树训练、ReaDy/FOLD 的上下文利用，以及 JetSpec++/LoopAhead 的预投机流水线。数据同步到交互网站 `src/data/`，新条目暂不伪造 PDF 缩略图。
+> **新增核验：9 篇 10 月论文 + LoopSpec 历史补收。** 本期重点是 D-Loop 与 DLoop 两种不同的 loop、DCOCO/TreeSpark 的候选修复与树训练、ReaDy/FOLD 的上下文利用，以及 JetSpec++/LoopAhead 的预投机流水线。数据同步到交互网站 `src/data/`；论文卡片使用 CI 从原始 PDF 渲染的首页缩略图。
 
 | 时间 | 新进展 | 为什么值得看 |
 |---|---|---|

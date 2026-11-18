@@ -6,7 +6,7 @@ const radar = JSON.parse(await readFile(new URL('../src/data/engineering.json', 
 
 test('engineering radar keeps PR/Issue references separately from research methods', async () => {
   const methods = JSON.parse(await readFile(new URL('../src/data/methods.json', import.meta.url),'utf8'));
-  assert.equal(methods.length, 60, 'the paper method atlas remains intact at this 2026-10-17 snapshot');
+  assert.ok(methods.length >= 63, 'the paper method atlas includes DLite, FlashMap and DStill');
   assert.equal(radar.asOf, '2026-10-17');
   const repos = new Map(radar.projects.map(project => [project.id, project.url]));
   assert.equal(repos.size, radar.projects.length);
