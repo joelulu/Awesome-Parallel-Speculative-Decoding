@@ -45,6 +45,7 @@ PR 只构建和测试，不部署。推送 main 后部署；每日 UTC 01:17（�
 - `categories.json`：六个问题方向的名称和颜色。
 - `relations.json`：具体方法之间的直接改进或组合关系及证据。
 - `citations.json`：已核验的站内论文引用。记录引用者 `source`、被引用者 `target`、引用用途 `role`、原文位置 `location`、证据链接 `evidenceUrl` 和说明 `note`。仅收录已从论文正文或参考文献核验的引用。
+- `benchmarks.json`：按论文实验场景记录主要基线、其他对比、原文位置、结果口径和证据链接。同一论文可记录多个实验场景。站内基线填 `methodId`，研究详情会自动生成反向的「后续被用作基线」；技术后续仍由已核验的扩展和组合关系生成。
 - `briefs.json`：从每日 Markdown 同步出的简短条目。
 - `stars.json`：真实 GitHub Star 数量与获取时间；不能手工填入估计数字。
 - `paper-metadata.json`：已取得的一手资料标题、作者、来源与论文首页缩略图路径。

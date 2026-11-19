@@ -2,6 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, Minus, Plus, Scan } from 'lucide-react';
 import type { Category, Method, Relation } from './types';
 import citations from './data/citations.json';
+import MethodResearchDetails, { publicationMonth } from './MethodResearchDetails';
 
 type Props = {
   methods: Method[]; categories: Category[]; relations: Relation[];
@@ -30,6 +31,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   const [size, setSize] = useState({ width: 900, height: 520 });
   const [hover, setHover] = useState<string | null>(null);
   const stage = useRef<HTMLDivElement>(null);
+  const research = useRef<HTMLDivElement>(null);
   const drag = useRef<{ id: number; x: number; y: number; left: number; top: number } | null>(null);
   const catalog = useMemo(() => new Map(methods.map(method => [method.id, method])), [methods]);
   const categoryIndex = useMemo(() => new Map(categories.map(category => [category.id, category])), [categories]);
@@ -106,9 +108,14 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     };
     placeColumn(upstream, -1);
     placeColumn(downstream, 1);
-    [...new Set(related.map(otherId))].forEach((id, index) => {
+    const relatedIds = [...new Set(related.map(otherId))].filter(id => !bounds.has(id));
+    const rowSize = width < 580 ? 2 : 4;
+    relatedIds.forEach((id, index) => {
       const method = catalog.get(id);
-      if (method && !bounds.has(id)) place(method, 0, 65 + index * 25);
+      const row = Math.floor(index / rowSize), column = index % rowSize;
+      const count = Math.min(rowSize, relatedIds.length - row * rowSize);
+      const fraction = (column - (count - 1) / 2) / Math.max(1, count - 1);
+      if (method) place(method, fraction * Math.min(width * .56, 590) + (row % 2 ? 12 : 0), 100 + row * 49);
     });
   } else {
     categories.forEach((category, index) => {
@@ -152,10 +159,11 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   const edges = local ? direct : layerEdges;
   const position = (point: Point) => ({ left: point.x, top: point.y });
 
-  return <div className="globe-frame">
+  return <div className="globe-frame" data-research-details>
     <div className="globe-toolbar">
-      <span aria-live="polite">{local ? `${current?.name} · ${neighbors.size} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
+      <span aria-live="polite">{local && current ? `${current.name} · ${publicationMonth(current)} · ${neighbors.size} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
       <div>
+        {local && <button type="button" onClick={() => research.current?.scrollIntoView({ block: 'start' })}>查看研究详情</button>}
         <button type="button" aria-label="缩小星球视图" onClick={() => zoomBy(.8)}><Minus size={16}/></button>
         <button type="button" aria-label="放大星球视图" onClick={() => zoomBy(1.25)}><Plus size={16}/></button>
         <button type="button" onClick={() => select(rootId, false)}><Scan size={15}/> 返回全图</button>
@@ -167,7 +175,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
       {layer === 'citations' && <span>已核验 {citationEdges.length} 条 · 引用者 → 被引用者</span>}
     </div>
     <div className="globe-stage" ref={stage} aria-label="研究方法关系图"
-      style={local ? { minHeight: Math.max(upstream.length * 25 + 65, downstream.length * 25 + 65, related.length * 50 + 165) } : undefined}
+      style={local ? { minHeight: Math.max(upstream.length * 25 + 65, downstream.length * 25 + 65, 270 + Math.max(0, Math.ceil(related.length / (width < 580 ? 2 : 4)) - 1) * 98) } : undefined}
       onPointerDown={event => {
         if (event.button !== 0 || (event.target as Element).closest('button')) return;
         drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY, left: view.x, top: view.y };
@@ -181,6 +189,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
       }}
       onLostPointerCapture={() => { drag.current = null; }}>
       {local && <div className="globe-column-labels" aria-hidden="true"><span>{leftTitle}</span><span>当前方法</span><span>{rightTitle}</span></div>}
+      {local && related.length > 0 && <span className="globe-related-label">下方点线 · 相关工作</span>}
       <svg className="globe-edges" aria-hidden="true">
       <defs><marker id={arrow} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
         <path d="M0 0 L8 4 L0 8 Z" fill="#a9c0e4"/>
@@ -225,12 +234,17 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
       </button>)}
     </div>
     <div className="globe-legend">{layer === 'lineage' ? <><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></> : <span>箭头指向被引用的论文</span>}</div>
-    {current && <div className="globe-selection">
+    {current && <div className="globe-selection" ref={research}>
       <div><h3>{current.name}</h3><p>{current.summary}</p></div>
       <a href={`#method-${current.id}`} onClick={event => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault(); onRead(current.id);
       }}>阅读方法卡片 <ArrowUpRight size={14}/></a>
+      {local && <MethodResearchDetails key={selected} method={current} category={categoryIndex.get(current.category)}
+        catalog={catalog} relations={verified} onSelect={id => {
+          select(id);
+          stage.current?.scrollIntoView({ block: 'nearest' });
+        }}/>}
       {local && (direct.length ? <details key={selected + layer}><summary>连线证据（{direct.length}）</summary>
         {([{ title: leftTitle, group: upstream }, { title: rightTitle, group: downstream }, { title: '相关方法', group: related }]).map(({ title, group }) =>
           group.length > 0 && <section key={title}><h4>{title}</h4><ul>

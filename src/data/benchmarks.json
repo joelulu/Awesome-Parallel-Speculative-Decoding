@@ -1,0 +1,44 @@
+[
+  {
+    "methodId":"dflash","context":"Qwen3 指令模型 · Table 1 / §5.1","source":"https://arxiv.org/html/2602.06036v1#S5.SS1",
+    "primary":{"label":"EAGLE-3","note":"主要投机解码对照，测试 16 和 60 个树节点。"},
+    "others":[{"label":"原生自回归（AR）","note":"加速比的参照。"}],
+    "takeaway":"对比解码加速比和平均接受长度，需区分 EAGLE-3 的候选树大小和 DFlash 的草稿块大小。"
+  },
+  {
+    "methodId":"dspark","context":"离线草稿质量 · Table 1 / §4.2","source":"https://arxiv.org/html/2607.05147v1#S4.SS2",
+    "primary":{"methodId":"dflash","label":"DFlash","note":"全并行起草对照，最直接检验块内顺序修正的收益。"},
+    "others":[{"label":"EAGLE-3","note":"自回归草稿器对照。"}],
+    "takeaway":"关闭置信度调度、固定草稿块比较接受长度。Qwen3-4B/8B/14B 宏平均接受长度较 DFlash 分别提升 16.3% / 18.4% / 18.3%。"
+  },
+  {
+    "methodId":"dspark","context":"DeepSeek-V4 真实流量 · Figure 7 / §5.4","source":"https://arxiv.org/html/2607.05147v1#S5.SS4",
+    "primary":{"label":"MTP-1","note":"原生产系统的一 token 草稿配置。"},
+    "others":[],
+    "takeaway":"比较系统总吞吐和每用户生成速度。Flash 与 Pro 的结果分别报告，和离线接受长度属于不同口径。"
+  },
+  {
+    "methodId":"ddtree","context":"单链与候选树对照 · Table 1 / §5.2","source":"https://liranringel.github.io/ddtree/DDTree.pdf#page=11",
+    "primary":{"methodId":"dflash","label":"原版 DFlash","note":"单路径验证；DDTree 基于同类块扩散草稿分布构建候选树。"},
+    "others":[{"label":"原生自回归（AR）","note":"加速比的参照。"}],
+    "takeaway":"同时关注接受长度和端到端加速。增大树预算可以继续拉长接受前缀，但验证开销也会上升。"
+  },
+  {
+    "methodId":"dflow","context":"低并发 · Table 1","source":"https://arxiv.org/pdf/2609.06498#page=7",
+    "primary":{"methodId":"dflash","label":"DFlash","note":"不传递上一轮拒绝位置的验证器信息。"},
+    "others":[{"label":"EAGLE-3","note":"自回归草稿器对照。"}],
+    "takeaway":"比较 T=0 和 T=1 的接受长度，低并发结果应和高并发的吞吐结果分别读。"
+  },
+  {
+    "methodId":"treespark","context":"Qwen3-4B / 8B 贪心解码 · 原文摘要","source":"https://arxiv.org/abs/2610.20175",
+    "primary":{"methodId":"dspark","label":"DSpark","note":"原文报告相对 DSpark 的接受长度和单请求吞吐增益。"},
+    "others":[],
+    "takeaway":"原文摘要报告相对 DSpark 的平均接受长度提升 23.4%–31.6%，平均单请求吞吐提升 15.1%–25.0%。"
+  },
+  {
+    "methodId":"adaspark","context":"同草稿器对照 · 原文摘要","source":"https://arxiv.org/abs/2610.05774",
+    "primary":{"methodId":"dspark","label":"llama.cpp 的 DSpark","note":"采用相同草稿器的引擎配置对照。"},
+    "others":[{"label":"imparo 三 token 链","note":"同引擎对照，用于分离调度器贡献。"}],
+    "takeaway":"同时报告同引擎的三 token 链式对照；跨引擎增益和调度器单独贡献需要分别读。"
+  }
+]

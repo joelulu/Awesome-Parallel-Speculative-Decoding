@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-export function validateData({methods,categories,relations,citations=[],briefs,stars,abstracts={},metadata={}}) {
+export function validateData({methods,categories,relations,citations=[],benchmarks=[],briefs,stars,abstracts={},metadata={}}) {
   const errors=[];const ids=new Set();const cats=new Set(categories.map(c=>c.id));const papers=new Set();
   const url=(value,label)=>{try{if(new URL(value).protocol!=='https:')errors.push(`${label}: HTTPS required`);}catch{errors.push(`${label}: invalid URL`);}};
   for(const m of methods){
@@ -34,6 +34,22 @@ export function validateData({methods,categories,relations,citations=[],briefs,s
     if (!evidenceUrl || !role?.trim() || !location?.trim() || !note?.trim()) errors.push(`Missing citation evidence details: ${key}`);
   }
   const dates=new Set();
+  const benchmarkIds = new Set();
+  const hasText = value => typeof value === 'string' && !!value.trim();
+  for (const b of benchmarks) {
+    const key = `${b.methodId} · ${b.context}`;
+    if (!ids.has(b.methodId) || !hasText(b.context) || !hasText(b.takeaway) || benchmarkIds.has(key)) errors.push(`Invalid or duplicate benchmark: ${key}`);
+    benchmarkIds.add(key);
+    url(b.source, `Benchmark evidence: ${key}`);
+    if (!b.primary || !Array.isArray(b.others)) { errors.push(`Missing benchmark baseline fields: ${key}`); continue; }
+    const comparisonIds = new Set();
+    for (const baseline of [b.primary, ...b.others]) {
+      const id = baseline?.methodId ?? baseline?.label;
+      if (!hasText(baseline?.label) || !hasText(baseline?.note) || comparisonIds.has(id) ||
+          (baseline?.methodId && (!ids.has(baseline.methodId) || baseline.methodId === b.methodId))) errors.push(`Invalid baseline: ${key}`);
+      comparisonIds.add(id);
+    }
+  }
   for(const b of briefs){if(!/^\d{4}-\d{2}-\d{2}$/.test(b.date)||dates.has(b.date))errors.push(`Invalid or duplicate brief date ${b.date}`);dates.add(b.date);url(b.archiveUrl,'Brief archive');for(const item of b.items){if(!item.title||!item.summary)errors.push('Empty brief item');if(item.sourceUrl)url(item.sourceUrl,'Brief source');for(const id of item.methodIds)if(!ids.has(id))errors.push(`Brief references unknown method ${id}`);}}
   for(const [repo,snapshot] of Object.entries(stars))if(!Number.isInteger(snapshot.count)||snapshot.count<0||!Number.isFinite(Date.parse(snapshot.updatedAt)))errors.push(`Invalid star snapshot: ${repo}`);
   for(const [id,abstract] of Object.entries(abstracts)) {
@@ -48,5 +64,5 @@ export function validateData({methods,categories,relations,citations=[],briefs,s
   }
   return errors;
 }
-export async function loadData(){const names=['methods','categories','relations','citations','briefs','stars','abstracts','paper-metadata'];return Object.fromEntries(await Promise.all(names.map(async n=>[n==='paper-metadata'?'metadata':n,JSON.parse(await readFile(new URL(`../src/data/${n}.json`,import.meta.url),'utf8'))])));}
+export async function loadData(){const names=['methods','categories','relations','citations','benchmarks','briefs','stars','abstracts','paper-metadata'];return Object.fromEntries(await Promise.all(names.map(async n=>[n==='paper-metadata'?'metadata':n,JSON.parse(await readFile(new URL(`../src/data/${n}.json`,import.meta.url),'utf8'))])));}
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const data=await loadData();const errors=validateData(data);if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log(`Validated ${data.methods.length} methods, ${data.relations.length} relations, ${data.briefs.length} briefs.`);}

@@ -26,8 +26,8 @@ try {
     const title = await page.locator('#daily .brief-intro h3').textContent();
     const count = await page.locator('.intro-meta').textContent();
     const hasDefaultGlobe = await page.getByRole('button', { name: '星球关系图', exact: true, pressed: true }).count();
-    const hasCitationLayer = await page.getByRole('button', { name: '论文引用', exact: true }).count();
-    if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe && hasCitationLayer) { ready = true; break; }
+    const hasResearchDetails = await page.locator('.globe-frame[data-research-details]').count();
+    if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe && hasResearchDetails) { ready = true; break; }
     await page.waitForTimeout(5000);
   }
   assert.ok(ready, 'Pages has not served the expected catalog/brief yet');
@@ -103,6 +103,10 @@ try {
   await page.locator('.globe-stage .globe-node[aria-pressed=true][aria-label="聚焦 DDTree"]').waitFor();
   assert.ok((await page.locator('.globe-node').count()) < methods.length);
   assert.equal(await ddtree.getAttribute('aria-pressed'), 'true');
+  const research = page.getByRole('article', { name: 'DDTree 研究详情' });
+  assert.ok((await research.locator('time').textContent()).includes('2026 年 4 月'));
+  assert.ok(await research.getByRole('button', { name: '原版 DFlash', exact: true }).isVisible());
+  assert.ok((await research.locator('.globe-benchmark-context').textContent()).includes('Table 1'));
   const rootNode = page.getByRole('button', { name: '聚焦 DFlash', exact: true });
   assert.ok((await rootNode.boundingBox()).x < (await ddtree.boundingBox()).x);
   const rootPosition = await rootNode.getAttribute('style');
