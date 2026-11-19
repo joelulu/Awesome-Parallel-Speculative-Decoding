@@ -40,7 +40,7 @@ export default function App(){
   const [readKey,setReadKey]=useState(0);
   const [focusId,setFocusId]=useState<string|null>(null);
   const [focusKey,setFocusKey]=useState(0);
-  const [mapMode,setMapMode]=useState<'timeline'|'globe'>('timeline');
+  const [mapMode,setMapMode]=useState<'timeline'|'globe'>('globe');
   const [unknown,setUnknown]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [today,setToday]=useState(todayInShanghai());

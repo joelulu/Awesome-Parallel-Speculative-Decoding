@@ -12,6 +12,10 @@ const rootId = 'dflash';
 const fullTurn = 2 * Math.PI;
 const relationNames: Record<string, string> = { extends: '扩展', combines: '组合', related: '相关' };
 const neutralView = { x: 0, y: 0, zoom: 1 };
+const globeColors: Record<string, string> = {
+  architecture: '#77b8ff', training: '#ffcb79', causality: '#6ce0ba', tree: '#ff8ea9',
+  systems: '#b6a0ff', reuse: '#f28de5', extensions: '#69dce9',
+};
 
 export default function ResearchGlobe({ methods, categories, relations, focusId, focusKey, onRead }: Props) {
   const [selected, setSelected] = useState(rootId);
@@ -160,7 +164,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
         const dim = direction && method.id !== rootId && method.category !== direction;
         return <div key={method.id} className={dim ? 'globe-method is-dimmed' : 'globe-method'}>
           <button type="button" className={`globe-node ${local ? 'is-local' : ''}`}
-            style={{ ...position(point), backgroundColor: method.id === rootId ? '#245778' : categoryIndex.get(method.category)?.color }}
+            style={{ ...position(point), color: method.id === rootId ? 'var(--globe-core)' : globeColors[method.category] ?? categoryIndex.get(method.category)?.color }}
             aria-label={`聚焦 ${method.name}`} aria-pressed={method.id === selected}
             onMouseEnter={() => setHover(method.id)} onMouseLeave={() => setHover(null)}
             onFocus={() => setHover(method.id)} onBlur={() => setHover(null)}
@@ -178,7 +182,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     <div className="globe-controls">
       {categories.map(category => <button key={category.id} type="button" aria-pressed={direction === category.id}
         onClick={() => { select(rootId); setDirection(direction === category.id ? '' : category.id); }}>
-        <i style={{ backgroundColor: category.color }}/>{category.name}
+        <i style={{ backgroundColor: globeColors[category.id] ?? category.color }}/>{category.name}
       </button>)}
     </div>
     <div className="globe-legend"><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></div>

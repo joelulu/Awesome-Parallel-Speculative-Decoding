@@ -25,13 +25,16 @@ try {
     await page.locator('#daily .brief-intro h3').waitFor();
     const title = await page.locator('#daily .brief-intro h3').textContent();
     const count = await page.locator('.intro-meta').textContent();
-    const hasGlobe = await page.getByRole('button', { name: '星球关系图', exact: true }).count();
-    if (title === brief.title && count.includes(methods.length + '') && hasGlobe) { ready = true; break; }
+    const hasDefaultGlobe = await page.getByRole('button', { name: '星球关系图', exact: true, pressed: true }).count();
+    if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe) { ready = true; break; }
     await page.waitForTimeout(5000);
   }
   assert.ok(ready, 'Pages has not served the expected catalog/brief yet');
-  await page.locator('.react-flow__node[data-id="dspine"]').waitFor();
+  await page.getByRole('button', { name: '聚焦 DFlash', exact: true }).waitFor();
+  assert.equal(await page.locator('.globe-stage').evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(9, 15, 29)');
   await page.screenshot({ path: path.join(output, 'home.png') });
+  await page.getByRole('button', { name: '平行时间线', exact: true }).click();
+  await page.locator('.react-flow__node[data-id="dspine"]').waitFor();
   assert.equal(await page.locator('#daily .brief-list > li').count(), Math.min(5, brief.items.length));
   await page.locator('#daily').screenshot({ path: path.join(output, 'daily.png') });
 
@@ -113,7 +116,7 @@ try {
 
   assert.deepEqual(pageErrors, []);
   const report = { commit: process.env.GITHUB_SHA, url: url.href, status: 'success', methods: methods.length,
-    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'globe switch', 'globe search focus', 'globe zoom', 'globe evidence', 'globe paper card', 'no page errors'] };
+    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'dark globe by default', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'globe switch', 'globe search focus', 'globe zoom', 'globe evidence', 'globe paper card', 'no page errors'] };
   await writeFile(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } catch (error) {
