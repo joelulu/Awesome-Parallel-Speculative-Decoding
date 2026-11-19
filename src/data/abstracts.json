@@ -448,5 +448,11 @@
     "sourceUrl": "https://arxiv.org/abs/2611.18482",
     "translatedAt": "2026-11-18",
     "kind": "translated-summary"
+  },
+  "dynadflash": {
+    "text": "DynaDFlash 检验 DFlash 的 target hidden 多层特征是否应随 token 上下文动态加权。它以 target 第 34 层隐状态计算五个门控值，再缩放所选层特征并沿用原投影，仅增加 20,480 个参数。700 道数学题上平均接受长度由 2.98 提至 3.13；24 个提示、8 并发的服务测试吞吐提升 4.1%。完整评测没有显著接受长度差异，且自训基线弱于已发布的 DFlash 模型。因此值得作为特定任务的特征融合实验收录，通用性仍待验证。",
+    "sourceUrl": "https://arxiv.org/abs/2611.19085",
+    "translatedAt": "2026-11-19",
+    "kind": "translated-summary"
   }
 }

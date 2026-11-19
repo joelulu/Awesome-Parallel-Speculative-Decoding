@@ -1269,5 +1269,16 @@
     ],
     "pdfUrl": "https://arxiv.org/pdf/2611.18482",
     "fetchedAt": "2026-11-18"
+  },
+  "dynadflash": {
+    "sourceUrl": "https://arxiv.org/abs/2611.19085",
+    "status": "fetched",
+    "title": "DynaDFlash: Dynamic Feature Projection for Block Diffusion Speculators",
+    "authors": [
+      "Aadi Kulshrestha",
+      "Reese Chong"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.19085",
+    "fetchedAt": "2026-11-19"
   }
 }

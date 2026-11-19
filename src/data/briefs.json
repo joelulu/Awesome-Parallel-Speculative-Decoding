@@ -1,5 +1,20 @@
 [
   {
+    "date": "2026-11-19",
+    "title": "补录 DynaDFlash：动态 target 特征融合",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-19.md",
+    "items": [
+      {
+        "title": "DynaDFlash · Dynamic Feature Projection for Block Diffusion Speculators",
+        "summary": "按 token 动态调节五层 target hidden 特征，再投影给 DFlash 草稿模型。",
+        "sourceUrl": "https://arxiv.org/abs/2611.19085",
+        "methodIds": [
+          "dynadflash"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-11-18",
     "title": "补录 MMFlash：视觉依赖感知的 DFlash 草拟",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-18.md",

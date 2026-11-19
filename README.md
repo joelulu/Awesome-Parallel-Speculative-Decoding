@@ -113,6 +113,7 @@
 | **2026-11-05** | **ChainFlow — Few-Step Latent Flow Matching for Speculative Decoding** | 一步目标特征流草拟，配合 token feedback 和候选树。 | DFlash 缺块内依赖，大树在高并发时验证昂贵。 | VAE 压缩 target hidden，条件 flow 草拟并反馈修正；Qwen3.5-4B 单 B300、batch 1 的 8×4 树比 DFlash 快 11%，batch≥8 时慢于无投机。([arXiv](https://arxiv.org/abs/2611.08669), [code](https://github.com/Cosmos-YTU/chain-flow))。 |
 
 
+| **2026-11-14** | **DynaDFlash — Dynamic Feature Projection for Block Diffusion Speculators** | 按 token 动态融合 target hidden 特征。 | DFlash 固定投影不能适应上下文。 | 第 34 层特征生成五层门控；数学题接受长度 +5%，全任务无显著差异。([arXiv](https://arxiv.org/abs/2611.19085), [code](https://github.com/midas-llm-research/DynaDFlash)) |
 | **2026-11-13** | **MMFlash — Faster Speculative Decoding for Vision-Language Models** | 用视觉依赖与错误率重加权 DFlash 训练。 | 图像依赖 token 降低接受率。 | 有图/无图 target 分布 KL 引导损失，长视频用稀疏注意力。([arXiv](https://arxiv.org/abs/2611.18482)) |
 | **2026-11-08** | **D3Tree — Learning to Prune Block-Diffusion Draft Trees for Efficient Verification** | 学习候选节点存活率，按并发负载分配全批验证预算。 | DFlash 候选树在高并发时验证低收益节点。 | 冻结 drafter 训练存活率头，按父链裁剪闭合子树，按负载与矩阵乘 tile 分配全批预算。([arXiv](https://arxiv.org/abs/2611.11371)) |
 | **2026-11-09** | **DForkTree — Accelerating Speculative Decoding with Fork-Aware Block Diffusion Draft Trees** | 用目标输出的 n-gram 路径统计修正分叉后草稿分布，并精确构造预算内候选树。 | DFlash 的逐位置分布按自身主路径预测；树在分叉后仍使用这些分布，条件前缀失配导致预算浪费。 | 从 target 生成文本提取 n-gram，将路径 PMI 加入候选分数，分叉后提高权重，用 GPU 分层搜索构造最优树；无需重训 drafter。 ([arXiv](https://arxiv.org/abs/2611.12356)) |
@@ -125,6 +126,12 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+## 2026-11-19
+
+补录 [DynaDFlash](https://arxiv.org/abs/2611.19085)：动态 target 特征融合在数学题有小幅收益，全任务未显著改善。
+
+[查看 2026-11-19 日报](daily/2026-11-19.md)。
 
 ## 2026-11-13
 

@@ -2234,5 +2234,41 @@
     "importance": 4,
     "pinned": false,
     "updatedAt": "2026-11-18"
+  },
+  {
+    "id": "dynadflash",
+    "name": "DynaDFlash",
+    "title": "DynaDFlash: Dynamic Feature Projection for Block Diffusion Speculators",
+    "date": "2026-11-14",
+    "dateLabel": "2026-11-14",
+    "category": "architecture",
+    "tags": [
+      "DFlash",
+      "DFlare",
+      "target hidden states",
+      "dynamic feature fusion",
+      "math"
+    ],
+    "summary": "按 token 动态调节五层 target hidden 特征，再投影给 DFlash 草稿模型。",
+    "problem": "DFlash 的 target 特征投影固定，无法随当前 token 调整各层贡献。",
+    "solution": "用最后一层 target hidden 产生五个门控权重，逐层缩放特征后沿用 DFlash 投影；新增 20,480 参数。",
+    "reason": "直接修改 DFlash 并受 DFlare 启发；700 道数学题平均接受长度 2.98→3.13，8 并发小样本吞吐提升 4.1%，但全任务无显著改善且基线弱于已发布 DFlash。值得列入 Draft Quality 的待验证方向，不宜宣称通用收益。",
+    "paperUrl": "https://arxiv.org/abs/2611.19085",
+    "sourceUrl": "https://arxiv.org/abs/2611.19085",
+    "code": [
+      {
+        "url": "https://github.com/midas-llm-research/DynaDFlash",
+        "repo": "midas-llm-research/DynaDFlash",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2611.19085",
+        "checkedAt": "2026-11-19",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "pinned": false,
+    "updatedAt": "2026-11-19"
   }
 ]

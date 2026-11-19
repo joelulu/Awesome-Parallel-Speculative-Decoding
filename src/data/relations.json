@@ -542,5 +542,21 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/html/2611.18482",
     "note": "直接沿用 DFlash 块扩散 drafter 与位置损失，在视觉依赖 token 上调整训练权重，并以同数据 DFlash 为基线。"
+  },
+  {
+    "source": "dflash",
+    "target": "dynadflash",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.19085",
+    "note": "沿用 DFlash 投影与训练，在输入前加入逐 token 的目标层特征门控。"
+  },
+  {
+    "source": "dflare",
+    "target": "dynadflash",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.19085",
+    "note": "论文明确受 DFlare 分层特征组合启发，但改为随 token 动态调权。"
   }
 ]
