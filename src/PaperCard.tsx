@@ -3,6 +3,7 @@ import { ArrowUpRight, BookOpen, ChevronDown, ChevronUp, Github, LocateFixed, St
 import abstractsJson from './data/abstracts.json';
 import metadataJson from './data/paper-metadata.json';
 import type { Method, Category, Relation, Stars } from './types';
+import MethodResearchDetails from './MethodResearchDetails';
 
 type Abstract = { text: string; sourceUrl: string; translatedAt: string; kind?: string };
 type Metadata = { title?: string; authors?: string[]; thumbnail?: string; sourceUrl: string; status: string; kind?: string };
@@ -43,7 +44,12 @@ export default function PaperCard({ method, category, highlight, onLocate, stars
         <button onClick={() => setDetails(value => !value)} aria-expanded={details}>研究笔记与来源{details ? <ChevronUp size={13}/> : <ChevronDown size={13}/>}</button>
         {abstract && <External href={abstract.sourceUrl} className="translation-source">{isArticle ? '官方文章中文概要' : '摘要中文译述'} · 原文<ArrowUpRight size={12}/></External>}
       </div>
-      {details && <div className="paper-notes"><p><b>核心问题：</b>{method.problem}</p><p><b>解决方式：</b>{method.solution}</p><p>{method.reason}。{method.citationStatus === 'root' ? 'DFlash 原始工作。' : method.citationStatus === 'confirmed' ? 'DFlash 引用关系已核验；具体继承或关联见下方证据。' : '尚未核实直接 DFlash 引用；关联范围见研究笔记。'}</p>{related.map(relation => <p key={`${relation.source}-${relation.target}`}><External href={relation.evidenceUrl}>{methods.find(m => m.id === relation.source)?.name} → {methods.find(m => m.id === relation.target)?.name}</External>：{relation.note}</p>)}</div>}
+      {details && <div className="paper-notes">
+        <p><b>核心问题：</b>{method.problem}</p><p><b>解决方式：</b>{method.solution}</p><p>{method.reason}</p>
+        <MethodResearchDetails compact method={method} category={category}
+          catalog={new Map(methods.map(item => [item.id, item]))} relations={relations} onSelect={onLocate}/>
+        {related.filter(relation => relation.status !== 'verified').map(relation => <p key={`${relation.source}-${relation.target}-${relation.type}`}><b>待核验关系：</b><External href={relation.evidenceUrl}>{methods.find(m => m.id === relation.source)?.name} → {methods.find(m => m.id === relation.target)?.name}</External>：{relation.note}</p>)}
+      </div>}
     </div>
     <aside className="paper-metrics" aria-label={`${method.name} 代码仓库`}>
       {method.code.length ? method.code.map(code => <External key={code.url} href={code.url} className="paper-repository" title={`${code.repo}${stars[code.repo] ? ` · Star 更新于 ${stars[code.repo].updatedAt}` : ''}`}>

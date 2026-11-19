@@ -26,7 +26,7 @@ try {
     const title = await page.locator('#daily .brief-intro h3').textContent();
     const count = await page.locator('.intro-meta').textContent();
     const hasDefaultGlobe = await page.getByRole('button', { name: '星球关系图', exact: true, pressed: true }).count();
-    const hasResearchDetails = await page.locator('.globe-frame[data-research-details]').count();
+    const hasResearchDetails = await page.locator('.globe-frame[data-method-links]').count();
     if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe && hasResearchDetails) { ready = true; break; }
     await page.waitForTimeout(5000);
   }
@@ -125,6 +125,17 @@ try {
   assert.ok(await page.locator('.globe-peers button').count() > 0);
   await page.getByRole('link', { name: '阅读方法卡片', exact: true }).click();
   await page.locator('#method-ddtree.highlighted').waitFor();
+  const methodNotes = page.locator('#method-ddtree').getByRole('button', { name: '研究笔记与来源' });
+  await methodNotes.click();
+  assert.ok(await page.locator('#method-ddtree').getByRole('article', { name: 'DDTree 研究详情' }).isVisible());
+  await methodNotes.click();
+  await page.getByRole('button', { name: '技术演进', exact: true }).click();
+  for (const methodName of ['JetSpec', 'JetSpec++', 'DSpark', 'DDTree', 'JetSpec']) {
+    await searchMap.fill(methodName);
+    await searchMap.press('Enter');
+    await page.locator('.globe-selection').getByRole('article', { name: methodName + ' 研究详情', exact: true }).waitFor();
+    assert.equal(await page.locator('.globe-selection .globe-research-card').count(), 1);
+  }
   await page.getByRole('button', { name: '平行时间线', exact: true }).click();
   await page.locator('.react-flow__node[data-id="ddtree"]').waitFor();
 

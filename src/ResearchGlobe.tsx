@@ -159,7 +159,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   const edges = local ? direct : layerEdges;
   const position = (point: Point) => ({ left: point.x, top: point.y });
 
-  return <div className="globe-frame" data-research-details>
+  return <div className="globe-frame" data-method-links>
     <div className="globe-toolbar">
       <span aria-live="polite">{local && current ? `${current.name} · ${publicationMonth(current)} · ${neighbors.size} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
       <div>
@@ -234,18 +234,18 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
       </button>)}
     </div>
     <div className="globe-legend">{layer === 'lineage' ? <><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></> : <span>箭头指向被引用的论文</span>}</div>
-    {current && <div className="globe-selection" ref={research}>
+    {current && <div className="globe-selection" key={current.id} ref={research}>
       <div><h3>{current.name}</h3><p>{current.summary}</p></div>
       <a href={`#method-${current.id}`} onClick={event => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault(); onRead(current.id);
       }}>阅读方法卡片 <ArrowUpRight size={14}/></a>
-      {local && <MethodResearchDetails key={selected} method={current} category={categoryIndex.get(current.category)}
+      {local && <MethodResearchDetails method={current} category={categoryIndex.get(current.category)}
         catalog={catalog} relations={verified} onSelect={id => {
           select(id);
           stage.current?.scrollIntoView({ block: 'nearest' });
         }}/>}
-      {local && (direct.length ? <details key={selected + layer}><summary>连线证据（{direct.length}）</summary>
+      {local && (direct.length ? <details key={layer}><summary>连线证据（{direct.length}）</summary>
         {([{ title: leftTitle, group: upstream }, { title: rightTitle, group: downstream }, { title: '相关方法', group: related }]).map(({ title, group }) =>
           group.length > 0 && <section key={title}><h4>{title}</h4><ul>
             {group.map((edge, index) => <li key={index}>
@@ -256,7 +256,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
             </li>)}
           </ul></section>)}
       </details> : <p>{layer === 'citations' ? '当前资料库尚未收录该方法的已核验引用。' : '暂无已核验的直接关系。'}</p>)}
-      {local && <details key={selected}><summary>同方向方法</summary>
+      {local && <details><summary>同方向方法</summary>
         <div className="globe-peers">{methods.filter(method => method.category === current.category && method.id !== selected)
           .map(method => <button key={method.id} type="button" onClick={() => select(method.id)}>{method.name}</button>)}</div>
       </details>}

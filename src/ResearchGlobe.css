@@ -82,4 +82,12 @@
 .globe-research-related { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .globe-research-related ul { margin: 6px 0 0; }
 .globe-research-card .globe-method-link { color: var(--globe-core); padding: 0; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+.globe-relationship-group { margin-top: 10px; }
+.globe-relationship-group p { margin: 0; }
+.globe-research-card .globe-baseline-contexts { margin: 2px 0 8px; padding-left: 14px; list-style: none; }
+.paper-notes .globe-research-card {
+  --globe-night: #f8fafb; --globe-line: #dbe2e8;
+  --globe-ink: #24324a; --globe-quiet: #526276; --globe-core: #24618a;
+  color: var(--globe-ink); margin-top: 12px;
+}
 @media (max-width: 650px) { .globe-research-related { grid-template-columns: 1fr; } }

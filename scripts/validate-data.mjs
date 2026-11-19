@@ -35,6 +35,11 @@ export function validateData({methods,categories,relations,citations=[],benchmar
   }
   const dates=new Set();
   const benchmarkIds = new Set();
+  const benchmarkMethods = new Set(benchmarks.map(item => item.methodId));
+  for (const method of methods) {
+    const expected = benchmarkMethods.has(method.id) ? 'verified' : 'pending';
+    if (method.benchmarkReview !== expected) errors.push(`${method.id}: benchmarkReview must be ${expected}`);
+  }
   const hasText = value => typeof value === 'string' && !!value.trim();
   for (const b of benchmarks) {
     const key = `${b.methodId} · ${b.context}`;
