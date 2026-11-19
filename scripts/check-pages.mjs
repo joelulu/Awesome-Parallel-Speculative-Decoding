@@ -25,7 +25,8 @@ try {
     await page.locator('#daily .brief-intro h3').waitFor();
     const title = await page.locator('#daily .brief-intro h3').textContent();
     const count = await page.locator('.intro-meta').textContent();
-    if (title === brief.title && count.includes(methods.length + '')) { ready = true; break; }
+    const hasGlobe = await page.getByRole('button', { name: '星球关系图', exact: true }).count();
+    if (title === brief.title && count.includes(methods.length + '') && hasGlobe) { ready = true; break; }
     await page.waitForTimeout(5000);
   }
   assert.ok(ready, 'Pages has not served the expected catalog/brief yet');
@@ -87,9 +88,32 @@ try {
       a.y < b.y + b.height - 1 && b.y < a.y + a.height - 1), a.id + ' overlaps ' + b.id);
   }
   assert.equal(await page.locator('.timeline-new-badge').count(), 3);
+
+  await page.getByRole('button', { name: '星球关系图', exact: true }).click();
+  await page.getByRole('button', { name: '返回全图', exact: true }).click();
+  assert.equal(await page.locator('.globe-node').count(), methods.length);
+  const ddtree = page.getByRole('button', { name: '聚焦 DDTree', exact: true });
+  const searchMap = page.getByRole('textbox', { name: '搜索方法、问题或关键词' });
+  await searchMap.fill('DDTree');
+  await searchMap.press('Enter');
+  await page.locator('.globe-stage .globe-node[aria-pressed=true][aria-label="聚焦 DDTree"]').waitFor();
+  assert.ok((await page.locator('.globe-node').count()) < methods.length);
+  assert.equal(await ddtree.getAttribute('aria-pressed'), 'true');
+  const rootNode = page.getByRole('button', { name: '聚焦 DFlash', exact: true });
+  const rootPosition = await rootNode.getAttribute('style');
+  await page.getByRole('button', { name: '放大星球视图' }).click();
+  assert.notEqual(await rootNode.getAttribute('style'), rootPosition);
+  await page.getByText('连线证据', { exact: true }).click();
+  assert.ok(await page.locator('.globe-selection details a[href="https://arxiv.org/abs/2604.12989"]').first().isVisible());
+  await page.locator('.globe-frame').screenshot({ path: path.join(output, 'research-globe.png') });
+  await page.getByRole('link', { name: '阅读方法卡片', exact: true }).click();
+  await page.locator('#method-ddtree.highlighted').waitFor();
+  await page.getByRole('button', { name: '平行时间线', exact: true }).click();
+  await page.locator('.react-flow__node[data-id="ddtree"]').waitFor();
+
   assert.deepEqual(pageErrors, []);
   const report = { commit: process.env.GITHUB_SHA, url: url.href, status: 'success', methods: methods.length,
-    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'no page errors'] };
+    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'globe switch', 'globe search focus', 'globe zoom', 'globe evidence', 'globe paper card', 'no page errors'] };
   await writeFile(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } catch (error) {

@@ -1,0 +1,49 @@
+.map-mode-switch { display: flex; gap: 4px; padding: 3px; margin: 0 0 10px; width: fit-content; border: 1px solid #dce5e9; border-radius: 8px; background: #f3f6f7; }
+.map-mode-switch button { padding: 6px 13px; border-radius: 5px; color: #526d7e; font-size: 12px; }
+.map-mode-switch button[aria-pressed=true] { background: #fff; color: #245778; box-shadow: 0 1px 4px #1c426018; font-weight: 650; }
+.globe-frame { overflow: hidden; border: 1px solid #dde5e9; border-radius: 14px; background: #fff; box-shadow: 0 10px 34px #1c42600a; color: #294f69; }
+.globe-toolbar, .globe-controls, .globe-legend, .globe-selection { padding: 10px 18px; }
+.globe-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; min-height: 51px; border-bottom: 1px solid #edf1f3; background: #fcfdfd; font-size: 13px; }
+.globe-toolbar > div { display: flex; gap: 5px; }
+.globe-toolbar button, .globe-controls button { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border: 1px solid #dce5e9; border-radius: 6px; background: #fff; font-size: 12px; }
+.globe-toolbar button:hover, .globe-controls button:hover, .globe-controls button[aria-pressed=true] { border-color: #bfd4df; background: #edf6fb; }
+.globe-stage { height: clamp(420px, 53vw, 564px); position: relative; overflow: hidden; isolation: isolate; cursor: grab; touch-action: none; background: radial-gradient(circle, #dce6ec 1px, transparent 1.5px) 0 0 / 24px 24px, #fdfefe; }
+.globe-stage:active { cursor: grabbing; }
+.globe-edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.globe-edges line { stroke: #91aaba; stroke-opacity: .38; }
+.globe-edges .is-local { stroke: #5f8196; stroke-opacity: .9; stroke-width: 1.5; }
+.globe-edges .is-dimmed { stroke-opacity: .09; }
+.globe-edges [data-relation=combines] { stroke-dasharray: 6 3; }
+.globe-edges [data-relation=related] { stroke-dasharray: 2 4; }
+.globe-method.is-dimmed { opacity: .23; }
+.globe-node, .globe-label, .globe-tooltip { position: absolute; }
+.globe-node { width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, -50%); padding: 0; }
+.globe-node::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
+.globe-node.is-local { width: 12px; height: 12px; }
+.globe-node.is-local::after { inset: -10px; }
+.globe-node[aria-pressed=true] { width: 16px; height: 16px; box-shadow: 0 0 0 5px #dbeaf2; z-index: 2; }
+.globe-node:hover, .globe-node:focus-visible { outline: 2px solid #245778; outline-offset: 3px; z-index: 3; }
+.globe-label { pointer-events: none; color: #3b5b71; font-size: 11px; line-height: 18px; white-space: nowrap; text-shadow: 0 1px 2px #fff, 0 -1px 2px #fff; }
+.globe-node.is-local + .globe-label { font-size: 13px; line-height: 21px; }
+.globe-node[aria-pressed=true] + .globe-label { font-weight: 700; }
+.globe-label small { margin-left: 4px; padding: 1px 3px; border-radius: 3px; background: #fff4d7; color: #775219; font-size: 8px; }
+.globe-tooltip { z-index: 4; pointer-events: none; width: min(250px, calc(100% - 16px)); padding: 8px 10px; border-radius: 8px; border: 1px solid #dce6eb; background: #fff; box-shadow: 0 6px 20px #173c551f; font-size: 12px; }
+.globe-tooltip span { display: block; color: #526d7e; }
+.globe-controls, .globe-legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.globe-controls { border-top: 1px solid #edf1f3; }
+.globe-controls i { width: 7px; height: 7px; border-radius: 50%; }
+.globe-legend { gap: 16px; padding-top: 0; font-size: 11px; color: #526d7e; }
+.globe-legend span::before { content: ''; display: inline-block; width: 17px; margin: 0 5px 3px 0; border-top: 1px solid currentColor; }
+.globe-legend [data-relation=combines]::before { border-top-style: dashed; }
+.globe-legend [data-relation=related]::before { border-top-style: dotted; }
+.globe-selection { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 14px; border-top: 1px solid #edf1f3; background: #fcfdfd; font-size: 13px; }
+.globe-selection > div { flex: 1 1 250px; }
+.globe-selection h3 { font: 600 18px var(--serif); }
+.globe-selection p, .globe-selection li span { color: #526d7e; }
+.globe-selection a { display: inline-flex; align-items: center; gap: 4px; color: #245778; }
+.globe-selection a:hover { text-decoration: underline; }
+.globe-selection details { width: 100%; }
+.globe-selection summary { cursor: pointer; }
+.globe-selection ul { padding-left: 18px; }
+.globe-selection li + li { margin-top: 6px; }
+.globe-selection li span, .globe-selection li a { margin-left: 6px; }

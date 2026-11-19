@@ -9,7 +9,9 @@ import briefsJson from './data/briefs.json';
 import engineeringJson from './data/engineering.json';
 import { recommend, filterMethods, scoreMethod, dateValue, todayInShanghai, chooseBrief } from './lib/catalog.mjs';
 import type { Method, Stars, Brief } from './types';
+import './ResearchGlobe.css';
 const ResearchMap=lazy(()=>import('./ResearchMap'));
+const ResearchGlobe=lazy(()=>import('./ResearchGlobe'));
 class MapBoundary extends Component<{children:React.ReactNode},{failed:boolean}> {
   state={failed:false};
   static getDerivedStateFromError(){return {failed:true};}
@@ -38,6 +40,7 @@ export default function App(){
   const [readKey,setReadKey]=useState(0);
   const [focusId,setFocusId]=useState<string|null>(null);
   const [focusKey,setFocusKey]=useState(0);
+  const [mapMode,setMapMode]=useState<'timeline'|'globe'>('timeline');
   const [unknown,setUnknown]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [today,setToday]=useState(todayInShanghai());
@@ -78,8 +81,15 @@ export default function App(){
     <main>
       <section className="intro"><div><div className="eyebrow"><span className="live-dot"/> PAPERS · METHODS · OPEN SOURCE</div><h1>Parallel Speculative Decoding</h1><p>从 DFlash 出发，沿着时间阅读并行投机解码的新方法。</p></div><div className="intro-meta"><span><b>{methods.length.toString().padStart(2,'0')}</b> 方法记录</span><span><b>{categories.length.toString().padStart(2,'0')}</b> 研究方向</span><small>资料更新于 {lastUpdated}</small></div></section>
       <section id="research-map" className="map-section" tabIndex={-1} aria-labelledby="map-title"><div className="section-heading"><div className="section-title"><span className="section-number">01</span><h2 id="map-title">探索研究脉络</h2><span className="quiet-label">交互地图</span></div><div className="search-wrap"><Search size={17}/><input aria-label="搜索方法、问题或关键词" placeholder="搜索方法、问题或关键词…" value={query} onFocus={()=>setSearchOpen(true)} onChange={e=>{setQuery(e.target.value);setAll(true);setSearchOpen(true);}} onKeyDown={e=>{if(e.key==='Escape')setSearchOpen(false);if(e.key==='Enter'&&searchMatches[0])locate(searchMatches[0].id);}}/>{query&&<button className="icon-button" aria-label="清空搜索" onClick={()=>setQuery('')}><X size={15}/></button>}{query&&searchOpen&&<div className="search-results">{searchMatches.length?searchMatches.map(m=><button key={m.id} onClick={()=>locate(m.id)}><span>{m.name}<small>{categoryMap[m.category].name}</small></span><LocateFixed size={15}/></button>):<p>未找到匹配方法</p>}</div>}</div></div>
-      <MapBoundary><Suspense fallback={<div className="map-loading">正在载入研究地图…</div>}><ResearchMap methods={methods} categories={categories} relations={relations} focusId={focusId} focusKey={focusKey} onRead={readMethod}/></Suspense></MapBoundary>
-      <div className="map-legend"><span>按问题分支 · 按时间演进</span>{categories.map(c=><button key={c.id} onClick={()=>{setCategory(c.id);setAll(true);scrollToId('featured');}}><i style={{background:c.color}}/>{c.name}</button>)}<span className="legend-note">实线表示时间顺序，非继承关系</span></div>
+      <div className="map-mode-switch" role="group" aria-label="研究地图视图">
+        <button type="button" aria-pressed={mapMode==='timeline'} onClick={()=>setMapMode('timeline')}>平行时间线</button>
+        <button type="button" aria-pressed={mapMode==='globe'} onClick={()=>setMapMode('globe')}>星球关系图</button>
+      </div>
+      <MapBoundary key={mapMode}><Suspense fallback={<div className="map-loading">正在载入研究地图…</div>}>
+        {mapMode==='timeline' ? <ResearchMap methods={methods} categories={categories} relations={relations} focusId={focusId} focusKey={focusKey} onRead={readMethod}/>
+          : <ResearchGlobe methods={methods} categories={categories} relations={relations} focusId={focusId} focusKey={focusKey} onRead={readMethod}/>}
+      </Suspense></MapBoundary>
+      {mapMode==='timeline'&&<div className="map-legend"><span>按问题分支 · 按时间演进</span>{categories.map(c=><button key={c.id} onClick={()=>{setCategory(c.id);setAll(true);scrollToId('featured');}}><i style={{background:c.color}}/>{c.name}</button>)}<span className="legend-note">实线表示时间顺序，非继承关系</span></div>}
       <details className="map-outline"><summary>以大纲浏览全部方法 <ChevronDown size={16}/></summary><div>{categories.map(c=><details key={c.id}><summary><i style={{background:c.color}}/>{c.name}</summary>{methods.filter(m=>m.category===c.id).map(m=><button key={m.id} onClick={()=>readMethod(m.id)}>{m.name}<ArrowUpRight size={14}/></button>)}</details>)}</div></details></section>
       <section id="featured" className="featured-section" tabIndex={-1} aria-labelledby="featured-title"><div className="section-heading"><div className="section-title"><span className="section-number">02</span><h2 id="featured-title">{all||searching?'方法库':'重点阅读'}</h2><span className="quiet-label">{visible.length} 个方法</span></div><button className="text-button" onClick={()=>{if(all||searching)resetFilters();else setAll(true);}}>{all||searching?'返回重点阅读':'查看全部方法'}<ArrowRight size={16}/></button></div>
       <div className="catalog-toolbar"><p>{all||searching?'沿着问题寻找方法，也可以回到地图中定位。':'最新新增优先展示，同时保留各条主线的关键工作。'}</p><label className="sort-select">排序<select aria-label="方法排序" value={sort} onChange={e=>{setSort(e.target.value);if(e.target.value!=='importance')setAll(true);}}><option value="importance">研究重要性</option><option value="newest">最新发布</option><option value="stars">GitHub Star</option></select></label></div>
