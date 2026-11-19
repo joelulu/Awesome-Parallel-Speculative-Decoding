@@ -1279,6 +1279,103 @@
       "Reese Chong"
     ],
     "pdfUrl": "https://arxiv.org/pdf/2611.19085",
+    "thumbnail": "papers/dynadflash.jpg",
     "fetchedAt": "2026-11-19"
+  },
+  "taps": {
+    "sourceUrl": "https://arxiv.org/abs/2606.00487",
+    "status": "fetched",
+    "title": "TAPS: Target-Aware Prefix Tree Selection for Diffusion-Drafted Speculative Decoding",
+    "authors": [
+      "Zhuoyu Wang",
+      "Junnan Huang",
+      "Xinyu Chen"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.00487",
+    "fetchedAt": "2026-10-10T00:00:00.000Z",
+    "thumbnail": "papers/taps.jpg"
+  },
+  "edr": {
+    "sourceUrl": "https://arxiv.org/abs/2610.10411",
+    "status": "fetched",
+    "title": "Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds",
+    "authors": [
+      "Yunxiao Zhao",
+      "Changxiao Cai"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.10411",
+    "fetchedAt": "2026-10-14",
+    "thumbnail": "papers/edr.jpg"
+  },
+  "alr-ira": {
+    "sourceUrl": "https://arxiv.org/abs/2609.38795",
+    "status": "fetched",
+    "title": "Recovering Off-Policy Supervision for Speculative Decoding",
+    "authors": [
+      "Jungseob Lee",
+      "Chanjun Park",
+      "Sugyeong Eo",
+      "Hyeonseok Moon"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2609.38795",
+    "fetchedAt": "2026-10-16",
+    "thumbnail": "papers/alr-ira.jpg"
+  },
+  "cast": {
+    "sourceUrl": "https://arxiv.org/abs/2610.00321",
+    "status": "fetched",
+    "title": "CAST: Cost-Aware Speculative Trees from One-Pass Block Drafters",
+    "authors": [
+      "Jungseob Lee",
+      "Sugyeong Eo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.00321",
+    "fetchedAt": "2026-10-16",
+    "thumbnail": "papers/cast.jpg"
+  },
+  "adaspark": {
+    "sourceUrl": "https://arxiv.org/abs/2610.05774",
+    "status": "fetched",
+    "title": "AdaSpark: Adaptive DSpark with Online Learning for Tree Verification and N-gram Fill",
+    "authors": [
+      "Liquan Liu",
+      "Yifan Zhang",
+      "Bowei Xu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.05774",
+    "fetchedAt": "2026-10-16",
+    "thumbnail": "papers/adaspark.jpg"
+  },
+  "d-pal": {
+    "sourceUrl": "https://arxiv.org/abs/2610.28355",
+    "status": "fetched",
+    "title": "Beyond the Point Mass: Acceptance-Derived Weights and Distributional Losses for Speculative Decoding",
+    "authors": [
+      "Tianyu Wu",
+      "Zhuohan Wang",
+      "Jonathan Geuter",
+      "Yu Yao",
+      "Weifan Jiang",
+      "Chengxi Zhang",
+      "Ju Li",
+      "Minlan Yu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.28355",
+    "fetchedAt": "2026-10-28T09:18:00+08:00",
+    "thumbnail": "papers/d-pal.jpg"
+  },
+  "target-regeneration": {
+    "sourceUrl": "https://arxiv.org/abs/2610.29013",
+    "status": "fetched",
+    "title": "Target Regeneration Shrinks the Gains of Draft-Training Objectives in Speculative Decoding",
+    "authors": [
+      "Jungseob Lee",
+      "Hogun Seong",
+      "Euijun Choi",
+      "Sugyeong Eo"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.29013",
+    "fetchedAt": "2026-10-28T09:18:00+08:00",
+    "thumbnail": "papers/target-regeneration.jpg"
   }
 }

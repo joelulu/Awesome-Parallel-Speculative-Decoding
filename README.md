@@ -119,6 +119,14 @@
 | **2026-11-09** | **DForkTree — Accelerating Speculative Decoding with Fork-Aware Block Diffusion Draft Trees** | 用目标输出的 n-gram 路径统计修正分叉后草稿分布，并精确构造预算内候选树。 | DFlash 的逐位置分布按自身主路径预测；树在分叉后仍使用这些分布，条件前缀失配导致预算浪费。 | 从 target 生成文本提取 n-gram，将路径 PMI 加入候选分数，分叉后提高权重，用 GPU 分层搜索构造最优树；无需重训 drafter。 ([arXiv](https://arxiv.org/abs/2611.12356)) |
 | **2026-11-09** | **Multi-Future Drafting — Mixture Block Drafters for Tree-Verified Speculative Decoding** | 单次前向生成多种连贯未来，用混合树避免候选预算消耗在拼接假路径上。 | DFlash 的逐位置边缘分布相乘会把不同合理未来拼成 target 不会生成的路径，浪费 DDTree 节点预算。 | 在 drafter 输入加入 K 个可学习模式向量，同一前向生成 K 个连贯草稿块，再用 mixture DDTree 进行无损树验证。 ([arXiv](https://arxiv.org/abs/2611.13017)) |
 
+| **2026-05-30** | **TAPS — Target-Aware Prefix Tree Selection** | ⭐⭐⭐ 在 DFlash 扩散草稿上选择前缀可达的紧凑候选树 | DDTree 仅按位置边际概率选树，浪费验证预算于错误前缀后代 | 离线学习 target 条件接受率、传播路径可达率并按效用阈值剪枝；单请求实验相对 DFlash 平均 1.36×。([arXiv](https://arxiv.org/abs/2606.00487)) |
+| **2026-10-07** | **EDR — Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds** | 用马尔可夫奖励过程直接最小化预期解码轮数，使训练权重反映跨轮到达概率和拒绝成本。 | 块内 CE 或接受长度替代目标忽略一轮拒绝位置如何改变后续轮起点，无法直接优化全局 target 调用次数。 | 将解码表示为 Markov reward process，推导精确 EDR 目标与时间差分梯度，并用 target rollouts 作无偏随机优化。 ([arXiv](https://arxiv.org/abs/2610.10411)) |
+| **2026-09-30（补漏）** | **ALR + IRA — Recovering Off-Policy Supervision for Speculative Decoding** | 恢复 DFlash 在固定外部语料中失效的块内训练信号。 | 一处离策略 token 使后续位置不再对应 target 续写，擦除标签损失监督。 | 用 target rollout 的分布重标记全部槽位，并在 rollout 内放置锚点复用 target 特征。([arXiv](https://arxiv.org/abs/2609.38795), [官方代码](https://github.com/js-lee-AI/ALR-IRA)) |
+| **2026-09-29（补漏）** | **CAST — Cost-Aware Speculative Trees from One-Pass Block Drafters** | 将 DFlash 已评分的替代候选变为可验证树，并按延迟决定树宽。 | 单链浪费候选概率，固定宽树又可能吃掉接受收益。 | 用路径概率排序前缀闭合候选，实测 target 验证增量时间并据此停止扩树；不改 DFlash 权重。([arXiv](https://arxiv.org/abs/2610.00321), [官方代码](https://github.com/js-lee-AI/CAST)) |
+| **2026-10-05（补漏）** | **AdaSpark — Adaptive DSpark with Online Learning for Tree Verification and N-gram Fill** | 服务中学习 DSpark 树验证成本与接受率。 | 离线成本表不能稳定覆盖新上下文和部署环境。 | 在线拟合按树宽和上下文变化的验证时间及候选接受率，使 DSpark 与 n-gram 候选共享验证预算；未直接评测 DFlash 原版。([arXiv](https://arxiv.org/abs/2610.05774), [官方实现](https://github.com/zeraix/imparo)) |
+| **2026-10-20** | **D-PAL — Acceptance-Derived Weights and Distributional Losses** | 用 target/draft 分布重叠改进 DFlash 的接受率训练目标。 | D-PACE 仅看记录 token 的 draft 概率，忽略完整分布重叠。 | 从期望接受长度导出 overlap 权重，以 Rényi-1/2 等分布损失替代 CE；Qwen3-4B 六任务 T=0 平均接受长度 4.50→4.57（相对 D-PACE）。([原文](https://arxiv.org/html/2610.28355)) |
+| **2026-10-21** | **Target Regeneration — 训练目标收益的归因检验** | target 重生成语料会缩小 DFlash 蒸馏与验证门控相对 CE 的收益。 | 外部回答上的 loss 增益可能混入语料与 target 的分布差异。 | 在 DFlash drafter 上对照外部与 target 重生成回答的 CE/KD/KD+gate，加入训练长度控制；用于训练评估基线，不是新推理算法。([原文](https://arxiv.org/html/2610.29013)) |
+
 ### ReTrace / DFlow / Carryover Drafting：跨轮 rejected state reuse
 
 ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round conditioning**；DFlow 进一步强调 **verifier information flow**，直接把 first rejection 之后已经算出的 target hidden states 作为下一轮 drafting 条件；Carryover Drafting 则把 rejected target states 组织为下一轮 drafter 可选择性 attention 的 **temporary KV context**，并用 parallel draft–verify–draft training 对齐训练与真实推理状态。三者共同形成一条连续的跨轮复用主线，并且天然适合继续与 DFlash2 / DSpark / D-CUT 等方法组合。
@@ -126,6 +134,8 @@ ReTrace 首次明确利用 **上一轮 rejected trajectory** 做 **cross-round c
 ---
 
 # Daily Briefs
+
+历史补档：[2026-10-10](daily/2026-10-10.md) · [2026-10-14](daily/2026-10-14.md) · [2026-10-15](daily/2026-10-15.md) · [2026-10-16](daily/2026-10-16.md)
 
 ## 2026-11-19
 

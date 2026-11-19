@@ -558,5 +558,77 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/html/2611.19085",
     "note": "论文明确受 DFlare 分层特征组合启发，但改为随 token 动态调权。"
+  },
+  {
+    "source": "dflash",
+    "target": "taps",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2606.00487",
+    "note": "论文 §4.1/§5.1 明确采用相应 DFlash draft model，从逐位置边际 logits 生成候选池，新增 target-aware 路径评分和预算选树。"
+  },
+  {
+    "source": "ddtree",
+    "target": "taps",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2606.00487",
+    "note": "论文 §3/§5 将 DDTree 边际概率选树与 TAPS 路径条件评分直接比较，并在相同节点预算下评估。"
+  },
+  {
+    "source": "dflash",
+    "type": "related",
+    "note": "§2 指出 DFlash 使用固定指数位置权重；EDR 的实证对象为 DSpark/DFly，不能标成已验证 DFlash 扩展。",
+    "target": "edr",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.10411v1"
+  },
+  {
+    "source": "dflash",
+    "target": "alr-ira",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2609.38795",
+    "note": "正文附录 D 在相同 DFlash 模型与固定语料上训练 ALR/IRA，并与 DFlash 基线对比。"
+  },
+  {
+    "source": "dflash",
+    "target": "cast",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.00321v2",
+    "note": "§2 明确使用未改动的 DFlash 单次块分布，并将标准链改为成本感知验证树。"
+  },
+  {
+    "source": "dspark",
+    "target": "adaspark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.05774v1",
+    "note": "论文 §2/§3 明确以 DSpark drafter 为基础，在线选择验证树宽并加入 n-gram 候选。"
+  },
+  {
+    "source": "dflash",
+    "target": "d-pal",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.28355",
+    "note": "D-PAL 在 DFlash drafter 上对照原始固定权重交叉熵，并用完整分布接受信号改进训练；不是架构继承。"
+  },
+  {
+    "source": "d-pace",
+    "target": "d-pal",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.28355",
+    "note": "D-PAL 明确从 D-PACE 单点标签接受率权重扩展到 target/draft 分布重叠与分布损失。"
+  },
+  {
+    "source": "dflash",
+    "target": "target-regeneration",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.29013",
+    "note": "论文直接续训 DFlash drafter 并使用公开 decoder，比较数据来源对训练目标增益的影响；属于评估研究。"
   }
 ]

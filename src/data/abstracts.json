@@ -454,5 +454,47 @@
     "sourceUrl": "https://arxiv.org/abs/2611.19085",
     "translatedAt": "2026-11-19",
     "kind": "translated-summary"
+  },
+  "taps": {
+    "text": "TAPS 研究 DFlash 式并行扩散草稿在候选树验证中的预算浪费。逐位置高概率 token 可能位于错误前缀下，即使被纳入验证树也不可达。方法用记录的 target 验证轨迹离线训练轻量打分器，估计每条边在父前缀已接受条件下的接受概率，并沿根到节点路径相乘得到可达率；再以可达率和节点深度成本计算效用，贪心选取前缀闭合子树，并在预算或最低效用阈值处停止。论文在单请求、A40/A800、Qwen3-4B/8B 与 LLaMA-3.1-8B-Instruct、七项数学/代码/对话任务上报告平均 5.44× 相对自回归加速、相对 DFlash 1.36×。这是论文报告的实验结果，不能直接推断高并发吞吐。",
+    "sourceUrl": "https://arxiv.org/abs/2606.00487",
+    "translatedAt": "2026-10-10",
+    "kind": "translated-summary"
+  },
+  "edr": {
+    "text": "EDR 研究并行或半自回归 drafter 的训练目标。某个位置的预测分布依赖本轮起点，而本轮起点又由前轮接受长度决定，因此固定位置权重或局部接受替代项忽略跨轮耦合。论文把解码建模为马尔可夫奖励过程，以状态到达概率加权局部拒绝成本，得到等于预期解码轮数的目标；又推导时间差分梯度与离线比较器。实证微调 DSpark 和 DFly，并未直接微调 DFlash；将其用于 DFlash 仍是研究假设。",
+    "sourceUrl": "https://arxiv.org/abs/2610.10411",
+    "translatedAt": "2026-10-14",
+    "kind": "translated-summary"
+  },
+  "alr-ira": {
+    "text": "ALR + IRA 处理 DFlash 在离策略固定语料上的训练损失：外部生成答案一旦偏离 target，块内后续位置的标签不再是 target 真实续写。Anchor-Label Relabelling 使用贪婪 target rollout 的分布重新标记全部预测槽位；In-Rollout Anchors 把草稿块放在这些 rollout 内，以已经计算的 target 特征提供推理时更接近的上下文。论文在视觉语言与纯文本语料上对比相同数据训练的 DFlash 和擦除策略，报告 greedy 接受长度最高增加 36.5%。这一数字是作者实验中的最大接受长度增幅，不是端到端通用加速。",
+    "sourceUrl": "https://arxiv.org/abs/2609.38795",
+    "translatedAt": "2026-10-16",
+    "kind": "translated-summary"
+  },
+  "cast": {
+    "text": "CAST 直接利用 DFlash 单次 forward 已输出的逐位置候选分数，把多个路径压成前缀闭合的验证树，不再增加 drafter 次数。它以路径概率排序候选，并通过少量目标验证延迟测量估计多一个节点的增量成本；当该成本超过预期新增接受 token 的价值时停止扩树。论文在不同 GPU 与 target 的八项设置中报告相较标准 DFlash 链最多 43% 的 decode-only 改善，也证明 greedy 和采样验证保持目标分布。该结论依赖验证成本曲线，需在新硬件与并发负载下重新测量。",
+    "sourceUrl": "https://arxiv.org/abs/2610.00321",
+    "translatedAt": "2026-10-16",
+    "kind": "translated-summary"
+  },
+  "adaspark": {
+    "text": "AdaSpark 针对 DSpark 树验证的固定成本表失配问题，在服务时学习不同验证宽度随上下文变化的耗时，以及候选相对 target 的实际接受率。它让 DSpark 草稿和请求文本中的 n-gram 延续共享候选排序，并以长期解码速率评估是否值得增加验证行。论文报告相同 drafter 下较 llama.cpp DSpark 快 1.5–3.1×，但这一跨引擎数字包含 imparo 运行时差异；同一 imparo 引擎下调度器相对三 token 链的收益为 1.17–1.52×。方法未直接在 DFlash 原版验证。",
+    "sourceUrl": "https://arxiv.org/abs/2610.05774",
+    "translatedAt": "2026-10-16",
+    "kind": "translated-summary"
+  },
+  "d-pal": {
+    "text": "D-PAL 针对 DFlash 与 D-PACE 的训练目标，把草稿模型和目标模型完整分布的重叠度作为位置接受信号，从期望接受长度推导动态权重。作者比较 log acceptance、forward KL 与 Rényi-1/2 损失；后者在 Qwen3-4B 六项任务上，将 D-PACE 的平均接受长度从 4.50 提至 4.57（温度 0），从 4.20 提至 4.28（温度 1）。论文也说明推导针对采样提议，部署中的 DFlash 使用 argmax 提议，相关界限不能当作两者完全等价。",
+    "sourceUrl": "https://arxiv.org/abs/2610.28355",
+    "translatedAt": "2026-10-28",
+    "kind": "translated-summary"
+  },
+  "target-regeneration": {
+    "text": "论文用 DFlash 式并行块草稿模型检验训练目标收益的归因。对同一批外部回答与目标模型贪心重生成回答，分别训练交叉熵、目标分布蒸馏和验证可达位置门控蒸馏，并比较接受长度。重生成后，蒸馏与门控的额外收益明显缩小；文本 DFlash 复现实验中，温度 0 下 KD 相对 CE 的增益由 7.3% 缩至 1.0%。作者建议新目标同时报告 target 重生成基线和不同训练长度。",
+    "sourceUrl": "https://arxiv.org/abs/2610.29013",
+    "translatedAt": "2026-10-28",
+    "kind": "translated-summary"
   }
 }

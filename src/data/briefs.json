@@ -201,6 +201,22 @@
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-28.md",
     "items": [
       {
+        "title": "Target Regeneration Shrinks the Gains of Draft-Training Objectives in Speculative Decoding",
+        "summary": "在 DFlash 式 block drafter 上检验 target 重生成语料后，蒸馏和 verification gate 的增益是否仍成立。",
+        "sourceUrl": "https://arxiv.org/abs/2610.29013",
+        "methodIds": [
+          "target-regeneration"
+        ]
+      },
+      {
+        "title": "Beyond the Point Mass: Acceptance-Derived Weights and Distributional Losses for Speculative Decoding",
+        "summary": "用 target 与 draft 分布重叠计算接受率权重，并用分布损失训练 DFlash drafter。",
+        "sourceUrl": "https://arxiv.org/abs/2610.28355",
+        "methodIds": [
+          "d-pal"
+        ]
+      },
+      {
         "title": "DScout · Factorization-Guided Training and Inference",
         "summary": "沿用 DFlash 骨干，以前缀接受率指导训练，并联合优化 MAT 与每轮延迟。",
         "sourceUrl": "https://arxiv.org/abs/2610.23935",
@@ -329,6 +345,115 @@
         "methodIds": [
           "dloop",
           "short-context-long-drafting"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-16",
+    "title": "ReaDy：循环状态增强 DSpark 草稿，与三篇历史补漏",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-16.md",
+    "items": [
+      {
+        "title": "ReaDy: Recurrent States as Dynamic Context for Speculative Drafting in Hybrid Linear Attention Large Language Models",
+        "summary": "每个草稿位置查询 target 已提交的循环状态，为 DSpark 并行骨干补充位置相关的历史上下文。",
+        "sourceUrl": "https://arxiv.org/abs/2610.20503",
+        "methodIds": [
+          "ready"
+        ]
+      },
+      {
+        "title": "Recovering Off-Policy Supervision for Speculative Decoding",
+        "summary": "以 target rollout 重标记块内全部位置，并把训练锚点放入 rollout，恢复离策略语料丢失的监督。",
+        "sourceUrl": "https://arxiv.org/abs/2609.38795",
+        "methodIds": [
+          "alr-ira"
+        ]
+      },
+      {
+        "title": "CAST: Cost-Aware Speculative Trees from One-Pass Block Drafters",
+        "summary": "把 DFlash 已评分的替代候选组为树，用实测验证增量成本决定树宽。",
+        "sourceUrl": "https://arxiv.org/abs/2610.00321",
+        "methodIds": [
+          "cast"
+        ]
+      },
+      {
+        "title": "AdaSpark: Adaptive DSpark with Online Learning for Tree Verification and N-gram Fill",
+        "summary": "在线学习验证延迟与候选接受率，让 DSpark 树宽和 n-gram 补充分支随负载调整。",
+        "sourceUrl": "https://arxiv.org/abs/2610.05774",
+        "methodIds": [
+          "adaspark"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-15",
+    "title": "vLLM 前缀缓存修复：DFlash2/DSpark 正确性补漏",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-15.md",
+    "items": [
+      {
+        "title": "vLLM：混合 Mamba 前缀缓存状态索引修复",
+        "summary": "合并的修复在原失败配置下通过复测；DFlash2/DSpark 服务需检查缓存热请求的输出与接受率。",
+        "sourceUrl": "https://github.com/vllm-project/vllm/pull/55601",
+        "methodIds": [
+          "dflash-2",
+          "dspark"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-14",
+    "title": "D-Loop / DLoop、EDR 与 DCOCO：块内因果和验证轮数",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-14.md",
+    "items": [
+      {
+        "title": "D-Loop: D-Loop: Looped Diffusion Drafting for Speculative Decoding",
+        "summary": "复用同一个 DFlash 式扩散骨干，以首轮可信前缀再次并行生成后缀，缓解块内重复预测。",
+        "sourceUrl": "https://arxiv.org/abs/2610.06011",
+        "methodIds": [
+          "d-loop"
+        ]
+      },
+      {
+        "title": "DLoop: DLoop: Looped Speculative Decoding",
+        "summary": "高置信时连续执行多次草拟后再统一验证，以额外 drafter 计算换取更少 target forward。",
+        "sourceUrl": "https://arxiv.org/abs/2610.07659",
+        "methodIds": [
+          "dloop"
+        ]
+      },
+      {
+        "title": "EDR: Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds",
+        "summary": "用马尔可夫奖励过程直接最小化预期解码轮数，使训练权重反映跨轮到达概率和拒绝成本。",
+        "sourceUrl": "https://arxiv.org/abs/2610.10411",
+        "methodIds": [
+          "edr"
+        ]
+      },
+      {
+        "title": "DCOCO: Contextual Correction of Parallel Drafts for Speculative Decoding",
+        "summary": "保留每位置 top-k 候选并并行计算相邻兼容分数，再选上下文一致的路径来延长接受前缀。",
+        "sourceUrl": "https://arxiv.org/abs/2610.12570",
+        "methodIds": [
+          "dcoco"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-10-10",
+    "title": "TAPS 历史补录：路径条件选树与验证预算",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-10-10.md",
+    "items": [
+      {
+        "title": "TAPS: Target-Aware Prefix Tree Selection for Diffusion-Drafted Speculative Decoding",
+        "summary": "将扩散草稿的逐位置概率转为路径条件接受估计，在验证预算内选择紧凑的前缀闭合树。",
+        "sourceUrl": "https://arxiv.org/abs/2606.00487",
+        "methodIds": [
+          "taps"
         ]
       }
     ]

@@ -2270,5 +2270,235 @@
     "importance": 4,
     "pinned": false,
     "updatedAt": "2026-11-19"
+  },
+  {
+    "id": "taps",
+    "name": "TAPS",
+    "title": "TAPS: Target-Aware Prefix Tree Selection for Diffusion-Drafted Speculative Decoding",
+    "date": "2026-05-30",
+    "dateLabel": "2026-05-30 · 历史补录",
+    "category": "tree",
+    "tags": [
+      "DFlash",
+      "DDTree",
+      "prefix-closed tree",
+      "path-conditional acceptance",
+      "verification budget"
+    ],
+    "summary": "将扩散草稿的逐位置概率转为路径条件接受估计，在验证预算内选择紧凑的前缀闭合树。",
+    "problem": "DFlash 单路径限制接受长度；DDTree 用位置边际概率选树节点，可能花验证预算检查错误前缀下不可达的后代。",
+    "solution": "用离线 verifier 轨迹训练轻量 target-aware scorer，估计边条件接受概率并沿路径传播可达率；按可达收益与深度成本贪心选择前缀闭合子树，达到预算或效用阈值即停止。",
+    "paperUrl": "https://arxiv.org/abs/2606.00487",
+    "sourceUrl": "https://arxiv.org/abs/2606.00487",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "reason": "直接使用 DFlash drafter 并比较 DFlash、DDTree，值得加入 Candidate Search 与 Verification Cost 路线。论文在 A40/A800、batch=1、三个 target、七项任务报告相对 DFlash 平均 1.36× 加速；高并发收益和作者代码可用性尚未验证。",
+    "updatedAt": "2026-10-10"
+  },
+  {
+    "id": "edr",
+    "name": "EDR",
+    "title": "Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds",
+    "date": "2026-10-07",
+    "dateLabel": "2026-10-07",
+    "category": "training",
+    "tags": [
+      "parallel drafting",
+      "expected decoding rounds",
+      "state occupancy",
+      "on-policy training"
+    ],
+    "summary": "用马尔可夫奖励过程直接最小化预期解码轮数，使训练权重反映跨轮到达概率和拒绝成本。",
+    "problem": "块内 CE 或接受长度替代目标忽略一轮拒绝位置如何改变后续轮起点，无法直接优化全局 target 调用次数。",
+    "solution": "将解码表示为 Markov reward process，推导精确 EDR 目标与时间差分梯度，并用 target rollouts 作无偏随机优化。",
+    "reason": "论文引用 DFlash 固定位置衰减权重，但实验微调的是 DSpark/DFly，尚未证明 DFlash 上的收益；值得加入 Training 候选路线并标明待验证。",
+    "paperUrl": "https://arxiv.org/abs/2610.10411",
+    "sourceUrl": "https://arxiv.org/abs/2610.10411",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-14"
+  },
+  {
+    "id": "alr-ira",
+    "name": "ALR + IRA",
+    "title": "Recovering Off-Policy Supervision for Speculative Decoding",
+    "date": "2026-09-30",
+    "dateLabel": "2026-09-30",
+    "category": "training",
+    "tags": [
+      "DFlash",
+      "off-policy supervision",
+      "target rollout",
+      "label relabelling"
+    ],
+    "summary": "以 target rollout 重标记块内全部位置，并把训练锚点放入 rollout，恢复离策略语料丢失的监督。",
+    "problem": "外部模型生成的固定语料一旦与 target 分叉，DFlash 块内后续 token 标签便失效，简单擦除造成训练信号浪费。",
+    "solution": "ALR 用贪婪 target rollout 的分布重标记每个位置；IRA 在 rollout 内放置草稿块，并复用已算 target 特征，缩小训练与推理上下文差距。",
+    "reason": "直接在 DFlash 基线和文本/视觉固定语料上实验，值得纳入 Training 路线；作者报告 greedy 平均接受长度最多提升 36.5%，这是特定配置的接受指标，不能等同于通用吞吐收益。",
+    "paperUrl": "https://arxiv.org/abs/2609.38795",
+    "sourceUrl": "https://arxiv.org/abs/2609.38795",
+    "code": [
+      {
+        "url": "https://github.com/js-lee-AI/ALR-IRA",
+        "repo": "js-lee-AI/ALR-IRA",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2609.38795",
+        "checkedAt": "2026-10-16",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-16"
+  },
+  {
+    "id": "cast",
+    "name": "CAST",
+    "title": "CAST: Cost-Aware Speculative Trees from One-Pass Block Drafters",
+    "date": "2026-09-29",
+    "dateLabel": "2026-09-29",
+    "category": "tree",
+    "tags": [
+      "DFlash",
+      "candidate tree",
+      "verification budget",
+      "latency probe"
+    ],
+    "summary": "把 DFlash 已评分的替代候选组为树，用实测验证增量成本决定树宽。",
+    "problem": "DFlash 一次预测各位置分布，却只验证 top-1 链；无脑加宽树又可能被 target 验证成本抵消。",
+    "solution": "按草稿路径概率保留前缀闭合的 top-N 候选；测量目标验证延迟，只在下一节点预期收益超过增量时间成本时扩树，并一次性树验证。",
+    "reason": "论文使用未改权重的 DFlash，值得加入 Candidate Search 与 Verification Cost；单请求 decode-only 实验在八个设置中均优于链，最高 43%，并发共享预算也有模拟/实验结果。需在实际部署测量验证成本。",
+    "paperUrl": "https://arxiv.org/abs/2610.00321",
+    "sourceUrl": "https://arxiv.org/abs/2610.00321",
+    "code": [
+      {
+        "url": "https://github.com/js-lee-AI/CAST",
+        "repo": "js-lee-AI/CAST",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2610.00321",
+        "checkedAt": "2026-10-16",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-16"
+  },
+  {
+    "id": "adaspark",
+    "name": "AdaSpark",
+    "title": "AdaSpark: Adaptive DSpark with Online Learning for Tree Verification and N-gram Fill",
+    "date": "2026-10-05",
+    "dateLabel": "2026-10-05",
+    "category": "systems",
+    "tags": [
+      "DSpark",
+      "online cost model",
+      "tree verification",
+      "n-gram fill"
+    ],
+    "summary": "在线学习验证延迟与候选接受率，让 DSpark 树宽和 n-gram 补充分支随负载调整。",
+    "problem": "DSpark 树验证通常依赖启动前或离线成本表，面对上下文长度和硬件变化时树宽易失配。",
+    "solution": "服务过程中分宽度拟合验证耗时及 target 实际接受概率，并让 DSpark 与请求文本 n-gram 候选在同一优先级队列竞争验证槽位。",
+    "reason": "是 DSpark 而非 DFlash 原版的直接扩展；值得纳入 Verification Cost 路线作为在线调度候选。论文跨引擎比较含运行时差异，同引擎调度器增益为 1.17–1.52×，尚未在 DFlash 直接验证。",
+    "paperUrl": "https://arxiv.org/abs/2610.05774",
+    "sourceUrl": "https://arxiv.org/abs/2610.05774",
+    "code": [
+      {
+        "url": "https://github.com/zeraix/imparo",
+        "repo": "zeraix/imparo",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2610.05774",
+        "checkedAt": "2026-10-16",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "pinned": false,
+    "updatedAt": "2026-10-16"
+  },
+  {
+    "id": "d-pal",
+    "name": "D-PAL",
+    "title": "Beyond the Point Mass: Acceptance-Derived Weights and Distributional Losses for Speculative Decoding",
+    "date": "2026-10-20",
+    "dateLabel": "2026-10-20",
+    "category": "training",
+    "tags": [
+      "DFlash",
+      "D-PACE",
+      "acceptance-aware loss",
+      "distribution overlap",
+      "Rényi divergence"
+    ],
+    "summary": "用 target 与 draft 分布重叠计算接受率权重，并用分布损失训练 DFlash drafter。",
+    "problem": "D-PACE 把 target 当成单点标签，无法刻画随机验证时 target 与 draft 的完整分布重叠。",
+    "solution": "从期望接受长度推导 overlap 权重及 log-acceptance 损失，并比较 forward KL 与 Rényi-1/2 分布损失。",
+    "reason": "原文直接在 DFlash/SpecForge 上训练和评估，Qwen3-4B 六任务相对 D-PACE 的平均接受长度 T=0 为 4.50→4.57、T=1 为 4.20→4.28。值得纳入 Training 路线；注意 deployed DFlash 用 argmax 草拟，而理论 overlap 对应采样接受率。",
+    "paperUrl": "https://arxiv.org/abs/2610.28355",
+    "sourceUrl": "https://arxiv.org/abs/2610.28355",
+    "code": [
+      {
+        "url": "https://github.com/Lucas-TY/D-PAL-SpecForge",
+        "repo": "Lucas-TY/D-PAL-SpecForge",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/html/2610.28355",
+        "checkedAt": "2026-10-28",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "pinned": false,
+    "updatedAt": "2026-10-28"
+  },
+  {
+    "id": "target-regeneration",
+    "name": "Target Regeneration",
+    "title": "Target Regeneration Shrinks the Gains of Draft-Training Objectives in Speculative Decoding",
+    "date": "2026-10-21",
+    "dateLabel": "2026-10-21",
+    "category": "training",
+    "tags": [
+      "DFlash",
+      "target-generated data",
+      "knowledge distillation",
+      "verification-aware loss",
+      "evaluation"
+    ],
+    "summary": "在 DFlash 式 block drafter 上检验 target 重生成语料后，蒸馏和 verification gate 的增益是否仍成立。",
+    "problem": "外部回答上的训练目标增益可能被 target 重生成数据本身解释，导致错误归因。",
+    "solution": "固定语料与 drafter，对照外部回答和 target 贪心重生成回答上的 CE、KD、KD+gate，并控制训练长度。",
+    "reason": "原文直接续训已发布的 DFlash drafter，文本复现实验中 KD 相对 CE 的接受长度增益由外部回答上的 7.3% 缩至重生成后的 1.0%（T=0）。值得作为 Training 路线的评估基线；这是实验分析，不是新的推理算法。",
+    "paperUrl": "https://arxiv.org/abs/2610.29013",
+    "sourceUrl": "https://arxiv.org/abs/2610.29013",
+    "code": [
+      {
+        "url": "https://github.com/js-lee-AI/TargetRegeneration",
+        "repo": "js-lee-AI/TargetRegeneration",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/abs/2610.29013",
+        "checkedAt": "2026-10-28",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "pinned": false,
+    "updatedAt": "2026-10-28"
   }
 ]
