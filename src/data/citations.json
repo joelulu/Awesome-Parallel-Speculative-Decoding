@@ -1,0 +1,7 @@
+[
+  {"source":"ddtree","target":"dflash","role":"方法基础","location":"§1，引文 [4]","evidenceUrl":"https://liranringel.github.io/ddtree/DDTree.pdf#page=2","note":"将 DFlash 的逐位置草稿分布用于候选树构建。"},
+  {"source":"domino","target":"dflash","role":"技术背景","location":"§1，Chen et al. (2026)","evidenceUrl":"https://arxiv.org/pdf/2605.29707#page=2","note":"以 DFlash 说明全并行起草及其块内依赖建模问题。"},
+  {"source":"dflow","target":"dflash","role":"方法基础","location":"运行开销分析与参考文献","evidenceUrl":"https://arxiv.org/pdf/2609.06498#page=9","note":"复用 DFlash 的目标特征投影，并以 DFlash 比较开销。"},
+  {"source":"dflow","target":"domino","role":"组合实验","location":"§6 与 Domino 的兼容性","evidenceUrl":"https://arxiv.org/pdf/2609.06498#page=9","note":"将 Domino 的轮内修正与 DFlow 的跨轮信息传递结合评估。"},
+  {"source":"dflow","target":"dspark","role":"技术背景","location":"§6，Cheng et al. (2026)","evidenceUrl":"https://arxiv.org/pdf/2609.06498#page=9","note":"引用 DSpark 说明自回归头可恢复草稿块内依赖。"}
+]

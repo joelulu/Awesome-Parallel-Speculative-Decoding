@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-export function validateData({methods,categories,relations,briefs,stars,abstracts={},metadata={}}) {
+export function validateData({methods,categories,relations,citations=[],briefs,stars,abstracts={},metadata={}}) {
   const errors=[];const ids=new Set();const cats=new Set(categories.map(c=>c.id));const papers=new Set();
   const url=(value,label)=>{try{if(new URL(value).protocol!=='https:')errors.push(`${label}: HTTPS required`);}catch{errors.push(`${label}: invalid URL`);}};
   for(const m of methods){
@@ -24,6 +24,15 @@ export function validateData({methods,categories,relations,briefs,stars,abstract
     }
   }
   for(const r of relations){if(!ids.has(r.source)||!ids.has(r.target)||r.source===r.target)errors.push(`Invalid relation ${r.source} → ${r.target}`);const k=`${r.source}:${r.target}:${r.type}`;if(edgeIds.has(k))errors.push(`Duplicate relation ${k}`);edgeIds.add(k);url(r.evidenceUrl,'Relation evidence');if(!r.note)errors.push('Relation explanation required');if(!['verified','proposed'].includes(r.status))errors.push('Invalid relation status');}
+  const citationIds = new Set();
+  for (const {source, target, role, location, evidenceUrl, note} of citations) {
+    const key = `${source} → ${target}`;
+    if (!ids.has(source) || !ids.has(target) || source === target) errors.push(`Invalid citation ${key}`);
+    if (citationIds.has(key)) errors.push(`Duplicate citation ${key}`);
+    citationIds.add(key);
+    url(evidenceUrl, 'Citation evidence');
+    if (!evidenceUrl || !role?.trim() || !location?.trim() || !note?.trim()) errors.push(`Missing citation evidence details: ${key}`);
+  }
   const dates=new Set();
   for(const b of briefs){if(!/^\d{4}-\d{2}-\d{2}$/.test(b.date)||dates.has(b.date))errors.push(`Invalid or duplicate brief date ${b.date}`);dates.add(b.date);url(b.archiveUrl,'Brief archive');for(const item of b.items){if(!item.title||!item.summary)errors.push('Empty brief item');if(item.sourceUrl)url(item.sourceUrl,'Brief source');for(const id of item.methodIds)if(!ids.has(id))errors.push(`Brief references unknown method ${id}`);}}
   for(const [repo,snapshot] of Object.entries(stars))if(!Number.isInteger(snapshot.count)||snapshot.count<0||!Number.isFinite(Date.parse(snapshot.updatedAt)))errors.push(`Invalid star snapshot: ${repo}`);
@@ -39,5 +48,5 @@ export function validateData({methods,categories,relations,briefs,stars,abstract
   }
   return errors;
 }
-export async function loadData(){const names=['methods','categories','relations','briefs','stars','abstracts','paper-metadata'];return Object.fromEntries(await Promise.all(names.map(async n=>[n==='paper-metadata'?'metadata':n,JSON.parse(await readFile(new URL(`../src/data/${n}.json`,import.meta.url),'utf8'))])));}
+export async function loadData(){const names=['methods','categories','relations','citations','briefs','stars','abstracts','paper-metadata'];return Object.fromEntries(await Promise.all(names.map(async n=>[n==='paper-metadata'?'metadata':n,JSON.parse(await readFile(new URL(`../src/data/${n}.json`,import.meta.url),'utf8'))])));}
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const data=await loadData();const errors=validateData(data);if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log(`Validated ${data.methods.length} methods, ${data.relations.length} relations, ${data.briefs.length} briefs.`);}

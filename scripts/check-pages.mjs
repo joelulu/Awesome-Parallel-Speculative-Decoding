@@ -26,7 +26,8 @@ try {
     const title = await page.locator('#daily .brief-intro h3').textContent();
     const count = await page.locator('.intro-meta').textContent();
     const hasDefaultGlobe = await page.getByRole('button', { name: '星球关系图', exact: true, pressed: true }).count();
-    if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe) { ready = true; break; }
+    const hasCitationLayer = await page.getByRole('button', { name: '论文引用', exact: true }).count();
+    if (title === brief.title && count.includes(methods.length + '') && hasDefaultGlobe && hasCitationLayer) { ready = true; break; }
     await page.waitForTimeout(5000);
   }
   assert.ok(ready, 'Pages has not served the expected catalog/brief yet');
@@ -103,12 +104,21 @@ try {
   assert.ok((await page.locator('.globe-node').count()) < methods.length);
   assert.equal(await ddtree.getAttribute('aria-pressed'), 'true');
   const rootNode = page.getByRole('button', { name: '聚焦 DFlash', exact: true });
+  assert.ok((await rootNode.boundingBox()).x < (await ddtree.boundingBox()).x);
   const rootPosition = await rootNode.getAttribute('style');
   await page.getByRole('button', { name: '放大星球视图' }).click();
   assert.notEqual(await rootNode.getAttribute('style'), rootPosition);
-  await page.getByText('连线证据', { exact: true }).click();
+  await page.locator('.globe-selection summary').filter({ hasText: '连线证据' }).click();
   assert.ok(await page.locator('.globe-selection details a[href="https://arxiv.org/abs/2604.12989"]').first().isVisible());
   await page.locator('.globe-frame').screenshot({ path: path.join(output, 'research-globe.png') });
+  await page.getByRole('button', { name: '论文引用', exact: true }).click();
+  const citation = page.locator('.globe-edges [data-source="ddtree"][data-target="dflash"][data-relation="cites"]');
+  assert.equal(await citation.count(), 1);
+  assert.ok(await citation.getAttribute('marker-end'));
+  await page.locator('.globe-selection summary').filter({ hasText: '连线证据' }).click();
+  assert.ok(await page.getByRole('link', { name: '§1，引文 [4]' }).isVisible());
+  await page.locator('.globe-selection summary').filter({ hasText: '同方向方法' }).click();
+  assert.ok(await page.locator('.globe-peers button').count() > 0);
   await page.getByRole('link', { name: '阅读方法卡片', exact: true }).click();
   await page.locator('#method-ddtree.highlighted').waitFor();
   await page.getByRole('button', { name: '平行时间线', exact: true }).click();
@@ -116,7 +126,7 @@ try {
 
   assert.deepEqual(pageErrors, []);
   const report = { commit: process.env.GITHUB_SHA, url: url.href, status: 'success', methods: methods.length,
-    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'dark globe by default', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'globe switch', 'globe search focus', 'globe zoom', 'globe evidence', 'globe paper card', 'no page errors'] };
+    brief: brief.date, checkedFeaturedCards: ids, checks: ['home', 'dark globe by default', 'daily', 'real covers', 'Chinese abstracts', 'map hover', 'map-to-card link', 'search', 'direction filter', 'no overlap', 'NEW badges', 'globe switch', 'globe search focus', 'globe zoom', 'upstream layout', 'globe evidence', 'citation direction and source', 'same-topic methods', 'globe paper card', 'no page errors'] };
   await writeFile(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } catch (error) {

@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, Minus, Plus, Scan } from 'lucide-react';
 import type { Category, Method, Relation } from './types';
+import citations from './data/citations.json';
 
 type Props = {
   methods: Method[]; categories: Category[]; relations: Relation[];
@@ -10,7 +11,9 @@ type Point = { method: Method; x: number; y: number };
 type Box = { x: number; y: number; w: number; h: number };
 const rootId = 'dflash';
 const fullTurn = 2 * Math.PI;
-const relationNames: Record<string, string> = { extends: '扩展', combines: '组合', related: '相关' };
+const relationNames: Record<string, string> = { extends: '扩展', combines: '组合', related: '相关', cites: '引用' };
+type GraphEdge = Pick<Relation, 'source' | 'target' | 'type' | 'note' | 'evidenceUrl'> & { role?: string; location?: string };
+const citationEdges: GraphEdge[] = citations.map(edge => ({ ...edge, type: 'cites' }));
 const neutralView = { x: 0, y: 0, zoom: 1 };
 const globeColors: Record<string, string> = {
   architecture: '#77b8ff', training: '#ffcb79', causality: '#6ce0ba', tree: '#ff8ea9',
@@ -19,6 +22,9 @@ const globeColors: Record<string, string> = {
 
 export default function ResearchGlobe({ methods, categories, relations, focusId, focusKey, onRead }: Props) {
   const [selected, setSelected] = useState(rootId);
+  const [focused, setFocused] = useState(false);
+  const [layer, setLayer] = useState<'lineage' | 'citations'>('lineage');
+  const arrow = useId();
   const [direction, setDirection] = useState('');
   const [view, setView] = useState(neutralView);
   const [size, setSize] = useState({ width: 900, height: 520 });
@@ -28,13 +34,20 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   const catalog = useMemo(() => new Map(methods.map(method => [method.id, method])), [methods]);
   const categoryIndex = useMemo(() => new Map(categories.map(category => [category.id, category])), [categories]);
   const verified = useMemo(() => relations.filter(relation => relation.status === 'verified' &&
-    relation.type in relationNames && catalog.has(relation.source) && catalog.has(relation.target)), [relations, catalog]);
+    ['extends', 'combines', 'related'].includes(relation.type) && catalog.has(relation.source) && catalog.has(relation.target)), [relations, catalog]);
   const latest = useMemo(() => new Set(methods.filter(method => method.id !== rootId && method.date)
     .sort((a, b) => b.date!.localeCompare(a.date!)).slice(0, 3).map(method => method.id)), [methods]);
   const current = catalog.get(selected);
-  const local = selected !== rootId && !!current;
-  const direct = local ? verified.filter(edge => edge.source === selected || edge.target === selected) : [];
-  const neighbors = [...new Set(direct.map(edge => edge.source === selected ? edge.target : edge.source))];
+  const local = focused && !!current;
+  const layerEdges: GraphEdge[] = layer === 'citations' ? citationEdges : verified;
+  const direct = local ? layerEdges.filter(edge => edge.source === selected || edge.target === selected) : [];
+  const upstream = direct.filter(edge => edge.type !== 'related' && (layer === 'lineage' ? edge.target : edge.source) === selected);
+  const downstream = direct.filter(edge => edge.type !== 'related' && (layer === 'lineage' ? edge.source : edge.target) === selected);
+  const related = direct.filter(edge => edge.type === 'related');
+  const otherId = (edge: GraphEdge) => edge.source === selected ? edge.target : edge.source;
+  const neighbors = new Set(direct.map(otherId));
+  const leftTitle = layer === 'lineage' ? '上游方法' : '引用了';
+  const rightTitle = layer === 'lineage' ? '下游方法' : '被哪些论文引用';
 
   useEffect(() => {
     const element = stage.current;
@@ -46,8 +59,9 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     return () => observer.disconnect();
   }, []);
 
-  function select(id: string) {
+  function select(id: string, focus = true) {
     setSelected(id);
+    setFocused(focus);
     setDirection('');
     setView(neutralView);
     setHover(null);
@@ -83,9 +97,18 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   }
   if (current) place(current, 0, 0);
   if (local) {
-    neighbors.forEach((id, index) => {
-      const theta = fullTurn * index / neighbors.length - Math.PI / 2;
-      place(catalog.get(id)!, Math.min(width * .33, 255) * Math.cos(theta), height * .32 * Math.sin(theta));
+    const placeColumn = (group: GraphEdge[], side: number) => {
+      const ids = [...new Set(group.map(otherId))];
+      ids.forEach((id, index) => {
+        const method = catalog.get(id);
+        if (method && !bounds.has(id)) place(method, side * Math.min(width * .29, 300), (index - (ids.length - 1) / 2) * 25);
+      });
+    };
+    placeColumn(upstream, -1);
+    placeColumn(downstream, 1);
+    [...new Set(related.map(otherId))].forEach((id, index) => {
+      const method = catalog.get(id);
+      if (method && !bounds.has(id)) place(method, 0, 65 + index * 25);
     });
   } else {
     categories.forEach((category, index) => {
@@ -126,19 +149,25 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     }
   }
   const hoverPoint = hover ? bounds.get(hover) : undefined;
-  const edges = local ? direct : verified;
+  const edges = local ? direct : layerEdges;
   const position = (point: Point) => ({ left: point.x, top: point.y });
 
   return <div className="globe-frame">
     <div className="globe-toolbar">
-      <span aria-live="polite">{local ? `${current?.name} · ${neighbors.length} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
+      <span aria-live="polite">{local ? `${current?.name} · ${neighbors.size} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
       <div>
         <button type="button" aria-label="缩小星球视图" onClick={() => zoomBy(.8)}><Minus size={16}/></button>
         <button type="button" aria-label="放大星球视图" onClick={() => zoomBy(1.25)}><Plus size={16}/></button>
-        <button type="button" onClick={() => select(rootId)}><Scan size={15}/> 返回全图</button>
+        <button type="button" onClick={() => select(rootId, false)}><Scan size={15}/> 返回全图</button>
       </div>
     </div>
+    <div className="globe-controls globe-layers" role="group" aria-label="关系层">
+      <button type="button" aria-pressed={layer === 'lineage'} onClick={() => { setLayer('lineage'); setView(neutralView); setHover(null); }}>技术演进</button>
+      <button type="button" aria-pressed={layer === 'citations'} onClick={() => { setLayer('citations'); setView(neutralView); setHover(null); }}>论文引用</button>
+      {layer === 'citations' && <span>已核验 {citationEdges.length} 条 · 引用者 → 被引用者</span>}
+    </div>
     <div className="globe-stage" ref={stage} aria-label="研究方法关系图"
+      style={local ? { minHeight: Math.max(upstream.length * 25 + 65, downstream.length * 25 + 65, related.length * 50 + 165) } : undefined}
       onPointerDown={event => {
         if (event.button !== 0 || (event.target as Element).closest('button')) return;
         drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY, left: view.x, top: view.y };
@@ -151,11 +180,21 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
         setView(previous => ({ ...previous, x: state.left + event.clientX - state.x, y: state.top + event.clientY - state.y }));
       }}
       onLostPointerCapture={() => { drag.current = null; }}>
-      <svg className="globe-edges" aria-hidden="true">{edges.map((edge, index) => {
+      {local && <div className="globe-column-labels" aria-hidden="true"><span>{leftTitle}</span><span>当前方法</span><span>{rightTitle}</span></div>}
+      <svg className="globe-edges" aria-hidden="true">
+      <defs><marker id={arrow} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L8 4 L0 8 Z" fill="#a9c0e4"/>
+      </marker></defs>
+      {edges.map((edge, index) => {
         const source = bounds.get(edge.source), target = bounds.get(edge.target);
         if (!source || !target) return null;
         const dim = direction && source.method.category !== direction && target.method.category !== direction;
-        return <line key={index} x1={source.x} y1={source.y} x2={target.x} y2={target.y}
+        const directed = edge.type === 'cites' || (local && edge.type !== 'related');
+        const distance = Math.hypot(target.x - source.x, target.y - source.y) || 1;
+        const inset = directed ? (target.method.id === selected ? 14 : local ? 9 : 6) / distance : 0;
+        return <line key={index} x1={source.x} y1={source.y}
+          x2={target.x - (target.x - source.x) * inset} y2={target.y - (target.y - source.y) * inset}
+          markerEnd={directed ? `url(#${arrow})` : undefined} data-source={edge.source} data-target={edge.target}
           data-relation={edge.type} className={local ? 'is-local' : dim ? 'is-dimmed' : undefined}/>;
       })}</svg>
       {points.map(point => {
@@ -181,24 +220,32 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     </div>
     <div className="globe-controls">
       {categories.map(category => <button key={category.id} type="button" aria-pressed={direction === category.id}
-        onClick={() => { select(rootId); setDirection(direction === category.id ? '' : category.id); }}>
+        onClick={() => { select(rootId, false); setDirection(direction === category.id ? '' : category.id); }}>
         <i style={{ backgroundColor: globeColors[category.id] ?? category.color }}/>{category.name}
       </button>)}
     </div>
-    <div className="globe-legend"><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></div>
+    <div className="globe-legend">{layer === 'lineage' ? <><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></> : <span>箭头指向被引用的论文</span>}</div>
     {current && <div className="globe-selection">
       <div><h3>{current.name}</h3><p>{current.summary}</p></div>
       <a href={`#method-${current.id}`} onClick={event => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault(); onRead(current.id);
       }}>阅读方法卡片 <ArrowUpRight size={14}/></a>
-      {local && (direct.length ? <details key={selected}><summary>连线证据</summary><ul>
-        {direct.map((edge, index) => <li key={index}>
-          <b>{catalog.get(edge.source)?.name} · {relationNames[edge.type]}{edge.type === 'related' ? ' · ' : ' → '}{catalog.get(edge.target)?.name}</b>
-          <span>{edge.note}</span>
-          {edge.evidenceUrl && <a href={edge.evidenceUrl} target="_blank" rel="noopener noreferrer">原始来源 <ArrowUpRight size={12}/></a>}
-        </li>)}
-      </ul></details> : <p>暂无已核验的直接关系。</p>)}
+      {local && (direct.length ? <details key={selected + layer}><summary>连线证据（{direct.length}）</summary>
+        {([{ title: leftTitle, group: upstream }, { title: rightTitle, group: downstream }, { title: '相关方法', group: related }]).map(({ title, group }) =>
+          group.length > 0 && <section key={title}><h4>{title}</h4><ul>
+            {group.map((edge, index) => <li key={index}>
+              <button type="button" onClick={() => select(otherId(edge))}>{catalog.get(otherId(edge))?.name}</button>
+              <b> · {edge.role ?? relationNames[edge.type]}</b>
+              <span>{edge.note}</span>
+              <a href={edge.evidenceUrl} target="_blank" rel="noopener noreferrer">{edge.location ?? '原始来源'} <ArrowUpRight size={12}/></a>
+            </li>)}
+          </ul></section>)}
+      </details> : <p>{layer === 'citations' ? '当前资料库尚未收录该方法的已核验引用。' : '暂无已核验的直接关系。'}</p>)}
+      {local && <details key={selected}><summary>同方向方法</summary>
+        <div className="globe-peers">{methods.filter(method => method.category === current.category && method.id !== selected)
+          .map(method => <button key={method.id} type="button" onClick={() => select(method.id)}>{method.name}</button>)}</div>
+      </details>}
     </div>}
   </div>;
 }

@@ -52,3 +52,14 @@
 .globe-selection ul { padding-left: 18px; }
 .globe-selection li + li { margin-top: 6px; }
 .globe-selection li span, .globe-selection li a { margin-left: 6px; }
+.globe-layers { align-items: center; border-top: 0; border-bottom: 1px solid var(--globe-line); }
+.globe-layers span { color: var(--globe-quiet); font-size: 12px; margin-left: 4px; }
+.globe-column-labels { position: absolute; inset: 12px 6px auto; z-index: 4; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; color: var(--globe-quiet); font-size: 11px; pointer-events: none; }
+.globe-edges [data-relation=cites] { stroke-dasharray: 4 3; stroke-opacity: .66; }
+.globe-selection section { margin-top: 10px; }
+.globe-selection section h4 { margin: 0; color: var(--globe-quiet); font-size: 12px; }
+.globe-selection li button, .globe-peers button { color: var(--globe-core); font-size: 12px; }
+.globe-selection li button { padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.globe-peers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.globe-peers button { border: 1px solid var(--globe-line); border-radius: 5px; padding: 4px 8px; }
+.globe-peers button:hover { background: #182740; }
