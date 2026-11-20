@@ -1,0 +1,822 @@
+[
+  {
+    "methodId": "dflash",
+    "context": "Qwen3 指令模型 · Table 1 / §5.1",
+    "source": "https://arxiv.org/html/2602.06036v1#S5.SS1",
+    "primary": {
+      "label": "EAGLE-3",
+      "note": "主要投机解码对照，测试 16 和 60 个树节点。"
+    },
+    "others": [
+      {
+        "label": "原生自回归（AR）",
+        "note": "加速比的参照。"
+      }
+    ],
+    "takeaway": "对比解码加速比和平均接受长度，需区分 EAGLE-3 的候选树大小和 DFlash 的草稿块大小。"
+  },
+  {
+    "methodId": "dspark",
+    "context": "离线草稿质量 · Table 1 / §4.2",
+    "source": "https://arxiv.org/html/2607.05147v1#S4.SS2",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "全并行起草对照，最直接检验块内顺序修正的收益。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "自回归草稿器对照。"
+      }
+    ],
+    "takeaway": "关闭置信度调度、固定草稿块比较接受长度。Qwen3-4B/8B/14B 宏平均接受长度较 DFlash 分别提升 16.3% / 18.4% / 18.3%。"
+  },
+  {
+    "methodId": "dspark",
+    "context": "DeepSeek-V4 真实流量 · Figure 7 / §5.4",
+    "source": "https://arxiv.org/html/2607.05147v1#S5.SS4",
+    "primary": {
+      "label": "MTP-1",
+      "note": "原生产系统的一 token 草稿配置。"
+    },
+    "others": [],
+    "takeaway": "比较系统总吞吐和每用户生成速度。Flash 与 Pro 的结果分别报告，和离线接受长度属于不同口径。"
+  },
+  {
+    "methodId": "ddtree",
+    "context": "单链与候选树对照 · Table 1 / §5.2",
+    "source": "https://liranringel.github.io/ddtree/DDTree.pdf#page=11",
+    "primary": {
+      "methodId": "dflash",
+      "label": "原版 DFlash",
+      "note": "单路径验证；DDTree 基于同类块扩散草稿分布构建候选树。"
+    },
+    "others": [
+      {
+        "label": "原生自回归（AR）",
+        "note": "加速比的参照。"
+      }
+    ],
+    "takeaway": "同时关注接受长度和端到端加速。增大树预算可以继续拉长接受前缀，但验证开销也会上升。"
+  },
+  {
+    "methodId": "treespark",
+    "context": "Qwen3-4B / 8B 贪心解码 · 原文摘要",
+    "source": "https://arxiv.org/abs/2610.20175",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "原文报告相对 DSpark 的接受长度和单请求吞吐增益。"
+    },
+    "others": [],
+    "takeaway": "原文摘要报告相对 DSpark 的平均接受长度提升 23.4%–31.6%，平均单请求吞吐提升 15.1%–25.0%。"
+  },
+  {
+    "methodId": "adaspark",
+    "context": "同草稿器对照 · 原文摘要",
+    "source": "https://arxiv.org/abs/2610.05774",
+    "primary": {
+      "methodId": "dspark",
+      "label": "llama.cpp 的 DSpark",
+      "note": "采用相同草稿器的引擎配置对照。"
+    },
+    "others": [
+      {
+        "label": "imparo 三 token 链",
+        "note": "同引擎对照，用于分离调度器贡献。"
+      }
+    ],
+    "takeaway": "同时报告同引擎的三 token 链式对照；跨引擎增益和调度器单独贡献需要分别读。"
+  },
+  {
+    "methodId": "bastion",
+    "context": "A100 · Qwen3-4B/8B · Table 1",
+    "source": "https://arxiv.org/abs/2605.29727",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "使用公开 DFlash 草稿器的单路径对照。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "对比 T=0/1 的加速与接受长度，树预算在推理时调整。"
+  },
+  {
+    "methodId": "presto",
+    "context": "块扩散草稿 · Table 2",
+    "source": "https://arxiv.org/abs/2607.22634",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "同一草稿器原有方案。"
+    },
+    "others": [],
+    "takeaway": "分别报告 Qwen3 三档规模在 T=0/1 的接受长度和吞吐。"
+  },
+  {
+    "methodId": "d-cut",
+    "context": "批量投机解码 · 主实验",
+    "source": "https://arxiv.org/abs/2607.14647",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "对照固定草稿块 8 和 16。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "MTP",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "原生 AR",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "主结果在并发 32，另有并发 4–64 的吞吐曲线。"
+  },
+  {
+    "methodId": "dartree",
+    "context": "Qwen3 · Table 1",
+    "source": "https://arxiv.org/abs/2608.13524",
+    "primary": {
+      "methodId": "ddtree",
+      "label": "DDTree",
+      "note": "基于边缘概率构建候选树的直接对照。"
+    },
+    "others": [
+      {
+        "methodId": "domino",
+        "label": "Domino",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "同时对照候选树与单链 causal correction，分别看接受长度与端到端速度。"
+  },
+  {
+    "methodId": "h-spec",
+    "context": "三种目标模型 · 统计不确定性分析",
+    "source": "https://arxiv.org/abs/2609.24197",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "带草稿侧历史状态的半自回归草稿对照。"
+    },
+    "others": [],
+    "takeaway": "论文报告跨任务平均接受长度和加速的 bootstrap 区间。"
+  },
+  {
+    "methodId": "dpara",
+    "context": "贪心单请求 · Table 1",
+    "source": "https://arxiv.org/abs/2609.27396",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "串行起草与验证的同类并行草稿对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "PEARL",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "SSD",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "SSD-E3",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "常规 SD",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "Qwen3-8B/14B、固定草稿长度 7；重叠执行可在接受更短时仍提高速度。"
+  },
+  {
+    "methodId": "longspark",
+    "context": "短上下文与负载 · Tables 1、3、6",
+    "source": "https://arxiv.org/abs/2609.37029",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "随历史前缀维护草稿状态的半自回归对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "原生 AR",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "接受长度与吞吐分别看；部分并发条件下两者的排序会改变。"
+  },
+  {
+    "methodId": "ready",
+    "context": "Qwen3.8-27B · Table 1",
+    "source": "https://arxiv.org/abs/2610.20503",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "未接入其 recurrent-state reader 的半自回归对照。"
+    },
+    "others": [
+      {
+        "label": "原生 AR",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "一张 B200、贪心解码、草稿块七 token，分别比较 TPS 和接受长度。"
+  },
+  {
+    "methodId": "dforktree",
+    "context": "Qwen3.5-4B/9B · 同草稿器树对照",
+    "source": "https://arxiv.org/abs/2611.12356",
+    "primary": {
+      "methodId": "ddtree",
+      "label": "DDTree",
+      "note": "相同草稿器、树流程和验证器的树基线。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "对比 fork-aware 打分与原始固定边缘概率方案。"
+  },
+  {
+    "methodId": "d3tree",
+    "context": "并发与预算消融 · Table IV",
+    "source": "https://arxiv.org/abs/2611.11371",
+    "primary": {
+      "methodId": "ddtree",
+      "label": "DDTree",
+      "note": "固定全树预算对照。"
+    },
+    "others": [
+      {
+        "methodId": "caddtree",
+        "label": "CaDDTree",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "dspark",
+        "label": "DSpark",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "并发升高时要同时看预算、接受长度和系统吞吐；固定宽度未必适用所有负载。"
+  },
+  {
+    "methodId": "mfd",
+    "context": "同训练资料的并行建树对照",
+    "source": "https://arxiv.org/abs/2611.13017",
+    "primary": {
+      "methodId": "dartree",
+      "label": "DARTree",
+      "note": "同 prompts 与微调数据的已发布 DARTree。"
+    },
+    "others": [],
+    "takeaway": "该场景单独对比建树开销和接受长度，并与总主表区分。"
+  },
+  {
+    "methodId": "dscale",
+    "context": "连续批处理 · 评测设置 / Figure 7",
+    "source": "https://arxiv.org/abs/2609.37532",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "共享 DFlash checkpoint，便于对照验证调度。"
+    },
+    "others": [
+      {
+        "methodId": "dspark",
+        "label": "DSpark",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "domino",
+        "label": "Domino",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "单 A100，闭环并发 8–32；以系统吞吐比较。"
+  },
+  {
+    "methodId": "dspine",
+    "context": "Qwen3-4B/8B · Table 1",
+    "source": "https://arxiv.org/abs/2609.36173",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "并行块草稿对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash-2",
+        "label": "DFlash 2",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "dspark",
+        "label": "DSpark",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "此表是接受长度，需另查端到端速度。"
+  },
+  {
+    "methodId": "dlite",
+    "context": "短上下文 · Table 1",
+    "source": "https://arxiv.org/abs/2610.23787",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "半自回归草稿对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "dflash-2",
+        "label": "DFlash 2",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "dflow",
+        "label": "DFlow",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "此表比较接受长度；长上下文和高并发结果见后续表格。"
+  },
+  {
+    "methodId": "dlite",
+    "context": "LongBench v2 · Table 2",
+    "source": "https://arxiv.org/abs/2610.23787",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "半自回归全历史草稿对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "长文本任务同时报告接受长度与加速，需和短上下文表分开。"
+  },
+  {
+    "methodId": "d3d",
+    "context": "Qwen3-8B/32B · Table 1",
+    "source": "https://arxiv.org/abs/2611.06425",
+    "primary": {
+      "methodId": "dspark",
+      "label": "DSpark",
+      "note": "半自回归草稿对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "PARD-2",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "SSD",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "异步方案与同步方案的 GPU 使用不同，读吞吐时保留资源配置。"
+  },
+  {
+    "methodId": "flashmap",
+    "context": "Qwen3-8B · Table 1",
+    "source": "https://arxiv.org/abs/2610.24365",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "独立位置预测的块并行参照。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "比较一步与两步草稿时，需分别阅读接受长度和速度。"
+  },
+  {
+    "methodId": "cast",
+    "context": "LLaMA-3.1-8B · Table 4",
+    "source": "https://arxiv.org/abs/2610.00321",
+    "primary": {
+      "methodId": "dflash",
+      "label": "DFlash",
+      "note": "原始单路径块扩散对照。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "EAGLE-3 使用 60 节点树，表中报告相对 AR 的 decode-only 加速。"
+  },
+  {
+    "methodId": "drelay",
+    "context": "单请求与并发 · Tables 1–2",
+    "source": "https://arxiv.org/abs/2610.01439",
+    "primary": {
+      "methodId": "domino",
+      "label": "Domino",
+      "note": "相近的块内因果修正对照。"
+    },
+    "others": [
+      {
+        "methodId": "dflash",
+        "label": "DFlash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "methodId": "dspark",
+        "label": "DSpark",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "单请求和并发分别测试，报告接受长度与实际吞吐。"
+  },
+  {
+    "methodId": "dcoco",
+    "context": "Qwen3 对照 · 吞吐与接受长度",
+    "source": "https://arxiv.org/abs/2610.12570",
+    "primary": {
+      "methodId": "domino",
+      "label": "Domino",
+      "note": "块内顺序修正的直接对照。"
+    },
+    "others": [],
+    "takeaway": "按目标模型、thinking 开关与温度分别比较，不把平均吞吐领先当作逐任务接受长度领先。"
+  },
+  {
+    "methodId": "recguide",
+    "context": "NLD-8B/14B · 实验设置",
+    "source": "https://arxiv.org/abs/2609.34388",
+    "primary": {
+      "label": "LinearSS",
+      "note": "原生线性自投机参照。"
+    },
+    "others": [
+      {
+        "label": "DFlash",
+        "methodId": "dflash",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "TiDAR",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "需区分单请求和并发条件。"
+  },
+  {
+    "methodId": "ncp-archpreview",
+    "context": "匹配计算量 · Table 2",
+    "source": "https://arxiv.org/abs/2609.10715",
+    "primary": {
+      "label": "34-block computation-aligned 模型",
+      "note": "按前向计算量对齐的基线。"
+    },
+    "others": [
+      {
+        "label": "Vanilla",
+        "note": "同场景的对比项。"
+      },
+      {
+        "label": "40-block 参数对齐配置",
+        "note": "同场景的对比项。"
+      }
+    ],
+    "takeaway": "核对 token 层和 concept 层不同的实际运行频率。"
+  },
+  {
+    "methodId": "angelspec",
+    "context": "并发盈亏临界点 · Table 8",
+    "source": "https://arxiv.org/abs/2607.25852",
+    "primary": {
+      "label": "MTP3",
+      "note": "三步 MTP 的并发参照。"
+    },
+    "others": [
+      {
+        "label": "DFlash",
+        "methodId": "dflash",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "DFlash 的不同层数和块大小单独测量，同一并发才可比较。"
+  },
+  {
+    "methodId": "sharpdraft",
+    "context": "长上下文 · Table 1",
+    "source": "https://arxiv.org/abs/2610.05106",
+    "primary": {
+      "label": "Frozen DFlash",
+      "methodId": "dflash",
+      "note": "冻结、未经查询缩放的同源草稿器。"
+    },
+    "others": [
+      {
+        "label": "Full Adaptation",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "LoRA",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "原生 AR",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "同组长上下文任务对比端到端时间；校准和同步计入延迟。"
+  },
+  {
+    "methodId": "d-loop",
+    "context": "Qwen3-8B GSM8K · Table 6",
+    "source": "https://arxiv.org/abs/2610.06011",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "无 loop 的块扩散草稿器。"
+    },
+    "others": [
+      {
+        "label": "DSpark",
+        "methodId": "dspark",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "单轮草稿耗时、目标验证耗时、接受长度和端到端加速应一起读。"
+  },
+  {
+    "methodId": "fold",
+    "context": "长上下文 · Table 2",
+    "source": "https://arxiv.org/abs/2610.20392",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "使用原始上下文机制的草稿器。"
+    },
+    "others": [
+      {
+        "label": "ReRoPE",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "三个目标模型分别汇报接受长度和加速；检索方案还要计选择与刷新成本。"
+  },
+  {
+    "methodId": "tabletune",
+    "context": "自适应长度控制 · EAGLE-3 对照",
+    "source": "https://arxiv.org/abs/2610.38968",
+    "primary": {
+      "label": "最佳固定长度",
+      "note": "用于衡量动态控制损失的固定策略参照。"
+    },
+    "others": [
+      {
+        "label": "TurboSpec-style",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "Nightjar-style",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "后两项是论文的独立插件复现，不能当作原仓库运行结果。"
+  },
+  {
+    "methodId": "hybridspec",
+    "context": "SPEED-Bench · Table 1",
+    "source": "https://arxiv.org/abs/2611.04055",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "未改验证调度的块扩散对照。"
+    },
+    "others": [
+      {
+        "label": "EVICT",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "报告相对同一目标原生 AR 的加速；保留模型和任务分组。"
+  },
+  {
+    "methodId": "chainflow",
+    "context": "匹配 draft 参数量 · Table 1",
+    "source": "https://arxiv.org/abs/2611.08669",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "同量级并行起草对照。"
+    },
+    "others": [
+      {
+        "label": "EAGLE-3",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "ChainFlow chain 与不同树配置分别列出，不能把树的增益全部归因于草稿器。"
+  },
+  {
+    "methodId": "dynadflash",
+    "context": "数学提示与吞吐 · Tables 1–2",
+    "source": "https://arxiv.org/abs/2611.19085",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "固定特征投影对照。"
+    },
+    "others": [
+      {
+        "label": "原生 AR",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "Table 1 看数学提示的接受长度，Table 2 看八并发吞吐。"
+  },
+  {
+    "methodId": "dflash-2",
+    "context": "Qwen3.5-4B · 技术报告 Table 3",
+    "source": "https://inco.ai/blog/dflash2/",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "作者同设置训练的并行草稿对照。"
+    },
+    "others": [
+      {
+        "label": "DSpark",
+        "methodId": "dspark",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "原生 MTP",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "thinking 开启，T=1，报告每请求平均接受长度。"
+  },
+  {
+    "methodId": "dflash-2",
+    "context": "Qwen3.8-27B · 技术报告 Table 4",
+    "source": "https://inco.ai/blog/dflash2/",
+    "primary": {
+      "label": "原生 MTP",
+      "note": "模型随附的草稿方案。"
+    },
+    "others": [
+      {
+        "label": "社区 DSpark",
+        "methodId": "dspark",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "默认采样、块大小 8；社区权重与 Table 3 的自训权重不同。"
+  },
+  {
+    "methodId": "only-accepted-tokens-count",
+    "context": "配对能耗测量 · 实验设置",
+    "source": "https://arxiv.org/abs/2610.40287",
+    "primary": {
+      "label": "无投机解码的同一模型",
+      "note": "每组配对测量的原生解码对照。"
+    },
+    "others": [],
+    "takeaway": "DFlash、DSpark、MTP 等是不同模型的草稿配置，并非统一的横向基线。"
+  },
+  {
+    "methodId": "ubtree",
+    "context": "Qwen3 Instruct · Table 1",
+    "source": "https://arxiv.org/pdf/2609.39972#page=7",
+    "primary": {
+      "label": "DARTree",
+      "methodId": "dartree",
+      "note": "同最大草稿深度的因果候选树对照。"
+    },
+    "others": [
+      {
+        "label": "DDTree",
+        "methodId": "ddtree",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "DFlash",
+        "methodId": "dflash",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "Domino",
+        "methodId": "domino",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "Domino 和 DARTree 仅在 Instruct 配置比较；thinking 配置不应沿用该结论。"
+  },
+  {
+    "methodId": "dloop",
+    "context": "DFlash 草稿器 · Table 1",
+    "source": "https://arxiv.org/pdf/2610.07659#page=7",
+    "primary": {
+      "label": "DFlash",
+      "methodId": "dflash",
+      "note": "原发布 checkpoint，逐块验证且没有 DLoop。"
+    },
+    "others": [],
+    "takeaway": "同架构、同块大小；对照 loop-aware 训练和带门控的循环起草。"
+  },
+  {
+    "methodId": "dloop",
+    "context": "DSpark 草稿器 · Table 1",
+    "source": "https://arxiv.org/pdf/2610.07659#page=7",
+    "primary": {
+      "label": "DSpark",
+      "methodId": "dspark",
+      "note": "原发布 checkpoint，未使用 DLoop。"
+    },
+    "others": [],
+    "takeaway": "这是另一组配对，原文也对 EAGLE-3、Domino 和 MTP 分别做了对应比较。"
+  },
+  {
+    "methodId": "taps",
+    "context": "同目标和解码设置 · §5",
+    "source": "https://arxiv.org/pdf/2606.00487#page=6",
+    "primary": {
+      "label": "DDTree",
+      "methodId": "ddtree",
+      "note": "并行块草稿的树对照，主设置的节点预算为 512。"
+    },
+    "others": [
+      {
+        "label": "DFlash",
+        "methodId": "dflash",
+        "note": "该场景的其他实验对照。"
+      },
+      {
+        "label": "EAGLE-3",
+        "note": "该场景的其他实验对照。"
+      }
+    ],
+    "takeaway": "同预算下的接受长度曲线另见 Figure 7；不能把不同验证预算混在一起。"
+  }
+]

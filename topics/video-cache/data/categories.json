@@ -1,0 +1,30 @@
+[
+  {
+    "id": "decision",
+    "name": "复用判据",
+    "english": "WHEN TO SKIP",
+    "description": "用什么信号判断这一步能不能省：输入差异、残差幅值、层误差、提示词复杂度。判据错了，后面全是白省。",
+    "color": "#5aa0e0"
+  },
+  {
+    "id": "schedule",
+    "name": "全局调度",
+    "english": "PATH AND BUDGET",
+    "description": "整条去噪轨迹的计算怎么分配、误差怎么不累积。从「这一步省不省」升级为「整条路径怎么走」。",
+    "color": "#e0aa44"
+  },
+  {
+    "id": "granularity",
+    "name": "缓存粒度",
+    "english": "WHAT TO CACHE",
+    "description": "缓存哪一层、哪些 token、哪个模块。粒度选得对，同样的加速比下画质损失更小。",
+    "color": "#42b99b"
+  },
+  {
+    "id": "forecast",
+    "name": "特征外推",
+    "english": "FORECAST INSTEAD OF REUSE",
+    "description": "不再复制历史特征，而是用泰勒展开预测未来步。目前只有一篇，代表一个尚未展开的分叉。",
+    "color": "#e0708a"
+  }
+]

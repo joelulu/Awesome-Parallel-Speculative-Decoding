@@ -1,0 +1,106 @@
+[
+  {
+    "source": "deepcache",
+    "target": "teacache",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2411.19108",
+    "note": "摘要依据：TeaCache 将要替代的做法描述为「在均匀选取的时间步上缓存并复用模型输出」，即 DeepCache 一类固定间隔复用；本文把间隔判断换成输入差异判断。"
+  },
+  {
+    "source": "deepcache",
+    "target": "smoothcache",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2411.10510",
+    "note": "摘要依据：SmoothCache 沿用「相邻时间步的层输出高度相似」这一前提，把统一间隔换成按层误差校准，属同一假设下的细化。"
+  },
+  {
+    "source": "deepcache",
+    "target": "omnicache",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.23844",
+    "note": "摘要依据：OmniCache 明确把「去噪步冗余」列为四类冗余之一，其层级复用是 DeepCache 跨步特征复用的多维扩展。"
+  },
+  {
+    "source": "adacache",
+    "target": "teacache",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2411.02397",
+    "note": "摘要依据：两者都用代价极低的代理量决定复用——AdaCache 把残差距离映射为缓存间隔，TeaCache 用时间步调制后的输入差异；差别在 AdaCache 按样本定制 schedule。"
+  },
+  {
+    "source": "adacache",
+    "target": "magcache",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2506.09045",
+    "note": "摘要依据：MagCache 批评既有方法「需要大量精选样本校准、易过拟合提示词」，针对的正是 AdaCache 这类依赖预标定 codebook 的间隔映射；本文把校准压到单样本。"
+  },
+  {
+    "source": "adacache",
+    "target": "lemica",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2511.00090",
+    "note": "摘要依据：两者都做整条轨迹的算力分配——AdaCache 按视频运动内容分配，LeMiCa 用带误差权重的路径优化压最坏误差。"
+  },
+  {
+    "source": "teacache",
+    "target": "magcache",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2506.09045",
+    "note": "摘要依据：MagCache 点名批评「依赖时间步嵌入的变体」需要大量精选提示词校准，即 TeaCache 一路；本文改用幅值律 + 误差建模，只需一个校准样本。"
+  },
+  {
+    "source": "teacache",
+    "target": "prompttea",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2507.06739",
+    "note": "摘要依据：PromptTea 以 TeaCache 为直接改进对象——重新审视其输入-输出假设，解耦噪声输入、强化文本信息、改用多元多项式展开，并按提示词复杂度调阈值。"
+  },
+  {
+    "source": "teacache",
+    "target": "lemica",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2511.00090",
+    "note": "摘要依据：LeMiCa 把既有缓存策略概括为「只压局部启发式误差、忽略全局误差累积」，并用路径级最坏误差上界替代逐步阈值，正对应 TeaCache 的逐步判据。"
+  },
+  {
+    "source": "fastercache",
+    "target": "teacache",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2410.19355",
+    "note": "摘要依据：FasterCache 指出「直接复用相邻步特征会丢失细微变化」，与 TeaCache 同属训练无关跨步复用，但它额外把同一步内 CFG 双分支的冗余纳入预算。"
+  },
+  {
+    "source": "taylorseer",
+    "target": "lemica",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2503.06923",
+    "note": "摘要依据：两者都在解决「间隔拉大后误差变大」——TaylorSeer 用泰勒外推代替复制旧特征，LeMiCa 用路径优化压住最坏误差。"
+  },
+  {
+    "source": "duca",
+    "target": "omnicache",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.23844",
+    "note": "摘要依据：两者都质疑既有的粒度选择——DuCa 指出 token 重要性选择常无效甚至不如随机，OmniCache 改用相似度匹配挑选可缓存特征，而非按重要性挑选或求平均合并。"
+  },
+  {
+    "source": "blockdance",
+    "target": "omnicache",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.23844",
+    "note": "摘要依据：两者都以「结构相似」作为可复用判据——BlockDance 定位结构相似时空特征块，OmniCache 跨 token / 帧 / 块 / 层四个维度做相似度匹配。"
+  }
+]

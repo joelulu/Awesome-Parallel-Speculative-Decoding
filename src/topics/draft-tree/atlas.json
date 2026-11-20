@@ -1,0 +1,43 @@
+{
+  "slug": "draft-tree",
+  "title": "Draft Tree Atlas",
+  "brand": {
+    "lead": "Draft Tree",
+    "tail": "Atlas"
+  },
+  "subtitle": "高并发下的草稿树预算",
+  "headline": "Draft Tree under Concurrency",
+  "tagline": "草稿树什么时候划算：沿着 DDTree 与 DSpark，看并发负载和验证预算如何改变答案。",
+  "rootId": "ddtree",
+  "rootName": "DDTree",
+  "rootTitle": "DDTree — Accelerating Speculative Decoding with Block Diffusion Draft Trees",
+  "rootDate": "2026-04-14",
+  "repository": "",
+  "homepage": "",
+  "base": "/Awesome-Parallel-Speculative-Decoding/",
+  "updatedAt": "2026-11-19",
+  "categoryIds": [
+    "architecture",
+    "causality",
+    "tree",
+    "systems"
+  ],
+  "features": {
+    "briefs": false,
+    "engineering": false,
+    "stars": true,
+    "citations": true
+  },
+  "copy": {
+    "dailyLabel": "DRAFT TREE FOLLOW-UP",
+    "dailyNote": "",
+    "engineeringTitle": "工程动态"
+  },
+  "scope": "以 DDTree 与 DSpark 为起点，追踪草稿树在并发负载与验证预算约束下的取舍：树开多大划算、什么时候必须裁剪、收益究竟来自接受长度还是端到端吞吐。",
+  "counts": {
+    "methods": 39,
+    "relations": 47,
+    "benchmarks": 43,
+    "briefs": 26
+  }
+}

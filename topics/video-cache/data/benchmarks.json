@@ -1,0 +1,207 @@
+[
+  {
+    "methodId": "teacache",
+    "context": "Open-Sora-Plan 文生视频，按论文报告设置",
+    "source": "https://arxiv.org/abs/2411.19108",
+    "primary": {
+      "label": "Open-Sora-Plan 原速",
+      "note": "未加速的原始采样，作为加速比与画质的共同基准"
+    },
+    "others": [
+      {
+        "label": "固定间隔复用",
+        "note": "被替代的做法：在均匀选取的时间步复用输出"
+      }
+    ],
+    "takeaway": "最高 4.41× 加速，VBench 仅下降 0.07%；说明按输入差异选步比均匀跳步更划算。"
+  },
+  {
+    "methodId": "lemica",
+    "context": "Latte 与 Open-Sora 文生视频",
+    "source": "https://arxiv.org/abs/2511.00090",
+    "primary": {
+      "label": "原始模型（未加速）",
+      "note": "加速与画质对照的基准"
+    },
+    "others": [
+      {
+        "label": "局部启发式缓存",
+        "note": "论文判断其只压单步误差、忽略全局累积"
+      }
+    ],
+    "takeaway": "Latte 上 2.9×，Open-Sora 上 LPIPS 0.05；作者把收益归因于约束了全轨迹最坏误差。"
+  },
+  {
+    "methodId": "adacache",
+    "context": "Open-Sora 720p / 2 秒 / 100 步，单卡 A100",
+    "source": "https://arxiv.org/abs/2411.02397",
+    "primary": {
+      "label": "Open-Sora 原速",
+      "note": "100 步未加速基线，单卡 A100"
+    },
+    "others": [
+      {
+        "methodId": "pab",
+        "label": "PAB",
+        "note": "注意力广播方法，同一设置下约 1.66×"
+      }
+    ],
+    "takeaway": "最高 4.7×；加 MoReg 后约 4.49×，用少量算力换回运动一致性。"
+  },
+  {
+    "methodId": "deepcache",
+    "context": "Stable Diffusion v1.5 与 LDM-4-G（ImageNet）",
+    "source": "https://arxiv.org/abs/2312.00858",
+    "primary": {
+      "label": "原始采样",
+      "note": "同采样器、同步数的未加速基线"
+    },
+    "others": [
+      {
+        "label": "剪枝与蒸馏方法",
+        "note": "需要重训练，论文作为对照"
+      }
+    ],
+    "takeaway": "SD v1.5 上 2.3×、CLIP 仅 -0.05；LDM-4-G 上 4.1×、FID +0.22。"
+  },
+  {
+    "methodId": "smoothcache",
+    "context": "DiT-XL、Open-Sora、Stable Audio Open",
+    "source": "https://arxiv.org/abs/2411.10510",
+    "primary": {
+      "label": "原始推理",
+      "note": "三个模态各自的未加速基线"
+    },
+    "others": [],
+    "takeaway": "8%–71% 加速且质量持平或略好；幅度不大，但同一套策略跨图像/视频/音频可用。"
+  },
+  {
+    "methodId": "pab",
+    "context": "三个 DiT 视频模型，最高 720p",
+    "source": "https://arxiv.org/abs/2408.12588",
+    "primary": {
+      "label": "原始推理",
+      "note": "同模型、同步数的未加速基线"
+    },
+    "others": [
+      {
+        "label": "均匀跳步复用",
+        "note": "被替代的固定间隔做法"
+      }
+    ],
+    "takeaway": "最高 10.5×，做到 720p 实时；代价是要按注意力类型分别设定广播策略。"
+  },
+  {
+    "methodId": "fastercache",
+    "context": "Vchitect-2.0 等视频扩散模型",
+    "source": "https://arxiv.org/abs/2410.19355",
+    "primary": {
+      "label": "原始模型",
+      "note": "画质对照基线"
+    },
+    "others": [
+      {
+        "label": "直接复用相邻步特征",
+        "note": "论文指出会丢失细微变化"
+      }
+    ],
+    "takeaway": "1.67× 且画质可比；CFG-Cache 把同一步内的双分支冗余也算进了预算。"
+  },
+  {
+    "methodId": "duca",
+    "context": "DiT、PixArt、FLUX、Open-Sora",
+    "source": "https://arxiv.org/abs/2412.18911",
+    "primary": {
+      "label": "token 级缓存 SOTA",
+      "note": "此前按重要性选 token 计算的做法"
+    },
+    "others": [
+      {
+        "label": "随机选择 token",
+        "note": "作者的对照，表现不劣于重要性选择"
+      }
+    ],
+    "takeaway": "摘要未给统一加速比；关键结论是「重要 token」的选取常无效，甚至不如随机。"
+  },
+  {
+    "methodId": "taylorseer",
+    "context": "FLUX、HunyuanVideo 与 DiT",
+    "source": "https://arxiv.org/abs/2503.06923",
+    "primary": {
+      "label": "原始模型",
+      "note": "近无损加速的对照基准"
+    },
+    "others": [
+      {
+        "label": "特征复用类缓存",
+        "note": "在 4.53× 加速下，本文 FID 比其低 3.41"
+      }
+    ],
+    "takeaway": "FLUX 4.99×、HunyuanVideo 5.00×，接近无损；加速比越高，外推相对复用的优势越明显。"
+  },
+  {
+    "methodId": "blockdance",
+    "context": "多种生成任务与 DiT 模型",
+    "source": "https://arxiv.org/abs/2503.15927",
+    "primary": {
+      "label": "原始模型",
+      "note": "画质与结构一致性对照"
+    },
+    "others": [
+      {
+        "label": "统一策略特征复用",
+        "note": "未区分尺度与结构相似度的复用做法"
+      }
+    ],
+    "takeaway": "25%–50% 加速；幅度保守，换来的是结构一致性。"
+  },
+  {
+    "methodId": "magcache",
+    "context": "Open-Sora、CogVideoX、Wan 2.1、HunyuanVideo",
+    "source": "https://arxiv.org/abs/2506.09045",
+    "primary": {
+      "label": "原始模型",
+      "note": "画质对照基线"
+    },
+    "others": [
+      {
+        "label": "时间步嵌入类缓存",
+        "note": "需要数十条精选提示词校准"
+      }
+    ],
+    "takeaway": "2.10–2.68×，相似算力预算下 LPIPS / SSIM / PSNR 均优于同类；单样本校准是主要卖点。"
+  },
+  {
+    "methodId": "prompttea",
+    "context": "Wan2.1 等视频模型",
+    "source": "https://arxiv.org/abs/2507.06739",
+    "primary": {
+      "label": "原始模型",
+      "note": "画质对照基线"
+    },
+    "others": [
+      {
+        "methodId": "teacache",
+        "label": "TeaCache 固定阈值",
+        "note": "复杂场景下质量下降，阈值需人工调"
+      }
+    ],
+    "takeaway": "2.79×；收益主要来自按提示词复杂度调阈值，以及重构后的代理量建模。"
+  },
+  {
+    "methodId": "omnicache",
+    "context": "SD3、SVD-XT、Latte",
+    "source": "https://arxiv.org/abs/2607.23844",
+    "primary": {
+      "label": "原始推理",
+      "note": "延迟基线"
+    },
+    "others": [
+      {
+        "label": "token 合并类方法",
+        "note": "对匹配特征求平均；本文改用相似度匹配并还原位置"
+      }
+    ],
+    "takeaway": "延迟分别下降 35% / 25% / 28%；收益来自四类冗余一起用，而不是单点加速比。"
+  }
+]

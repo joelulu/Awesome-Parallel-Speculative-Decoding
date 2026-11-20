@@ -1,0 +1,43 @@
+{
+  "slug": "video-cache",
+  "title": "Video Cache Atlas",
+  "brand": {
+    "lead": "Video",
+    "tail": "Cache Atlas"
+  },
+  "subtitle": "TRAINING-FREE FEATURE CACHING",
+  "headline": "训练无关的缓存，如何在视频扩散里省算力",
+  "tagline": "从 TeaCache 与 LeMiCa 出发：什么时候可以省这一步，整条轨迹的误差由谁负责。",
+  "rootId": "teacache",
+  "rootName": "TeaCache",
+  "rootTitle": "Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model",
+  "rootDate": "2024-11-28",
+  "repository": "",
+  "homepage": "",
+  "base": "/",
+  "updatedAt": "2026-11-20",
+  "categoryIds": [
+    "decision",
+    "schedule",
+    "granularity",
+    "forecast"
+  ],
+  "features": {
+    "briefs": false,
+    "engineering": false,
+    "stars": false,
+    "citations": false
+  },
+  "copy": {
+    "dailyLabel": "",
+    "dailyNote": "",
+    "engineeringTitle": "工程动态"
+  },
+  "scope": "训练无关的特征缓存如何加速视频扩散：复用判据、全局调度、缓存粒度与外推。不收需要重训练的方法，不收采样步蒸馏，不收纯注意力稀疏化。",
+  "counts": {
+    "methods": 13,
+    "relations": 13,
+    "benchmarks": 13,
+    "briefs": 0
+  }
+}

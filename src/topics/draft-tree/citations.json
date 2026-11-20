@@ -1,0 +1,10 @@
+[
+  {
+    "source": "ddtree",
+    "target": "dflash",
+    "role": "方法基础",
+    "location": "§1，引文 [4]",
+    "evidenceUrl": "https://liranringel.github.io/ddtree/DDTree.pdf#page=2",
+    "note": "将 DFlash 的逐位置草稿分布用于候选树构建。"
+  }
+]

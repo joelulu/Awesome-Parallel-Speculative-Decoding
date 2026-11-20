@@ -1,0 +1,402 @@
+[
+  {
+    "id": "teacache",
+    "benchmarkReview": "verified",
+    "name": "TeaCache",
+    "title": "Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model",
+    "date": "2024-11-28",
+    "dateLabel": "2024-11-28",
+    "category": "decision",
+    "tags": [
+      "训练无关",
+      "输入侧代理量",
+      "视频扩散"
+    ],
+    "summary": "用时间步嵌入调制后的模型输入估计输出差异，差异小才复用缓存，不再按固定间隔跳步。",
+    "problem": "已有加速在均匀选取的时间步上复用输出，但相邻步之间的输出差异并不均匀：固定间隔会在该算的步上省，在不该省的步上算。",
+    "solution": "不直接算昂贵的模型输出，而是拿与输出强相关、代价极低的模型输入作代理；先用时间步嵌入调制噪声输入，使输入差异更接近输出差异，再用 rescale 策略校正阈值，据此判断这一步能否复用缓存。",
+    "paperUrl": "https://arxiv.org/abs/2411.19108",
+    "sourceUrl": "https://arxiv.org/abs/2411.19108",
+    "code": [
+      {
+        "url": "https://github.com/ali-vilab/TeaCache",
+        "repo": "ali-vilab/TeaCache",
+        "kind": "official",
+        "label": "TeaCache"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "root",
+    "importance": 5,
+    "importanceBasis": "被 1 篇用作基线 · 被 3 篇后续工作继承 · 1 组可核验实验",
+    "pinned": true,
+    "reason": "把「缓不缓存」从固定间隔改成按输入差异判断，是这条线后续几乎所有工作的对照起点，也是本专题的起始节点。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "lemica",
+    "benchmarkReview": "verified",
+    "name": "LeMiCa",
+    "title": "LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation",
+    "date": "2025-10-30",
+    "dateLabel": "2025-10-30",
+    "category": "schedule",
+    "tags": [
+      "路径优化",
+      "误差上界",
+      "NeurIPS 2025"
+    ],
+    "summary": "把缓存调度建成带误差权重的有向图，用字典序极小极大选路，显式压住整条轨迹的最坏误差。",
+    "problem": "既有缓存策略主要压单步的局部启发式误差，但误差会沿去噪轨迹累积，最终表现为加速版与原版视频之间的内容退化。",
+    "solution": "把缓存调度表述为带误差权重边的有向图，引入字典序极小极大（lexicographic minimax）路径优化，显式约束最坏路径误差，再按该路径决定各步是否复用，从而改善跨帧的全局内容与风格一致性。",
+    "paperUrl": "https://arxiv.org/abs/2511.00090",
+    "sourceUrl": "https://arxiv.org/abs/2511.00090",
+    "code": [
+      {
+        "url": "https://github.com/UnicomAI/LeMiCa",
+        "repo": "UnicomAI/LeMiCa",
+        "kind": "official",
+        "label": "LeMiCa"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 5,
+    "importanceBasis": "1 组可核验实验",
+    "pinned": true,
+    "reason": "把优化对象从「这一步省不省」升级为「整条路径怎么走」，是对误差累积问题最直接的回答，也是本专题另一个核心节点。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "adacache",
+    "benchmarkReview": "verified",
+    "name": "AdaCache",
+    "title": "Adaptive Caching for Faster Video Generation with Diffusion Transformers",
+    "date": "2024-11-04",
+    "dateLabel": "2024-11-04",
+    "category": "schedule",
+    "tags": [
+      "按样本自适应",
+      "运动正则",
+      "残差缓存"
+    ],
+    "summary": "承认「并非所有视频都一样」，为每条视频单独定制缓存 schedule，并用运动量控制算力分配。",
+    "problem": "不同视频达到可接受画质所需的去噪步数不同，统一 schedule 会让简单视频浪费算力、复杂视频掉质量。",
+    "solution": "缓存残差计算，并把残差距离映射到缓存间隔，为每次生成单独推导 schedule；再用 Motion Regularization（MoReg）按运动内容分配计算，把更多步留给运动剧烈的片段。",
+    "paperUrl": "https://arxiv.org/abs/2411.02397",
+    "sourceUrl": "https://arxiv.org/abs/2411.02397",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "被 3 篇后续工作继承 · 1 组可核验实验",
+    "pinned": false,
+    "reason": "最早把「按内容自适应」讲清楚的系统方案之一；后续 MagCache、PromptTea 对阈值标定的批评，针对的正是它依赖预标定 codebook 这一点。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "deepcache",
+    "benchmarkReview": "verified",
+    "name": "DeepCache",
+    "title": "DeepCache: Accelerating Diffusion Models for Free",
+    "date": "2023-12-01",
+    "dateLabel": "2023-12-01",
+    "category": "granularity",
+    "tags": [
+      "U-Net 分层",
+      "训练无关",
+      "图像扩散原型"
+    ],
+    "summary": "利用 U-Net 的分层结构，复用高层语义特征、只廉价更新低层，跨去噪步免费加速。",
+    "problem": "扩散采样要反复跑同一个网络，相邻步的高层语义特征高度重复，逐步全量计算是浪费。",
+    "solution": "利用 U-Net 的分层特性：缓存并复用高层特征，低层特征用极低成本的方式更新，从而跳过大部分重复计算，且不需要重训练。",
+    "paperUrl": "https://arxiv.org/abs/2312.00858",
+    "sourceUrl": "https://arxiv.org/abs/2312.00858",
+    "code": [
+      {
+        "url": "https://github.com/horseee/DeepCache",
+        "repo": "horseee/DeepCache",
+        "kind": "official",
+        "label": "DeepCache"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "importanceBasis": "被 3 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
+    "pinned": false,
+    "reason": "训练无关特征缓存在图像扩散里的原型。本条线所有工作都站在它「跨步特征可复用」的前提上，包括后来反对它固定间隔做法的那些。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "smoothcache",
+    "benchmarkReview": "verified",
+    "name": "SmoothCache",
+    "title": "SmoothCache: A Universal Inference Acceleration Technique for Diffusion Transformers",
+    "date": "2024-11-15",
+    "dateLabel": "2024-11-15",
+    "category": "decision",
+    "tags": [
+      "按层校准",
+      "跨模态通用",
+      "模型无关"
+    ],
+    "summary": "在小校准集上统计每层的表示误差，按层决定缓存谁、复用多少，可跨图像视频音频通用。",
+    "problem": "DiT 不同层的跨步相似度差别很大，统一策略会在一部分层上过度复用，另一部分层又没省到。",
+    "solution": "用一个小校准集分析逐层的表示误差，据此为每一层生成缓存/复用策略，推理时按策略跳过部分层的计算；方案与模型结构解耦，可迁移到图像、视频、音频。",
+    "paperUrl": "https://arxiv.org/abs/2411.10510",
+    "sourceUrl": "https://arxiv.org/abs/2411.10510",
+    "code": [
+      {
+        "url": "https://github.com/Roblox/SmoothCache",
+        "repo": "Roblox/SmoothCache",
+        "kind": "official",
+        "label": "SmoothCache"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验 · 方向首篇",
+    "pinned": false,
+    "reason": "把「缓哪一层」和「按误差校准」放在一起，且是少见的跨模态通用方案：加速幅度不大，但适用面最宽。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "pab",
+    "benchmarkReview": "verified",
+    "name": "PAB",
+    "title": "Real-Time Video Generation with Pyramid Attention Broadcast",
+    "date": "2024-08-22",
+    "dateLabel": "2024-08-22",
+    "category": "granularity",
+    "tags": [
+      "注意力广播",
+      "序列并行",
+      "实时 720p"
+    ],
+    "summary": "发现注意力差异沿去噪步呈 U 形，按注意力模块的方差分级，把输出广播到后续步。",
+    "problem": "DiT 的注意力是主要开销，但相邻步的注意力输出高度冗余，逐步全量计算是浪费。",
+    "solution": "观察到注意力差异在扩散过程中呈 U 形分布，据此对每类注意力按其方差设定不同的广播策略（金字塔式），把注意力输出广播到后续若干步；再引入 broadcast sequence parallel 提升分布式推理效率。",
+    "paperUrl": "https://arxiv.org/abs/2408.12588",
+    "sourceUrl": "https://arxiv.org/abs/2408.12588",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 1 组可核验实验",
+    "pinned": false,
+    "reason": "把复用对象从整块特征换成注意力输出，并给出实时 720p 的工程实现，是粒度这条线上最激进的一刀。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "fastercache",
+    "benchmarkReview": "verified",
+    "name": "FasterCache",
+    "title": "FasterCache: Training-Free Video Diffusion Model Acceleration with High Quality",
+    "date": "2024-10-25",
+    "dateLabel": "2024-10-25",
+    "category": "schedule",
+    "tags": [
+      "CFG 冗余",
+      "动态复用",
+      "画质优先"
+    ],
+    "summary": "动态复用要保住特征差异，同时把同一步内条件/无条件分支的冗余也纳入缓存预算。",
+    "problem": "直接复用相邻步特征会丢掉细微变化，导致画质下降；而同一时间步内 CFG 的条件与无条件分支又高度冗余，没被利用。",
+    "solution": "提出保留特征差异与时间连续性的动态复用策略；进一步分析 CFG 双分支的冗余，设计 CFG-Cache 复用条件与无条件输出，在不牺牲画质的前提下再提速。",
+    "paperUrl": "https://arxiv.org/abs/2410.19355",
+    "sourceUrl": "https://arxiv.org/abs/2410.19355",
+    "code": [
+      {
+        "url": "https://github.com/Vchitect/FasterCache",
+        "repo": "Vchitect/FasterCache",
+        "kind": "official",
+        "label": "FasterCache"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
+    "pinned": false,
+    "reason": "明确指出「直接复制会丢细节」，并把 CFG 冗余纳入预算，是这一支里少有的两条线索同时推进的工作。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "duca",
+    "benchmarkReview": "verified",
+    "name": "DuCa",
+    "title": "Rethinking Token-wise Feature Caching: Accelerating Diffusion Transformers with Dual Feature Caching",
+    "date": "2024-12-25",
+    "dateLabel": "2024-12-25",
+    "category": "granularity",
+    "tags": [
+      "token 级缓存",
+      "反直觉结论",
+      "负结果"
+    ],
+    "summary": "质疑 token 级缓存里「重要 token」的选取：持续计算它们并不必要，重要性选择甚至可能不如随机。",
+    "problem": "token 级缓存按重要性挑选每步要计算的 token，但「重要」这个判断本身是否成立，此前没人系统检验。",
+    "solution": "用两个问题回检前提：每步都算所谓重要 token 是否必要、所谓重要 token 是否真重要。结论是两者都站不住；于是提出双策略缓存（激进与保守交替）并随机选择要计算的 token。",
+    "paperUrl": "https://arxiv.org/abs/2412.18911",
+    "sourceUrl": "https://arxiv.org/abs/2412.18911",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验",
+    "pinned": false,
+    "reason": "一篇反直觉的负结果，直接动摇了 token 级缓存的前提。图谱里必须收这种「证伪」工作，否则看起来每个方向都在稳步前进。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "taylorseer",
+    "benchmarkReview": "verified",
+    "name": "TaylorSeer",
+    "title": "From Reusing to Forecasting: Accelerating Diffusion Models with TaylorSeers",
+    "date": "2025-03-10",
+    "dateLabel": "2025-03-10",
+    "category": "forecast",
+    "tags": [
+      "泰勒展开",
+      "特征外推",
+      "高加速比"
+    ],
+    "summary": "把「复用旧特征」换成「外推未来特征」：用泰勒级数预测后续步，间隔越大相对优势越明显。",
+    "problem": "步间隔一旦拉大，特征相似度迅速下降，复用旧特征引入的误差显著上升，加速比越高画质越崩。",
+    "solution": "论证特征沿时间步缓慢连续变化，因此未来步的特征可由历史值预测；用差分近似高阶导数，按泰勒级数展开外推，替代直接复制历史特征。",
+    "paperUrl": "https://arxiv.org/abs/2503.06923",
+    "sourceUrl": "https://arxiv.org/abs/2503.06923",
+    "code": [
+      {
+        "url": "https://github.com/Shenyi-Z/TaylorSeer",
+        "repo": "Shenyi-Z/TaylorSeer",
+        "kind": "official",
+        "label": "TaylorSeer"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
+    "pinned": false,
+    "reason": "唯一把「复用」换成「预测」的一支，代表一个尚未展开的分叉：目前同类工作只有它一篇，值得单独成线。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "blockdance",
+    "benchmarkReview": "verified",
+    "name": "BlockDance",
+    "title": "BlockDance: Reuse Structurally Similar Spatio-Temporal Features to Accelerate Diffusion Transformers",
+    "date": "2025-03-20",
+    "dateLabel": "2025-03-20",
+    "category": "granularity",
+    "tags": [
+      "结构相似",
+      "实例级决策",
+      "保守加速"
+    ],
+    "summary": "只缓存结构最相似的时空特征块，再用轻量网络为每个样本分配加速比。",
+    "problem": "不同尺度的特征冗余程度不同，统一复用策略会在不该复用的块上损伤结构一致性。",
+    "solution": "定位结构相似时空特征（Structurally Similar Spatio-Temporal，STSS），这些特征主要出现在去噪后期的结构块中；只缓存复用它们以最大化与原始结果的一致性；再用轻量决策网络 BlockDance-Ada 按样本动态分配资源。",
+    "paperUrl": "https://arxiv.org/abs/2503.15927",
+    "sourceUrl": "https://arxiv.org/abs/2503.15927",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验",
+    "pinned": false,
+    "reason": "把「缓什么」落到结构相似性上，并引入实例级决策，是粒度与调度两条线之间的一次折中。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "magcache",
+    "benchmarkReview": "verified",
+    "name": "MagCache",
+    "title": "MagCache: Fast Video Generation with Magnitude-Aware Cache",
+    "date": "2025-06-10",
+    "dateLabel": "2025-06-10",
+    "category": "decision",
+    "tags": [
+      "幅值律",
+      "单样本校准",
+      "鲁棒性"
+    ],
+    "summary": "发现相邻残差幅值比单调下降的规律，用幅值律建误差模型，一个样本就能校准。",
+    "problem": "依赖时间步嵌入的阈值方法需要在大量精选提示词上校准，既费事又容易过拟合到特定提示词。",
+    "solution": "发现跨模型跨提示词统一的幅值律：相邻残差输出的幅值比大体单调下降，前期平稳、最后几步陡降；据此建立误差模型，自适应跳过不重要的时间步，且只需一个样本校准。",
+    "paperUrl": "https://arxiv.org/abs/2506.09045",
+    "sourceUrl": "https://arxiv.org/abs/2506.09045",
+    "code": [
+      {
+        "url": "https://github.com/Zehong-Ma/MagCache",
+        "repo": "Zehong-Ma/MagCache",
+        "kind": "official",
+        "label": "MagCache"
+      }
+    ],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
+    "pinned": false,
+    "reason": "把阈值从「经验调参」变成「有规律的物理量」，同时把标定成本压到单样本，是判据这条线上最实用的一步。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "prompttea",
+    "benchmarkReview": "verified",
+    "name": "PromptTea",
+    "title": "PromptTea: Let Prompts Tell TeaCache the Optimal Threshold",
+    "date": "2025-07-09",
+    "dateLabel": "2025-07-09",
+    "category": "decision",
+    "tags": [
+      "提示词复杂度",
+      "代理量重构",
+      "动态 CFG"
+    ],
+    "summary": "按提示词隐含的场景复杂度自动调阈值，同时重构 TeaCache 的输入-输出建模。",
+    "problem": "固定频率复用会在复杂场景显著掉质量，人工调阈值既不高效也不稳健；TeaCache 用输入近似输出差异的假设也过于简化。",
+    "solution": "提出 Prompt-Complexity-Aware 缓存：从提示词估计场景复杂度以自动调整复用阈值；重新审视 TeaCache 的代理量，解耦噪声输入、加强文本信息的作用、用多元多项式展开提升预测精度；再用 DynCFGCache 按估计的输出变化选择性复用 CFG。",
+    "paperUrl": "https://arxiv.org/abs/2507.06739",
+    "sourceUrl": "https://arxiv.org/abs/2507.06739",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
+    "pinned": false,
+    "reason": "直接对 TeaCache 的两个薄弱点（阈值与代理量）动刀，是判据线上最新的修正，也说明这条线还在快速迭代。",
+    "updatedAt": "2026-11-20"
+  },
+  {
+    "id": "omnicache",
+    "benchmarkReview": "verified",
+    "name": "OmniCache",
+    "title": "OmniCache: Multidimensional Hierarchical Feature Caching For Diffusion Models",
+    "date": "2026-07-26",
+    "dateLabel": "2026-07-26",
+    "category": "granularity",
+    "tags": [
+      "多维冗余",
+      "层级缓存",
+      "统一框架"
+    ],
+    "summary": "把帧内、帧间、运动、去噪步四类冗余统一进 token/frame/block/layer 四级缓存。",
+    "problem": "已有方法通常只利用单一维度的冗余，而视频扩散的冗余同时出现在帧内、帧间、运动与采样步四个方向。",
+    "solution": "识别四类互补冗余，构建四级缓存（Token / Frame / Block / Layered）；不用对匹配特征求平均的 token 合并做法，而是用相似度匹配挑选可缓存特征，跳过冗余计算后按位置一致地还原缓存激活，保持特征顺序与时空结构。",
+    "paperUrl": "https://arxiv.org/abs/2607.23844",
+    "sourceUrl": "https://arxiv.org/abs/2607.23844",
+    "code": [],
+    "status": "imported",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
+    "pinned": false,
+    "reason": "目前把「缓存粒度」做得最完整的一篇：从单点技巧走向统一框架，代表这一支当前的收敛方向。",
+    "updatedAt": "2026-11-20"
+  }
+]

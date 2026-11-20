@@ -1,0 +1,378 @@
+[
+  {
+    "source": "dflash",
+    "target": "ddtree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2604.12989",
+    "note": "DDTree 摘要明确说明在 DFlash 的逐位置分布上构建候选树。"
+  },
+  {
+    "source": "dflash",
+    "target": "dspark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://github.com/vllm-project/speculators/blob/main/docs/user_guide/algorithms/dspark.md",
+    "note": "框架文档明确说明 DSpark 在 DFlash 上增加 Markov 与 confidence heads。"
+  },
+  {
+    "source": "dflash",
+    "target": "bastion",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2605.29727",
+    "note": "BASTION 直接使用 DFlash block-diffusion drafters 的逐位置分布构建动态 prefix tree，并联合优化树结构与 verification budget。"
+  },
+  {
+    "source": "dflash",
+    "target": "angelspec",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.25852",
+    "note": "AngelSpec 中的 DFly 明确提出两项 DFlash 架构改进：hybrid target conditioning 与 predecessor-conditioned autoregressive head。"
+  },
+  {
+    "source": "d-cut",
+    "target": "angelspec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2607.25852",
+    "note": "AngelSpec 将 D-CUT 集成到 DFly serving 中，按请求 confidence 与 runtime cost 动态分配 batch-level verification budget。"
+  },
+  {
+    "source": "dflash",
+    "target": "h-spec",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.24197v1#S3",
+    "note": "从 DFlash target-KV 复用消融出发替换 drafter 架构；不是对现有 DFlash checkpoint 的即插即用修补。"
+  },
+  {
+    "source": "dspark",
+    "target": "h-spec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.24197v1#S3.SS3.SSS3",
+    "note": "H-Spec §3.3.3 明确采用 DSpark Markov head。"
+  },
+  {
+    "source": "dspark",
+    "target": "dpara",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.27396v1#S3.SS2",
+    "note": "§3.2：从官方 DSpark checkpoint 初始化，微调多锚点 backbone，冻结 AR head。"
+  },
+  {
+    "source": "dflash",
+    "target": "dpara",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.27396v1#S3.SS1",
+    "note": "§3.1：将 DFlash 单锚点语义推广为多锚点；实际初始化来源是 DSpark。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "ncp-archpreview",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2609.10715",
+    "note": "§5.3：基线使用 DFlash2 two-tap convolution 与 top-16 path selector，再加入 concept conditioning。"
+  },
+  {
+    "source": "dflash",
+    "target": "recguide",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.34388v1#S6.SS1",
+    "note": "§2 引用 DFlash，§6.1 使用 DFlash 比较；方法本身面向共享骨干自投机。"
+  },
+  {
+    "source": "dspark",
+    "target": "recguide",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.34388v1#S5.SS2",
+    "note": "§5.2 明确借鉴 DSpark 的硬件感知成本建模；不表示采用其 drafter 架构。"
+  },
+  {
+    "source": "dflash",
+    "target": "longspark",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.37029v1",
+    "note": "论文 §1/§2 直接研究 DFlash 等完整前缀条件化的草拟成本；以固定大小 target 视图提出相关架构，不宣称冻结 DFlash 直接继承。"
+  },
+  {
+    "source": "dspark",
+    "target": "longspark",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.37029v1",
+    "note": "论文 §2.3 在并行 backbone 后使用 DSpark 的 Markov correction head。"
+  },
+  {
+    "source": "dflash",
+    "target": "dscale",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.37532v1",
+    "note": "§III-A 明确复用 DFlash drafter，保持架构、权重和完整草稿长度不变，仅优化高并发验证 tile、预算分配与 graph 工作区。"
+  },
+  {
+    "source": "dflash",
+    "target": "dspine",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.36173v1",
+    "note": "原文 Appendix A 明确以 DFlash 五层骨干为基础，加入逐层相邻因果注入与末次校正。"
+  },
+  {
+    "source": "dflash",
+    "target": "ubtree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "原文使用预训练 DFlash 作为 unigram proposer，并联合训练 bigram selector 与 proposer。"
+  },
+  {
+    "source": "dartree",
+    "target": "ubtree",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "原文明确采用 DARTree 的 depth-wise tree construction 与 global pruning。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "ubtree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2609.39972v1",
+    "note": "bigram selector 受 DFlash2 启发并重新设计；不等同于采用整个 DFlash2 骨干。"
+  },
+  {
+    "source": "dflash",
+    "target": "drelay",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.01439v1",
+    "note": "原文明示 DFlash 并行块草拟的早期选错问题，并直接评测；新增全局候选读与因果修复，不据此声称复用冻结权重。"
+  },
+  {
+    "source": "dflash",
+    "target": "sharpdraft",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.05106v1",
+    "note": "§3.3 直接在 DFlash Q-normalization 后缩放 query，保持权重、target 和验证规则。"
+  },
+  {
+    "source": "dflash",
+    "target": "presto",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2607.22634v1",
+    "note": "论文 §5 明确将前缀评分与树构建应用于 DFlash 独立 drafter。"
+  },
+  {
+    "source": "dflash",
+    "target": "d-loop",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.06011",
+    "note": "D-Loop 在两遍草拟中复用 DFlash 的 target-conditioned diffusion drafter，并直接比较 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "dloop",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.07659",
+    "note": "DLoop 将多轮延长草拟和统一验证用于包括 DFlash 在内的多种 drafter。"
+  },
+  {
+    "source": "dflash",
+    "target": "dcoco",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.12570",
+    "note": "DCOCO 直接消费单次 DFlash 的 hidden states、top-k logits 来做并行相邻候选评分。"
+  },
+  {
+    "source": "dspark",
+    "target": "treespark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20175",
+    "note": "TreeSpark 明确基于 DSpark backbone，改为训练与实际建树、裁剪一致的候选树。"
+  },
+  {
+    "source": "dspark",
+    "target": "ready",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20503",
+    "note": "ReaDy 将位置相关 recurrent-state reader 接入 DSpark 半自回归草稿骨干。"
+  },
+  {
+    "source": "dflash",
+    "target": "fold",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/abs/2610.20392",
+    "note": "FOLD 对 DFlash 与 DSpark 的既有草稿注意力进行免训练长上下文位置和归一化改造。"
+  },
+  {
+    "source": "dflash",
+    "target": "dlite",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.23787v1",
+    "note": "DLite 原文以 DFlash 为长上下文和 agentic 基线，针对其历史上下文和草稿侧 KV 负担提出替代架构。"
+  },
+  {
+    "source": "dspark",
+    "target": "dlite",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.23787v1",
+    "note": "DLite 与 DSpark 均用顺序头补偿块内因果关系；原文直接比较二者，但并未声称继承 DSpark 权重。"
+  },
+  {
+    "source": "dflash",
+    "target": "flashmap",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.24365",
+    "note": "FlashMap 保留 DFlash 的 target hidden 条件化和整块单次草拟，并以连续 flow map 替代独立位置的离散扩散预测；原文直接重训并比较 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "tabletune",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.38968",
+    "note": "TableTune 原文第 6.4、6.7 节分别以 DFlash 测试任务切换后的动态长度控制及画像误差；是 DFlash 服务配置相关工作，并非 drafter 架构继承。"
+  },
+  {
+    "source": "dflash",
+    "target": "only-accepted-tokens-count",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.40287",
+    "note": "原文第 2、6、9 节直接测量 DFlash-16/7 的验证能耗与并发转折点；是成本分析，不继承 drafter 架构。"
+  },
+  {
+    "source": "dflash",
+    "target": "hybridspec",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.04055",
+    "note": "直接使用相同 DFlash drafter；三种 GDN–MoE target 单请求 greedy 吞吐为原 DFlash 的 1.30–1.33×。值得加入 Verification Cost，需核查高并发泛化。"
+  },
+  {
+    "source": "dflash",
+    "target": "d3d",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.06425",
+    "note": "借鉴 DFlash 位置权重并重训同数据基线；接受长度更高。速度表 D3D 用双 H800、DFlash 用单 H800，不是等资源比较。值得加入异步 Draft Quality 路线，优先等资源复测。"
+  },
+  {
+    "source": "dflash",
+    "target": "chainflow",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.08669",
+    "note": "论文直接对比 DFlash；flow drafter 为替代架构，不属于直接扩展。"
+  },
+  {
+    "source": "dflash",
+    "target": "dforktree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.12356",
+    "note": "直接复用 DFlash drafter，与 DDTree 共用树流水线和 verifier；论文报告最高比 DFlash 快 41.5%、比 DDTree 快 15.1%。值得加入 Candidate Search，关注离线统计的领域迁移和并发成本。"
+  },
+  {
+    "source": "ddtree",
+    "target": "dforktree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.12356",
+    "note": "DFlash 的逐位置分布按自身主路径预测；树在分叉后仍使用这些分布，条件前缀失配导致预算浪费。"
+  },
+  {
+    "source": "dflash",
+    "target": "mfd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.13017",
+    "note": "直接针对 DFlash 与 DDTree 的路径独立性；论文 batch 1 报告比同训练单模式树快 5–8%，比发布的 DARTree 快 9–16%。值得加入 Draft Quality/Candidate Search，需检验高并发及训练代价。"
+  },
+  {
+    "source": "ddtree",
+    "target": "mfd",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.13017",
+    "note": "DFlash 的逐位置边缘分布相乘会把不同合理未来拼成 target 不会生成的路径，浪费 DDTree 节点预算。"
+  },
+  {
+    "source": "dflash",
+    "target": "d3tree",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.11371",
+    "note": "使用 DFlash 风格块扩散草稿并直接比较线性验证。"
+  },
+  {
+    "source": "ddtree",
+    "target": "d3tree",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.11371",
+    "note": "在 DDTree 候选树上学习节点存活率并动态裁剪。"
+  },
+  {
+    "source": "dflash",
+    "target": "dynadflash",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.19085",
+    "note": "沿用 DFlash 投影与训练，在输入前加入逐 token 的目标层特征门控。"
+  },
+  {
+    "source": "dflash",
+    "target": "taps",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2606.00487",
+    "note": "论文 §4.1/§5.1 明确采用相应 DFlash draft model，从逐位置边际 logits 生成候选池，新增 target-aware 路径评分和预算选树。"
+  },
+  {
+    "source": "ddtree",
+    "target": "taps",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2606.00487",
+    "note": "论文 §3/§5 将 DDTree 边际概率选树与 TAPS 路径条件评分直接比较，并在相同节点预算下评估。"
+  },
+  {
+    "source": "dflash",
+    "target": "cast",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.00321v2",
+    "note": "§2 明确使用未改动的 DFlash 单次块分布，并将标准链改为成本感知验证树。"
+  },
+  {
+    "source": "dspark",
+    "target": "adaspark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2610.05774v1",
+    "note": "论文 §2/§3 明确以 DSpark drafter 为基础，在线选择验证树宽并加入 n-gram 候选。"
+  }
+]
