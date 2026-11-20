@@ -34,3 +34,12 @@
 .radar-footer{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;margin-top:1.3rem}
 .radar-footer a{font-size:.86rem;display:inline-flex;align-items:center;gap:.3rem}
 @media(max-width:760px){.engineering-section{padding:3rem 1rem}.radar-grid{grid-template-columns:1fr}.radar-card-meta time{margin-left:0}}
+
+/* 证据等级：把内部两个字段折叠成读者能看懂的一档，卡片与详情卡共用同一套口径。 */
+.evidence-badge{display:inline-flex;align-items:center;gap:4px;font-family:'DM Sans','Noto Sans SC',sans-serif;font-size:10px;line-height:1.5;letter-spacing:.2px;padding:1px 6px;border-radius:3px;border:1px solid transparent;white-space:nowrap}
+.evidence-badge i{width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+.evidence-badge[data-level=verified]{color:#3d6b57;background:#eaf4ee;border-color:#cfe4d8}
+.evidence-badge[data-level=review]{color:#8a5a1e;background:#fdf2e0;border-color:#f0dcbc}
+.evidence-badge[data-level=imported]{color:#7d5560;background:#f8ecef;border-color:#e8d3d9}
+.evidence-badge[data-level=root]{color:#1f4d3f;background:#e6f2ec;border-color:#c8e0d4}
+.importance-pill{font-family:'DM Sans','Noto Sans SC',sans-serif;font-size:10px;line-height:1.5;color:#8a8f88;padding:1px 5px;border:1px solid #e2ddd2;border-radius:3px;cursor:help}

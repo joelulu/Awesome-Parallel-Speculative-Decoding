@@ -91,3 +91,12 @@
   color: var(--globe-ink); margin-top: 12px;
 }
 @media (max-width: 650px) { .globe-research-related { grid-template-columns: 1fr; } }
+
+/* 空心节点 = 论文身份待复核。颜色仍表示方向，形状额外承载证据等级，两者不互相挤压。 */
+.globe-node[data-evidence=review], .globe-node[data-evidence=imported]{background:color-mix(in srgb, currentColor 30%, transparent);box-shadow:inset 0 0 0 1.5px currentColor, 0 0 8px color-mix(in srgb, currentColor 40%, transparent)}
+.globe-node[data-evidence=review].is-local, .globe-node[data-evidence=imported].is-local{box-shadow:inset 0 0 0 2px currentColor, 0 0 9px color-mix(in srgb, currentColor 45%, transparent)}
+.globe-tooltip-evidence{display:block;margin-top:3px;font-size:11px;color:var(--globe-quiet)}
+.globe-tooltip-evidence[data-level=review]{color:#ffcb79}
+.globe-tooltip-evidence[data-level=imported]{color:#f2a7b5}
+.globe-legend-evidence{display:inline-flex;align-items:center;gap:6px}
+.globe-legend-evidence i{width:7px;height:7px;border-radius:50%;border:1.5px solid currentColor;display:inline-block}

@@ -6,3 +6,9 @@ dist/
 .env
 .env.local
 .cache/
+# 由 scripts/select-topic.mjs 装配，源码在 src/data 与 src/topics
+src/active/
+# 由 atlas.config.json 编译，不单独留档
+src/data/atlas.json
+# 截图脚本的临时输出
+.tmp/

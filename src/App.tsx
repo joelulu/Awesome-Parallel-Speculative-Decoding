@@ -1,14 +1,9 @@
 import { Component, lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, ChevronDown, GitBranch, Github, LocateFixed, Search, Sparkles, X } from 'lucide-react';
 import PaperCard from './PaperCard';
-import methodsJson from './data/methods.json';
-import categories from './data/categories.json';
-import relations from './data/relations.json';
-import starsJson from './data/stars.json';
-import briefsJson from './data/briefs.json';
-import engineeringJson from './data/engineering.json';
+import { atlas, briefs as briefsData, categories, engineering as radar, methods as methodsData, relations, stars as starsData } from './lib/dataset';
 import { recommend, filterMethods, scoreMethod, dateValue, todayInShanghai, chooseBrief } from './lib/catalog.mjs';
-import type { Method, Stars, Brief } from './types';
+import type { Method, Brief } from './types';
 import './ResearchGlobe.css';
 const ResearchMap=lazy(()=>import('./ResearchMap'));
 const ResearchGlobe=lazy(()=>import('./ResearchGlobe'));
@@ -17,15 +12,12 @@ class MapBoundary extends Component<{children:React.ReactNode},{failed:boolean}>
   static getDerivedStateFromError(){return {failed:true};}
   render(){return this.state.failed?<div className="map-loading">地图暂时无法载入，可以使用下方大纲和方法卡片继续阅读。</div>:this.props.children;}
 }
-const methods=methodsJson as Method[];
-const stars=starsJson as Stars;
-const briefs=briefsJson as Brief[];
-type RadarProject = {id:string;name:string;url:string;focus:string};
-type RadarEvent = {id:string;repo:string;kind:string;status:string;topic:string;priority:string;date:string;title:string;summary:string;caveat:string;url:string};
-const radar=engineeringJson as {asOf:string;timezone:string;editorial:string;projects:RadarProject[];events:RadarEvent[]};
-const repository='https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding';
+const methods=methodsData as Method[];
+const stars=starsData;
+const briefs=briefsData as Brief[];
+const repository=atlas.repository;
 const categoryMap=Object.fromEntries(categories.map(c=>[c.id,c]));
-const lastUpdated=methods.map(m=>m.updatedAt).sort().at(-1);
+const lastUpdated=atlas.updatedAt ?? methods.map(m=>m.updatedAt).sort().at(-1);
 const motion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant' as const:'smooth' as const;
 function scrollToId(id:string){requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.getElementById(id);el?.scrollIntoView({behavior:motion(),block:'start'});el?.focus({preventScroll:true});}));}
 function External({href,children,...rest}:{href:string;children:React.ReactNode;className?:string;title?:string}){return <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>{children}</a>;}
@@ -35,6 +27,7 @@ export default function App(){
   const [category,setCategory]=useState('all');
   const [all,setAll]=useState(false);
   const [codeOnly,setCodeOnly]=useState(false);
+  const [verifiedOnly,setVerifiedOnly]=useState(false);
   const [sort,setSort]=useState('importance');
   const [active,setActive]=useState<string|null>(null);
   const [readKey,setReadKey]=useState(0);
@@ -51,18 +44,18 @@ export default function App(){
   const brief=chooseBrief(briefs,today) as Brief|null;
   const isToday=brief?.date===today;
   const previousBriefs=briefs.filter(item=>item.date!==brief?.date).slice(0,8);
-  const searching=Boolean(query.trim()||category!=='all'||codeOnly);
+  const searching=Boolean(query.trim()||category!=='all'||codeOnly||verifiedOnly);
   const recommended=useMemo(()=>recommend(methods,stars,categories.length),[]);
   const newestMethods=useMemo(()=>[...methods].filter(m=>m.date).sort((a,b)=>dateValue(b.date)-dateValue(a.date)).slice(0,2),[]);
   const featured=useMemo(()=>[...(brief?.items.flatMap(item=>item.methodIds).map(id=>methods.find(m=>m.id===id)).filter((m):m is Method=>Boolean(m))??[]),...newestMethods,...recommended].filter((method,index,list)=>list.findIndex(item=>item.id===method.id)===index),[brief,newestMethods,recommended]);
   const visible=useMemo(()=>{
     if(!all&&!searching&&sort==='importance')return featured;
-    const filtered=filterMethods(methods,query,category,codeOnly) as Method[];
+    const filtered=filterMethods(methods,query,category,codeOnly,verifiedOnly) as Method[];
     return filtered.sort((a,b)=>sort==='newest'?dateValue(b.date)-dateValue(a.date):sort==='stars'?Math.max(-1,...b.code.map(c=>stars[c.repo]?.count??-1))-Math.max(-1,...a.code.map(c=>stars[c.repo]?.count??-1)):Number(b.pinned)-Number(a.pinned)||scoreMethod(b,stars)-scoreMethod(a,stars));
-  },[all,query,category,codeOnly,sort,searching,featured]);
+  },[all,query,category,codeOnly,verifiedOnly,sort,searching,featured]);
   function readMethod(id:string,hash=true){
     if(!methods.some(m=>m.id===id)){setUnknown(true);return;}
-    setUnknown(false);setActive(id);setAll(true);setQuery('');setCategory('all');setCodeOnly(false);
+    setUnknown(false);setActive(id);setAll(true);setQuery('');setCategory('all');setCodeOnly(false);setVerifiedOnly(false);
     if(hash&&window.location.hash!==`#method-${id}`)window.history.pushState(null,'',`#method-${id}`);
     setReadKey(key=>key+1);
   }
@@ -73,13 +66,18 @@ export default function App(){
     return()=>{window.removeEventListener('hashchange',onHash);window.removeEventListener('popstate',onHash);};
   },[]);
   function locate(id:string){setSearchOpen(false);setFocusId(id);setFocusKey(n=>n+1);scrollToId('research-map');}
-  function resetFilters(){setQuery('');setCategory('all');setCodeOnly(false);setSort('importance');setAll(false);setActive(null);}
+  function resetFilters(){setQuery('');setCategory('all');setCodeOnly(false);setVerifiedOnly(false);setSort('importance');setAll(false);setActive(null);}
   const searchMatches=query.trim()?filterMethods(methods,query).slice(0,5) as Method[]:[];
+  // 简报与工程雷达是可选模块：专题没有对应数据时整段不渲染，编号顺延。
+  const showBriefs=atlas.features.briefs&&briefs.length>0;
+  const showRadar=atlas.features.engineering&&radar.events.length>0;
+  const briefsNumber=showBriefs?'03':'';
+  const radarNumber=showRadar?(showBriefs?'04':'03'):'';
   return <>
     <a className="skip-link" href="#featured">跳至方法卡片</a>
-    <header className="site-header"><a className="brand" href="#"><span className="brand-mark"><GitBranch size={23}/></span><span>DFlash <b>Atlas</b><small>PARALLEL SPECULATIVE DECODING</small></span></a><nav aria-label="主导航"><a className="nav-active" href="#research-map">研究地图</a><a href="#featured">方法卡片</a><a href="#daily">每日简报</a><a href="#engineering">工程动态</a></nav><External href={repository} className="repo-link"><Github size={18}/><span>GitHub</span><ArrowUpRight size={14}/></External></header>
+    <header className="site-header"><a className="brand" href="#"><span className="brand-mark"><GitBranch size={23}/></span><span>{atlas.brand.lead} <b>{atlas.brand.tail}</b><small>{atlas.subtitle}</small></span></a><nav aria-label="主导航"><a className="nav-active" href="#research-map">研究地图</a><a href="#featured">方法卡片</a>{atlas.features.briefs&&briefs.length>0&&<a href="#daily">每日简报</a>}{atlas.features.engineering&&radar.events.length>0&&<a href="#engineering">工程动态</a>}</nav>{repository&&<External href={repository} className="repo-link"><Github size={18}/><span>GitHub</span><ArrowUpRight size={14}/></External>}</header>
     <main>
-      <section className="intro"><div><div className="eyebrow"><span className="live-dot"/> PAPERS · METHODS · OPEN SOURCE</div><h1>Parallel Speculative Decoding</h1><p>从 DFlash 出发，沿着时间阅读并行投机解码的新方法。</p></div><div className="intro-meta"><span><b>{methods.length.toString().padStart(2,'0')}</b> 方法记录</span><span><b>{categories.length.toString().padStart(2,'0')}</b> 研究方向</span><small>资料更新于 {lastUpdated}</small></div></section>
+      <section className="intro"><div><div className="eyebrow"><span className="live-dot"/> PAPERS · METHODS · OPEN SOURCE</div><h1>{atlas.headline}</h1><p>{atlas.tagline}</p></div><div className="intro-meta"><span><b>{methods.length.toString().padStart(2,'0')}</b> 方法记录</span><span><b>{categories.length.toString().padStart(2,'0')}</b> 研究方向</span><small>资料更新于 {lastUpdated}</small></div></section>
       <section id="research-map" className="map-section" tabIndex={-1} aria-labelledby="map-title"><div className="section-heading"><div className="section-title"><span className="section-number">01</span><h2 id="map-title">探索研究脉络</h2><span className="quiet-label">交互地图</span></div><div className="search-wrap"><Search size={17}/><input aria-label="搜索方法、问题或关键词" placeholder="搜索方法、问题或关键词…" value={query} onFocus={()=>setSearchOpen(true)} onChange={e=>{setQuery(e.target.value);setAll(true);setSearchOpen(true);}} onKeyDown={e=>{if(e.key==='Escape')setSearchOpen(false);if(e.key==='Enter'&&searchMatches[0])locate(searchMatches[0].id);}}/>{query&&<button className="icon-button" aria-label="清空搜索" onClick={()=>setQuery('')}><X size={15}/></button>}{query&&searchOpen&&<div className="search-results">{searchMatches.length?searchMatches.map(m=><button key={m.id} onClick={()=>locate(m.id)}><span>{m.name}<small>{categoryMap[m.category].name}</small></span><LocateFixed size={15}/></button>):<p>未找到匹配方法</p>}</div>}</div></div>
       <div className="map-mode-switch" role="group" aria-label="研究地图视图">
         <button type="button" aria-pressed={mapMode==='timeline'} onClick={()=>setMapMode('timeline')}>平行时间线</button>
@@ -93,21 +91,21 @@ export default function App(){
       <details className="map-outline"><summary>以大纲浏览全部方法 <ChevronDown size={16}/></summary><div>{categories.map(c=><details key={c.id}><summary><i style={{background:c.color}}/>{c.name}</summary>{methods.filter(m=>m.category===c.id).map(m=><button key={m.id} onClick={()=>readMethod(m.id)}>{m.name}<ArrowUpRight size={14}/></button>)}</details>)}</div></details></section>
       <section id="featured" className="featured-section" tabIndex={-1} aria-labelledby="featured-title"><div className="section-heading"><div className="section-title"><span className="section-number">02</span><h2 id="featured-title">{all||searching?'方法库':'重点阅读'}</h2><span className="quiet-label">{visible.length} 个方法</span></div><button className="text-button" onClick={()=>{if(all||searching)resetFilters();else setAll(true);}}>{all||searching?'返回重点阅读':'查看全部方法'}<ArrowRight size={16}/></button></div>
       <div className="catalog-toolbar"><p>{all||searching?'沿着问题寻找方法，也可以回到地图中定位。':'最新新增优先展示，同时保留各条主线的关键工作。'}</p><label className="sort-select">排序<select aria-label="方法排序" value={sort} onChange={e=>{setSort(e.target.value);if(e.target.value!=='importance')setAll(true);}}><option value="importance">研究重要性</option><option value="newest">最新发布</option><option value="stars">GitHub Star</option></select></label></div>
-      {(all||searching)&&<div className="filter-row"><button className={category==='all'?'selected':''} onClick={()=>setCategory('all')}>全部方向</button>{categories.map(c=><button key={c.id} className={category===c.id?'selected':''} onClick={()=>setCategory(c.id)}>{c.name}</button>)}<label><input type="checkbox" checked={codeOnly} onChange={e=>setCodeOnly(e.target.checked)}/> 有代码链接</label></div>}
+      {(all||searching)&&<div className="filter-row"><button className={category==='all'?'selected':''} onClick={()=>setCategory('all')}>全部方向</button>{categories.map(c=><button key={c.id} className={category===c.id?'selected':''} onClick={()=>setCategory(c.id)}>{c.name}</button>)}<label><input type="checkbox" checked={codeOnly} onChange={e=>setCodeOnly(e.target.checked)}/> 有代码链接</label><label title="只保留论文身份与实验对照都已核对的条目"><input type="checkbox" checked={verifiedOnly} onChange={e=>setVerifiedOnly(e.target.checked)}/> 仅看已核验</label></div>}
       {unknown&&<div role="status" className="empty-state">没有找到链接中的方法，请搜索名称或浏览方法库。<button onClick={()=>setUnknown(false)}>关闭</button></div>}
       <div className="cards-grid">{visible.map(m=><PaperCard key={m.id} method={m} category={categoryMap[m.category]} highlight={active===m.id} onLocate={locate} stars={stars} relations={relations} methods={methods}/>)}</div>
       {!visible.length&&<div className="empty-state"><Search size={25}/><h3>暂时没有匹配的方法</h3><p>试试更短的关键词，或清除筛选条件。</p><button className="primary-button" onClick={resetFilters}>清除筛选</button></div>}
       {!all&&!searching&&<div className="recommendation-note"><Sparkles size={14}/> 综合编辑关注、来源核验、发布时间与方向覆盖推荐；Star 仅作辅助信号。</div>}
       </section>
-      <section id="daily" className="daily-section" tabIndex={-1} aria-labelledby="daily-title"><div className="section-heading"><div className="section-title"><span className="section-number">03</span><h2 id="daily-title">每日简报</h2><span className="quiet-label">DFlash FOLLOW-UP</span></div><External className="text-button" href={`${repository}/tree/main/daily`}>全部往期 <ArrowUpRight size={16}/></External></div>
-      {!isToday&&<p className="brief-empty">今日暂无值得单独收录的新论文。{brief?`以下为最近一期：${brief.date}。`:'新的 DFlash 后续研究会出现在这里。'}</p>}
-      {brief&&<div className="brief-layout"><div className="brief-intro"><span className="eyebrow">{isToday?'TODAY’S BRIEF':'LATEST BRIEF'}</span><h3>{brief.title}</h3><p>只追踪 DFlash 及直接后续研究；新论文优先。</p><External href={brief.archiveUrl}>新窗口阅读完整简报 <ArrowUpRight size={15}/></External></div><ol className="brief-list">{brief.items.slice(0,5).map((item,i)=><li key={`${brief.date}-${i}`}><span className="brief-number">{String(i+1).padStart(2,'0')}</span><div><h4>{item.title}</h4><p>{item.summary}</p><div className="brief-links">{item.sourceUrl?<External href={item.sourceUrl}>来源 <ArrowUpRight size={12}/></External>:<span>来源链接待补充</span>}{item.methodIds.map(id=><button key={id} onClick={()=>readMethod(id)}>{methods.find(m=>m.id===id)?.name} <ArrowRight size={12}/></button>)}</div></div></li>)}</ol></div>}
-      {previousBriefs.length>0&&<div className="brief-archive"><div className="brief-archive-heading"><span>往期简报</span><small>点击后在新窗口打开</small></div><div className="brief-archive-links">{previousBriefs.map(item=><External key={item.date} href={item.archiveUrl} title={item.title}><time>{item.date}</time><span>{item.title}</span><ArrowUpRight size={13}/></External>)}</div></div>}
-      </section>
+      {showBriefs&&<section id="daily" className="daily-section" tabIndex={-1} aria-labelledby="daily-title"><div className="section-heading"><div className="section-title"><span className="section-number">{briefsNumber}</span><h2 id="daily-title">每日简报</h2><span className="quiet-label">{atlas.copy.dailyLabel}</span></div>{repository&&<External className="text-button" href={`${repository}/tree/main/daily`}>全部往期 <ArrowUpRight size={16}/></External>}</div>
+      {!isToday&&<p className="brief-empty">今日暂无值得单独收录的新论文。{brief?`以下为最近一期：${brief.date}。`:`新的 ${atlas.rootName} 后续研究会出现在这里。`}</p>}
+      {brief&&<div className="brief-layout"><div className="brief-intro"><span className="eyebrow">{isToday?'TODAY’S BRIEF':'LATEST BRIEF'}</span><h3>{brief.title}</h3><p>{atlas.copy.dailyNote||`只追踪 ${atlas.rootName} 及直接后续研究；新论文优先。`}</p>{brief.archiveUrl&&<External href={brief.archiveUrl}>新窗口阅读完整简报 <ArrowUpRight size={15}/></External>}</div><ol className="brief-list">{brief.items.slice(0,5).map((item,i)=><li key={`${brief.date}-${i}`}><span className="brief-number">{String(i+1).padStart(2,'0')}</span><div><h4>{item.title}</h4><p>{item.summary}</p><div className="brief-links">{item.sourceUrl?<External href={item.sourceUrl}>来源 <ArrowUpRight size={12}/></External>:<span>来源链接待补充</span>}{item.methodIds.map(id=><button key={id} onClick={()=>readMethod(id)}>{methods.find(m=>m.id===id)?.name} <ArrowRight size={12}/></button>)}</div></div></li>)}</ol></div>}
+      {previousBriefs.length>0&&<div className="brief-archive"><div className="brief-archive-heading"><span>往期简报</span><small>点击后在新窗口打开</small></div><div className="brief-archive-links">{previousBriefs.filter(item=>item.archiveUrl).map(item=><External key={item.date} href={item.archiveUrl} title={item.title}><time>{item.date}</time><span>{item.title}</span><ArrowUpRight size={13}/></External>)}</div></div>}
+      </section>}
 
-      <section id="engineering" className="engineering-section" tabIndex={-1} aria-labelledby="engineering-title">
-        <div className="section-heading"><div className="section-title"><span className="section-number">04</span><h2 id="engineering-title">投机解码工程动态</h2><span className="quiet-label">PR · ISSUES · SERVING</span></div><External className="text-button" href={`${repository}/blob/main/engineering/2026-10-17.md`}>完整调查报告 <ArrowUpRight size={16}/></External></div>
-        <p className="radar-description">独立追踪 vLLM、Speculators、SGLang、SpecForge 与 TensorRT-LLM 的模型适配、训练、KV 管理和 Verify 性能。状态为 {radar.asOf} 快照；PR 自报加速不代表主分支效果。</p>
+      {showRadar&&<section id="engineering" className="engineering-section" tabIndex={-1} aria-labelledby="engineering-title">
+        <div className="section-heading"><div className="section-title"><span className="section-number">{radarNumber}</span><h2 id="engineering-title">{atlas.copy.engineeringTitle}</h2><span className="quiet-label">PR · ISSUES · SERVING</span></div>{repository&&<External className="text-button" href={`${repository}/tree/main/engineering`}>完整调查报告 <ArrowUpRight size={16}/></External>}</div>
+        <p className="radar-description">独立追踪 {radar.projects.map(project=>project.name).join('、')} 的模型适配、训练、KV 管理和 Verify 性能。状态为 {radar.asOf} 快照；PR 自报加速不代表主分支效果。</p>
         <div className="radar-controls" aria-label="按工程仓库筛选">
           <button className={radarRepo==='all'?'selected':''} onClick={()=>{setRadarRepo('all');setRadarExpanded(false);}}>全部 ({radar.events.length})</button>
           {radar.projects.map(project=><button key={project.id} className={radarRepo===project.id?'selected':''} onClick={()=>{setRadarRepo(project.id);setRadarExpanded(true);}}>{project.name}</button>)}
@@ -121,8 +119,8 @@ export default function App(){
             <p className="radar-caveat">核验边界：{item.caveat}</p>
           </article>;
         })}</div>
-        <div className="radar-footer"><button className="text-button" onClick={()=>setRadarExpanded(v=>!v)}>{radarExpanded?'收起工程条目':`查看全部 ${radarRepo==='all'?radar.events.length:radar.events.filter(item=>item.repo===radarRepo).length} 条记录`} <ArrowRight size={16}/></button><External href={`${repository}/tree/main/engineering`}>维护规则与历次快照 <ArrowUpRight size={14}/></External></div>
-      </section>
-    </main><footer><a className="footer-brand" href="#">DFlash Atlas</a><span>沿着问题，持续阅读。<span className="footer-divider"> / </span>由开放研究连接起来。</span><External href={repository}>在 GitHub 上参与整理 <ArrowUpRight size={14}/></External></footer>
+        <div className="radar-footer"><button className="text-button" onClick={()=>setRadarExpanded(v=>!v)}>{radarExpanded?'收起工程条目':`查看全部 ${radarRepo==='all'?radar.events.length:radar.events.filter(item=>item.repo===radarRepo).length} 条记录`} <ArrowRight size={16}/></button>{repository&&<External href={`${repository}/tree/main/engineering`}>维护规则与历次快照 <ArrowUpRight size={14}/></External>}</div>
+      </section>}
+    </main><footer><a className="footer-brand" href="#">{atlas.brand.lead} {atlas.brand.tail}</a><span>沿着问题，持续阅读。<span className="footer-divider"> / </span>由开放研究连接起来。</span>{repository&&<External href={repository}>在 GitHub 上参与整理 <ArrowUpRight size={14}/></External>}</footer>
   </>;
 }

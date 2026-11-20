@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Category, Method, Relation } from './types';
 import { methodLinks } from './lib/method-links';
+import EvidenceBadge from './EvidenceBadge';
 
 export function publicationMonth(method: Method) {
   const match = method.date?.match(/^(\d{4})-(\d{2})/);
@@ -20,6 +21,7 @@ export default function MethodResearchDetails({ method, category, catalog, relat
   return <article className="globe-research-card" aria-label={`${method.name} 研究详情`}>
     <div className="globe-research-meta">
       {method.date ? <time dateTime={method.date}>{publicationMonth(method)}</time> : <span>{publicationMonth(method)}</span>}
+      <EvidenceBadge method={method}/>
       {category && <span>{category.name}</span>}
       {source(method.paperUrl ?? method.sourceUrl, method.paperUrl ? '阅读原文' : '原始来源')}
       <span>{method.benchmarkReview === 'verified' ? '已收录经核验的对照' : '实验对照待核验'}</span>

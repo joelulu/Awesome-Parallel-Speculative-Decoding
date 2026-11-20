@@ -7,6 +7,7 @@ import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, Minus, Scan, Maximize2, Mini
 import '@xyflow/react/dist/style.css';
 import './ResearchMap.css';
 import { buildTimeline, comparePublication } from './lib/timeline.mjs';
+import { atlas } from './lib/dataset';
 import type { Method, Category, Relation } from './types';
 type AtlasData = {
   kind: string; label: string; subtitle: string; color: string;
@@ -30,7 +31,7 @@ function AtlasNodeView({ data }: NodeProps<AtlasNode>) {
       if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault(); event.stopPropagation(); data.onRead?.();
     }} title={`${data.subtitle} · 点击阅读方法卡片`} aria-label={`阅读 ${data.label} 方法卡片`} aria-current={data.selected ? 'true' : undefined}>
-      <strong>{data.label}</strong>{data.latest && <span className="timeline-new-badge">NEW</span>}<i className="method-point"/><span className="timeline-read-hint">阅读卡片 <ArrowUpRight size={11}/></span>
+      <span className="timeline-name"><strong>{data.label}</strong>{data.latest && <span className="timeline-new-badge">NEW</span>}</span><i className="method-point"/><span className="timeline-read-hint">阅读卡片 <ArrowUpRight size={11}/></span>
       <span className="timeline-node-tooltip" role="tooltip"><b>{data.label}</b><small>{data.dateLabel}{data.categoryLabel ? ` · ${data.categoryLabel}` : ''}</small><em>{data.subtitle}</em></span>
     </a>
   </div>;
@@ -50,9 +51,10 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
   const pendingFocus = useRef<string | null>(null);
   const flow = useReactFlow<AtlasNode>();
   const nodesReady = useNodesInitialized();
-  const timeline = useMemo(() => buildTimeline(methods, categories), [methods, categories]);
-  const latestMethods = useMemo(() => [...methods].filter(method => method.id !== 'dflash' && method.date).sort((a,b) => comparePublication(b,a)).slice(0,3), [methods]);
+  const latestMethods = useMemo(() => [...methods].filter(method => method.id !== atlas.rootId && method.date).sort((a,b) => comparePublication(b,a)).slice(0,3), [methods]);
   const latestIds = useMemo(() => new Set(latestMethods.map(method => method.id)), [latestMethods]);
+  // NEW 徽标会和标题挤在同一行，节点宽度必须先知道哪几篇要带徽标。
+  const timeline = useMemo(() => buildTimeline(methods, categories, atlas.rootId, latestIds), [methods, categories, latestIds]);
   const latestMethod = latestMethods[0] ?? null;
   const methodIndex = useMemo(() => new Map([timeline.root, ...timeline.methods].map(node => [node.id, node])), [timeline]);
   const duration = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 400;
@@ -154,7 +156,7 @@ function MapCanvas({ methods, categories, relations, focusId, focusKey, onRead }
   }
   return <div className="map-frame chronology-map" ref={container}>
     <div className="map-topbar">
-      <div className="map-breadcrumb"><button onClick={startView}>DFlash</button><ArrowRight size={14}/><span>沿着问题，向右探索</span></div>
+      <div className="map-breadcrumb"><button onClick={startView}>{atlas.rootName}</button><ArrowRight size={14}/><span>沿着问题，向右探索</span></div>
       <div className="map-top-actions">
         {latestMethod && <button className="map-latest-jump" onClick={() => focusMethod(latestMethod.id)} title={`定位最新论文：${latestMethod.name}`}><LocateFixed size={13}/><span>最新</span><b>{latestMethod.name}</b></button>}
         <label className="relation-toggle"><input type="checkbox" checked={showRelations} onChange={event => setShowRelations(event.target.checked)}/>叠加已核验关系</label>

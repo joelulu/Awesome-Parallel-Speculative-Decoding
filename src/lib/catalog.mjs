@@ -22,10 +22,11 @@ export function recommend(methods, stars = {}, limit = 6, now = Date.now()) {
   }
   return selected;
 }
-export function filterMethods(methods, query, category = 'all', codeOnly = false) {
+export function filterMethods(methods, query, category = 'all', codeOnly = false, verifiedOnly = false) {
   const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   return methods.filter(m => (category === 'all' || m.category === category)
     && (!codeOnly || m.code.some(c => !['unavailable', 'placeholder'].includes(c.availability)))
+    && (!verifiedOnly || (m.status === 'verified' && m.citationStatus === 'confirmed'))
     && words.every(w => [m.name,m.title,m.summary,m.problem,m.solution,...m.tags].join(' ').toLocaleLowerCase().includes(w)));
 }
 export function todayInShanghai(now = new Date()) {

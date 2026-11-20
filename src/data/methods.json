@@ -29,6 +29,7 @@
     "status": "verified",
     "citationStatus": "root",
     "importance": 5,
+    "importanceBasis": "被 56 篇用作基线 · 被 47 篇后续工作继承 · 被库内 3 篇引用 · 1 组可核验实验 · 方向首篇",
     "pinned": true,
     "reason": "基础方法 · 阅读起点",
     "updatedAt": "2026-09-09"
@@ -67,7 +68,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -98,6 +100,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 5,
+    "importanceBasis": "被 10 篇用作基线 · 被 4 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
     "pinned": false,
     "reason": "关键分支 · 从单路径到树",
     "updatedAt": "2026-09-09"
@@ -120,6 +123,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验 · 方向首篇",
     "pinned": false,
     "reason": "编辑关注 · 验证与动态预算",
     "updatedAt": "2026-09-09"
@@ -150,7 +154,8 @@
     ],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 2,
+    "importance": 5,
+    "importanceBasis": "被 1 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验 · 方向首篇",
     "pinned": false,
     "reason": "编辑关注 · 训练目标对齐",
     "updatedAt": "2026-09-09"
@@ -189,7 +194,8 @@
     ],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 4,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -224,7 +230,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "DFlash 直接后续 · 动态树结构与硬件感知 verification budget",
     "updatedAt": "2026-09-18"
@@ -255,7 +262,8 @@
     ],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 3,
+    "importance": 5,
+    "importanceBasis": "被 7 篇用作基线 · 被 1 篇后续工作继承 · 被库内 1 篇引用 · 1 组可核验实验 · 方向首篇",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -286,7 +294,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 3,
+    "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 训练目标对齐",
     "updatedAt": "2026-09-09"
@@ -319,6 +328,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 训练目标对齐",
     "updatedAt": "2026-09-09"
@@ -350,6 +360,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -380,7 +391,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 2,
+    "importance": 4,
+    "importanceBasis": "被 2 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 验证与动态预算",
     "updatedAt": "2026-09-09"
@@ -411,7 +423,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 3,
+    "importance": 5,
+    "importanceBasis": "被 1 篇用作基线 · 被 2 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 能力与架构",
     "updatedAt": "2026-09-09"
@@ -443,6 +456,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 树与路径选择",
     "updatedAt": "2026-09-09"
@@ -474,6 +488,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 验证与动态预算",
     "updatedAt": "2026-09-09"
@@ -509,7 +524,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "核验 arXiv 原文及官方代码后补齐论文入口；原提交日期为 2026-06-16，最新版本 v5 为 2026-10-03，不按项目日期当作新论文。值得纳入 Candidate Search；一次生成深度候选并不意味着 tree construction 无顺序操作。",
     "updatedAt": "2026-10-08"
@@ -539,7 +555,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -561,6 +578,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 能力与架构",
     "updatedAt": "2026-09-09"
@@ -583,6 +601,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 多模态与扩展",
     "updatedAt": "2026-09-09"
@@ -604,7 +623,8 @@
     "code": [],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 3,
+    "importance": 2,
+    "importanceBasis": "2 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 训练目标对齐",
     "updatedAt": "2026-09-09"
@@ -646,6 +666,7 @@
     "status": "verified",
     "citationStatus": "unconfirmed",
     "importance": 5,
+    "importanceBasis": "被 22 篇用作基线 · 被 10 篇后续工作继承 · 被库内 1 篇引用 · 2 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -677,6 +698,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -708,6 +730,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 树与路径选择",
     "updatedAt": "2026-09-09"
@@ -739,7 +762,8 @@
     ],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 验证与动态预算",
     "updatedAt": "2026-09-09"
@@ -770,7 +794,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 验证与动态预算",
     "updatedAt": "2026-09-09"
@@ -807,7 +832,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "DFlash 直接后续 · DFly 架构增强 + 高并发自适应验证",
     "updatedAt": "2026-09-18"
@@ -838,7 +864,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -870,7 +897,8 @@
       }
     ],
     "citationStatus": "unconfirmed",
-    "importance": 4,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "reason": "验证策略扩展 · 已核验论文与官方代码，直接引用 DFlash 的关系待核验",
     "dateLabel": "2026-08-04",
     "sourceUrl": "https://arxiv.org/abs/2608.03447",
@@ -896,6 +924,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -930,6 +959,7 @@
     "status": "verified",
     "citationStatus": "unconfirmed",
     "importance": 5,
+    "importanceBasis": "被 2 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 树与路径选择",
     "updatedAt": "2026-09-09"
@@ -961,6 +991,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 5,
+    "importanceBasis": "被 2 篇用作基线 · 被 2 篇后续工作继承 · 2 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -982,7 +1013,8 @@
     "code": [],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 因果与相关性",
     "updatedAt": "2026-09-09"
@@ -1005,7 +1037,8 @@
     "paperUrl": "https://arxiv.org/abs/2608.29748",
     "code": [],
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验 · 方向首篇",
     "reason": "DFlash 直接改进 · 跨轮复用被拒绝草稿的信息",
     "dateLabel": "2026-08-30",
     "sourceUrl": "https://arxiv.org/abs/2608.29748",
@@ -1031,6 +1064,7 @@
     "status": "imported",
     "citationStatus": "unconfirmed",
     "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 能力与架构",
     "updatedAt": "2026-09-09"
@@ -1067,7 +1101,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "目前检索到最直接的多模态 DFlash-like 工作：明确以 DFlash 风格 block-diffusion head 为基础，将 target hidden fusion、整块并行 draft 与树验证迁移到 VLM，并提供官方代码。SGLang 0.5.6、单 RTX A6000、bf16、每轮 32 候选共预算下，相对 EAGLE3-VL 的五任务几何平均端到端解码收益为 1.3%；grounded 子集约快 11%，captioning 更慢；对 AR 的最高 3.05×仅在 ChartQA decode-only 比较中出现。",
     "updatedAt": "2026-10-08"
@@ -1098,7 +1133,8 @@
     ],
     "status": "imported",
     "citationStatus": "unconfirmed",
-    "importance": 3,
+    "importance": 2,
+    "importanceBasis": "2 组可核验实验",
     "pinned": false,
     "reason": "编辑关注 · 训练目标对齐",
     "updatedAt": "2026-09-09"
@@ -1124,7 +1160,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 1 组可核验实验",
     "pinned": false,
     "reason": "DFlash 直接后续 · 跨轮 verifier 信息复用",
     "updatedAt": "2026-09-18"
@@ -1152,7 +1189,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "DFlash / DSpark 直接训练扩展 · RL online co-training 与长上下文分布式训练",
     "updatedAt": "2026-09-18"
@@ -1174,6 +1212,7 @@
     "problem": "块并行草稿缺少跨多个未来位置的整体语义条件，仅 token-level target features 仍会产生不连贯候选。",
     "solution": "取最后完整 target chunk 的 concept，经 RMSNorm 与零初始化门控注入各 draft 层；在 DFlash2 局部卷积/路径选择和 DFlare 逐层特征融合之上增加条件。",
     "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "reason": "值得作为 Draft Quality 子方向观察；依赖具备 Concept Module 的 target，不能视为任意冻结 LLM 的通用插件。4.17% 是平均接受长度提升，非端到端速度。",
     "code": [
       {
@@ -1217,7 +1256,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "DFlash / DSpark 直接实验 · 跨轮 rejected verifier state reuse 的最新工作",
     "updatedAt": "2026-09-18"
@@ -1257,6 +1297,7 @@
     "status": "verified",
     "citationStatus": "unconfirmed",
     "importance": 4,
+    "importanceBasis": "被 1 篇用作基线 · 被 1 篇后续工作继承 · 1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1283,7 +1324,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "直接研究 DFlash KV injection 的系统成本；值得纳入能力与架构路线。KV 维度需匹配 target，低并发和短输入下 backbone 可能更慢。",
     "updatedAt": "2026-09-24"
@@ -1321,6 +1363,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "明确引用 DFlash 的多模态相关路线，值得观察共享参数自投机；并非冻结 target 的 DFlash 插件，也不等价于原始 GLM-OCR。",
     "updatedAt": "2026-09-24"
@@ -1341,7 +1384,8 @@
     "summary": "预计算所有接受边界，让 diffusion backbone 与验证重叠，消除猜错 bonus token 导致的串行回退。",
     "problem": "块并行 drafter 仍在每轮关键路径上；猜测验证结果的重叠调度会因预测失败而回退。",
     "solution": "从 DSpark 微调多锚点 M-DFlash backbone，冻结 AR head；验证时预计算全部边界，结果揭晓后选分支并用真实 bonus token 驱动轻量 head。",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "reason": "值得纳入验证成本路线：减少串行关键路径。主要实验额外使用 drafting GPU；完全隐藏 backbone 要求预计算落在验证窗口内。",
     "code": [],
     "dateLabel": "2026-09-23",
@@ -1376,7 +1420,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -1403,7 +1448,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 4,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "值得加入 Verification Cost 长期路线。基于共享骨干自投机，非 DFlash 直接扩展；预算调度对 DFlash 的适用性仍需独立验证。",
     "updatedAt": "2026-09-30"
@@ -1431,7 +1477,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "直接复用 DFlash drafter，解决其高并发验证成本；值得纳入 Verification Cost 长期路线。论文在单张 A100、TP1、Qwen3-4B/8B、并发 8–32 上评测，报告相对 DFlash 的几何平均吞吐提升 43.9%/48.8%，不是跨模型或硬件的通用保证。未核实到作者官方代码仓库。",
     "updatedAt": "2026-10-08"
@@ -1467,7 +1514,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "已补齐 arXiv 原文与 PDF，值得纳入 Draft Quality 的固定成本长上下文路线。固定的是 drafter 状态与每轮草拟工作，target KV 仍增长；论文投机配置比 AR 多一张专用 drafter GPU，吞吐不能解释为同 GPU 数收益。",
     "updatedAt": "2026-10-08",
@@ -1498,7 +1546,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -1526,7 +1575,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -1555,7 +1605,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-08"
   },
@@ -1583,7 +1634,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1619,7 +1671,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "2 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1646,7 +1699,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1684,7 +1738,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1721,7 +1776,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1758,7 +1814,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1786,7 +1843,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 4,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1813,7 +1871,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1841,7 +1900,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "unconfirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-17"
   },
@@ -1878,7 +1938,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "2 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-23"
   },
@@ -1915,7 +1976,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-26"
   },
@@ -1943,7 +2005,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-26"
   },
@@ -1971,7 +2034,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-28"
   },
@@ -2008,7 +2072,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 4,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-02"
   },
@@ -2037,7 +2102,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 4,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-03"
   },
@@ -2063,7 +2129,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "2 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-06"
   },
@@ -2089,7 +2156,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-06"
   },
@@ -2124,7 +2192,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-06"
   },
@@ -2151,7 +2220,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 2,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-09"
   },
@@ -2187,7 +2257,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-10"
   },
@@ -2214,7 +2285,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-13"
   },
@@ -2242,7 +2314,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-16"
   },
@@ -2269,7 +2342,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-13"
   },
@@ -2306,7 +2380,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 4,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-18"
   },
@@ -2344,6 +2419,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-11-19"
   },
@@ -2370,7 +2446,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "reason": "直接使用 DFlash drafter 并比较 DFlash、DDTree，值得加入 Candidate Search 与 Verification Cost 路线。论文在 A40/A800、batch=1、三个 target、七项任务报告相对 DFlash 平均 1.36× 加速；高并发收益和作者代码可用性尚未验证。",
     "updatedAt": "2026-10-10"
@@ -2398,7 +2475,8 @@
     "code": [],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-14"
   },
@@ -2434,7 +2512,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-16"
   },
@@ -2470,7 +2549,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-16"
   },
@@ -2506,7 +2586,8 @@
     ],
     "status": "verified",
     "citationStatus": "confirmed",
-    "importance": 5,
+    "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-16"
   },
@@ -2544,6 +2625,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 4,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-28"
   },
@@ -2581,6 +2663,7 @@
     "status": "verified",
     "citationStatus": "confirmed",
     "importance": 3,
+    "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-28"
   }

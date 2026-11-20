@@ -1,8 +1,9 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight, Minus, Plus, Scan } from 'lucide-react';
 import type { Category, Method, Relation } from './types';
-import citations from './data/citations.json';
+import { atlas, categories as catalogCategories, citations } from './lib/dataset';
 import MethodResearchDetails, { publicationMonth } from './MethodResearchDetails';
+import { evidenceLevel, EVIDENCE_COPY as evidenceCopy } from './EvidenceBadge';
 
 type Props = {
   methods: Method[]; categories: Category[]; relations: Relation[];
@@ -10,16 +11,20 @@ type Props = {
 };
 type Point = { method: Method; x: number; y: number };
 type Box = { x: number; y: number; w: number; h: number };
-const rootId = 'dflash';
+const rootId = atlas.rootId;
 const fullTurn = 2 * Math.PI;
 const relationNames: Record<string, string> = { extends: '扩展', combines: '组合', related: '相关', cites: '引用' };
 type GraphEdge = Pick<Relation, 'source' | 'target' | 'type' | 'note' | 'evidenceUrl'> & { role?: string; location?: string };
-const citationEdges: GraphEdge[] = citations.map(edge => ({ ...edge, type: 'cites' }));
+const citationEdges: GraphEdge[] = atlas.features.citations
+  ? citations.map(edge => ({ ...edge, type: 'cites', note: edge.note ?? '', evidenceUrl: edge.evidenceUrl ?? '' }))
+  : [];
 const neutralView = { x: 0, y: 0, zoom: 1 };
-const globeColors: Record<string, string> = {
-  architecture: '#77b8ff', training: '#ffcb79', causality: '#6ce0ba', tree: '#ff8ea9',
-  systems: '#b6a0ff', reuse: '#f28de5', extensions: '#69dce9',
-};
+// 深色星图需要比日间配色更亮的点。按分类顺序取色，这样任何专题都能拿到一套
+// 可读的调色板；默认专题的 7 个分类顺序与历史配色一一对应，视觉不变。
+const darkPalette = ['#77b8ff', '#ffcb79', '#6ce0ba', '#ff8ea9', '#b6a0ff', '#f28de5', '#69dce9'];
+const globeColors: Record<string, string> = Object.fromEntries(
+  catalogCategories.map((category, index) => [category.id, darkPalette[index % darkPalette.length]]),
+);
 
 export default function ResearchGlobe({ methods, categories, relations, focusId, focusKey, onRead }: Props) {
   const [selected, setSelected] = useState(rootId);
@@ -101,9 +106,12 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   if (local) {
     const placeColumn = (group: GraphEdge[], side: number) => {
       const ids = [...new Set(group.map(otherId))];
+      // 局部视图里节点少时按可用高度铺开，避免挤在一条 25px 的窄带里，
+      // 否则只有一两个邻居的方法会留下一大片空白。
+      const spacing = Math.min(48, (height * .68) / Math.max(1, ids.length));
       ids.forEach((id, index) => {
         const method = catalog.get(id);
-        if (method && !bounds.has(id)) place(method, side * Math.min(width * .29, 300), (index - (ids.length - 1) / 2) * 25);
+        if (method && !bounds.has(id)) place(method, side * Math.min(width * .29, 300), (index - (ids.length - 1) / 2) * spacing);
       });
     };
     placeColumn(upstream, -1);
@@ -120,13 +128,25 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   } else {
     categories.forEach((category, index) => {
       const members = methods.filter(method => method.category === category.id && method.id !== rootId);
+      if (!members.length) return;
       const theta = fullTurn * index / categories.length - Math.PI / 2;
+      const dx = Math.cos(theta), dy = Math.sin(theta);
+      // 沿方向中心的切线铺开，而不是在中心点堆一个螺旋。
+      // 螺旋在成员少时（新专题常见）会挤成 30px 的一团，标签互相遮挡。
+      const px = -dy, py = dx;
+      const grow = direction === category.id ? 1.12 : 1;
+      // 舞台是横向的，圆环却按高度缩放，两侧会留下大片空白。横向单独放宽，标签也就有地方站。
+      const radiusX = Math.min(scale * 224, width * 0.33);
+      const baseX = radiusX * dx * grow, baseY = scale * 163 * dy * grow;
+      const rows = members.length > 5 ? 2 : 1;
+      const perRow = Math.ceil(members.length / rows);
+      const step = Math.min(scale * 50, (scale * 290) / Math.max(1, perRow - 1));
       members.forEach((method, rank) => {
-        const radius = scale * (direction === category.id ? 19 : 15) * Math.sqrt(rank);
-        const phase = rank * 2.399963 + theta;
-        place(method,
-          scale * 164 * Math.cos(theta) + radius * Math.cos(phase),
-          scale * 159 * Math.sin(theta) + radius * Math.sin(phase));
+        const row = Math.floor(rank / perRow);
+        const column = rank % perRow;
+        const offset = (column - (perRow - 1) / 2) * step;
+        const lift = rows > 1 ? (row - (rows - 1) / 2) * scale * 30 : 0;
+        place(method, baseX + px * offset + dx * lift, baseY + py * offset + dy * lift);
       });
     });
   }
@@ -158,10 +178,14 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
   const hoverPoint = hover ? bounds.get(hover) : undefined;
   const edges = local ? direct : layerEdges;
   const position = (point: Point) => ({ left: point.x, top: point.y });
+  // 局部视图的高度跟着邻居数量走：只有一两个邻居时收窄，避免大片空框。
+  const localHeight = Math.max(300, Math.min(620,
+    Math.max(upstream.length, downstream.length) * 46 + 180 +
+    Math.max(0, Math.ceil(related.length / (width < 580 ? 2 : 4)) - 1) * 98));
 
   return <div className="globe-frame" data-method-links>
     <div className="globe-toolbar">
-      <span aria-live="polite">{local && current ? `${current.name} · ${publicationMonth(current)} · ${neighbors.size} 个直接关联方法` : 'DFlash · 研究方向总览'}</span>
+      <span aria-live="polite">{local && current ? `${current.name} · ${publicationMonth(current)} · ${neighbors.size} 个直接关联方法` : `${atlas.rootName} · 研究方向总览`}</span>
       <div>
         {local && <button type="button" onClick={() => research.current?.scrollIntoView({ block: 'start' })}>查看研究详情</button>}
         <button type="button" aria-label="缩小星球视图" onClick={() => zoomBy(.8)}><Minus size={16}/></button>
@@ -171,11 +195,11 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
     </div>
     <div className="globe-controls globe-layers" role="group" aria-label="关系层">
       <button type="button" aria-pressed={layer === 'lineage'} onClick={() => { setLayer('lineage'); setView(neutralView); setHover(null); }}>技术演进</button>
-      <button type="button" aria-pressed={layer === 'citations'} onClick={() => { setLayer('citations'); setView(neutralView); setHover(null); }}>论文引用</button>
+      {atlas.features.citations && citationEdges.length > 0 && <button type="button" aria-pressed={layer === 'citations'} onClick={() => { setLayer('citations'); setView(neutralView); setHover(null); }}>论文引用</button>}
       {layer === 'citations' && <span>已核验 {citationEdges.length} 条 · 引用者 → 被引用者</span>}
     </div>
     <div className="globe-stage" ref={stage} aria-label="研究方法关系图"
-      style={local ? { minHeight: Math.max(upstream.length * 25 + 65, downstream.length * 25 + 65, 270 + Math.max(0, Math.ceil(related.length / (width < 580 ? 2 : 4)) - 1) * 98) } : undefined}
+      style={local ? { height: localHeight } : undefined}
       onPointerDown={event => {
         if (event.button !== 0 || (event.target as Element).closest('button')) return;
         drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY, left: view.x, top: view.y };
@@ -213,6 +237,8 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
         return <div key={method.id} className={dim ? 'globe-method is-dimmed' : 'globe-method'}>
           <button type="button" className={`globe-node ${local ? 'is-local' : ''}`}
             style={{ ...position(point), color: method.id === rootId ? 'var(--globe-core)' : globeColors[method.category] ?? categoryIndex.get(method.category)?.color }}
+            data-evidence={evidenceLevel(method)}
+            title={`${method.name} · ${evidenceCopy[evidenceLevel(method)].label}`}
             aria-label={`聚焦 ${method.name}`} aria-pressed={method.id === selected}
             onMouseEnter={() => setHover(method.id)} onMouseLeave={() => setHover(null)}
             onFocus={() => setHover(method.id)} onBlur={() => setHover(null)}
@@ -225,7 +251,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
       {hoverPoint && <div className="globe-tooltip" role="tooltip" style={{
         left: Math.max(8, Math.min(hoverPoint.x + 14, width - Math.min(width - 16, 250) - 8)),
         top: Math.max(8, Math.min(hoverPoint.y + 17, height - 108)),
-      }}><b>{hoverPoint.method.name}</b><span>{hoverPoint.method.summary}</span></div>}
+      }}><b>{hoverPoint.method.name}</b><span>{hoverPoint.method.summary}</span><span className="globe-tooltip-evidence" data-level={evidenceLevel(hoverPoint.method)}>{evidenceCopy[evidenceLevel(hoverPoint.method)].label}{hoverPoint.method.importanceBasis ? ` · ${hoverPoint.method.importanceBasis}` : ''}</span></div>}
     </div>
     <div className="globe-controls">
       {categories.map(category => <button key={category.id} type="button" aria-pressed={direction === category.id}
@@ -233,7 +259,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
         <i style={{ backgroundColor: globeColors[category.id] ?? category.color }}/>{category.name}
       </button>)}
     </div>
-    <div className="globe-legend">{layer === 'lineage' ? <><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></> : <span>箭头指向被引用的论文</span>}</div>
+    <div className="globe-legend">{layer === 'lineage' ? <><span data-relation="extends">扩展</span><span data-relation="combines">组合</span><span data-relation="related">相关</span></> : <span>箭头指向被引用的论文</span>}<span className="globe-legend-evidence"><i/>空心节点 = 证据未核验</span></div>
     {current && <div className="globe-selection" key={current.id} ref={research}>
       <div><h3>{current.name}</h3><p>{current.summary}</p></div>
       <a href={`#method-${current.id}`} onClick={event => {

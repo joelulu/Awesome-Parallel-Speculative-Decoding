@@ -59,3 +59,8 @@
  .chronology-map .map-caption{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.chronology-map *{transition:none!important}}
+
+/* 标题与 NEW 徽标放同一行居中，避免徽标压在标题上；节点宽度已在 timeline.mjs 里预留。 */
+.chronology-map .timeline-name{position:absolute;top:4px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 2px}
+.chronology-map .timeline-name strong{position:static;top:auto;bottom:auto;padding:0}
+.chronology-map .timeline-name .timeline-new-badge{position:static;top:auto;left:auto;transform:none;flex:none}

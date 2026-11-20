@@ -1,9 +1,9 @@
 import { useState, type CSSProperties } from 'react';
 import { ArrowUpRight, BookOpen, ChevronDown, ChevronUp, Github, LocateFixed, Star } from 'lucide-react';
-import abstractsJson from './data/abstracts.json';
-import metadataJson from './data/paper-metadata.json';
+import { abstracts as abstractsJson, paperMetadata as metadataJson } from './lib/dataset';
 import type { Method, Category, Relation, Stars } from './types';
 import MethodResearchDetails from './MethodResearchDetails';
+import EvidenceBadge from './EvidenceBadge';
 
 type Abstract = { text: string; sourceUrl: string; translatedAt: string; kind?: string };
 type Metadata = { title?: string; authors?: string[]; thumbnail?: string; sourceUrl: string; status: string; kind?: string };
@@ -33,7 +33,7 @@ export default function PaperCard({ method, category, highlight, onLocate, stars
     </External>
     <div className="paper-content">
       <h3><External href={paperUrl}>{source?.title || method.title}</External></h3>
-      <div className="paper-byline">{authors.length > 0 && <><span>{authors.slice(0, 3).join(', ')}{authors.length > 3 ? ` 等 ${authors.length} 位作者` : ''}</span><span className="byline-dot">·</span></>}<time>{method.dateLabel}</time></div>
+      <div className="paper-byline">{authors.length > 0 && <><span>{authors.slice(0, 3).join(', ')}{authors.length > 3 ? ` 等 ${authors.length} 位作者` : ''}</span><span className="byline-dot">·</span></>}<time>{method.dateLabel}</time><EvidenceBadge method={method}/>{method.importanceBasis && <span className="importance-pill" title={`重要性 ${method.importance}/5 · ${method.importanceBasis}`}>★ {method.importance}</span>}</div>
       {abstract
         ? <><p className={`paper-abstract ${expanded ? 'expanded' : ''}`}>{abstract.text}</p><button className="abstract-toggle" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? '收起' : isArticle ? '展开中文概要' : '展开中文摘要'}{expanded ? <ChevronUp size={13}/> : <ChevronDown size={13}/>}</button></>
         : <p className="paper-abstract abstract-unavailable">暂未取得可核验的论文原始摘要。可通过论文或资料链接阅读；已有研究笔记保留在下方。</p>}

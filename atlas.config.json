@@ -1,0 +1,51 @@
+{
+  "slug": "dflash-atlas",
+  "title": "DFlash Atlas",
+  "subtitle": "Parallel Speculative Decoding",
+  "scope": "以 DFlash 为起点的并行投机解码与 block diffusion 草拟后续方法",
+  "root": {
+    "id": "dflash",
+    "name": "DFlash",
+    "title": "DFlash: Block Diffusion for Flash Speculative Decoding",
+    "arxiv": "2602.06036",
+    "openalex": "W7128006584",
+    "doi": "10.48550/arxiv.2602.06036",
+    "date": "2026-02-05"
+  },
+  "outOfScope": [
+    "与 block diffusion 草拟无技术关系的纯 EAGLE 系投机解码",
+    "仅在应用任务上使用投机解码、未改动草拟机制的工作",
+    "综述、复现报告与教程"
+  ],
+  "sources": {
+    "primary": "openalex",
+    "incremental": "arxiv",
+    "identity": ["arxiv", "doi"],
+    "codeAudit": "CODE_LINK_AUDIT.md"
+  },
+  "site": {
+    "base": "/Awesome-Parallel-Speculative-Decoding/",
+    "repo": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding",
+    "homepage": "https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/",
+    "screenshots": ["assets/atlas-globe.png", "assets/atlas-node-relations.png"],
+    "brand": {
+      "lead": "DFlash",
+      "tail": "Atlas"
+    },
+    "headline": "Parallel Speculative Decoding",
+    "tagline": "从 DFlash 出发，沿着时间阅读并行投机解码的新方法。",
+    "features": {
+      "briefs": true,
+      "engineering": true,
+      "stars": true,
+      "citations": true
+    },
+    "copy": {
+      "dailyLabel": "DFlash FOLLOW-UP",
+      "dailyNote": "只追踪 DFlash 及直接后续研究；新论文优先。",
+      "engineeringTitle": "投机解码工程动态"
+    }
+  },
+  "methodology": "docs/METHOD.md",
+  "updatedAt": "2026-11-19"
+}

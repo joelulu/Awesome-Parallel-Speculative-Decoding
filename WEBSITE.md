@@ -24,6 +24,60 @@ npm test
 npm run build
 ```
 
+`npm run dev` 与 `npm run build` 都会先装配数据集（`scripts/select-topic.mjs` → `src/active/`），所以改了 `atlas.config.json` 或主数据后不必手动跑额外命令。
+
+### 换一个专题
+
+```sh
+npm run topic -- --config topics/draft-tree.json    # 派生子集
+VITE_ATLAS_TOPIC=draft-tree npm run dev             # 预览
+VITE_ATLAS_TOPIC=draft-tree npm run build           # 发布
+```
+
+`src/active/` 是单目录，**同一时间只跑一个专题**：两个不同专题的 dev/build 并行会互相覆盖。派生规则与配置字段见 [docs/TOPICS.md](docs/TOPICS.md)。
+
+换领域时用 `mode: "standalone"`，数据放在 `topics/<slug>/data/`，命令不变：
+
+```sh
+npm run topic -- --config topics/video-cache.json
+VITE_ATLAS_TOPIC=video-cache npm run dev
+```
+
+## 重要性与证据等级
+
+站点上有两个不能混用的轴：**重要性**回答「值不值得读」，**证据等级**回答「我们有多确定」。
+
+```sh
+npm run rescore                                  # 按结构信号重算 importance，写回 methods.json
+npm run rescore -- --dry                         # 只看结果不改文件
+npm run rescore -- --dir topics/video-cache/data --audit   # 检查分布上限与依据是否齐全
+```
+
+`rescore` 的口径在 `scripts/rescore-importance.mjs` 的 `WEIGHTS` 与 `TIER_SHARE`：被用作基线的次数权重最高，其次是被后续继承、可核验实验数；配额锁死在 10% / 23% / 38%，每个分数都带一句 `importanceBasis`。**不要手改 importance**，否则下一个人无法判断某个分数是算出来的还是拍出来的。报告写在 `docs/importance-report.md`。
+
+证据等级折叠成三档展示：`已核验`（verified + confirmed）、`待复核`（verified + unconfirmed）、`导入未核验`（imported）。星球图上待复核节点画成空心，方法卡片与研究详情卡显示角标，方法库提供「仅看已核验」筛选。判据只写在 `src/EvidenceBadge.tsx` 一处，避免各页面各说各话。
+
+## 截图与界面冒烟
+
+README 的门户图由脚本生成，改动界面后需要重跑，避免截图与站点不一致。两者都要求本机有 Chrome 或 Edge，并先在另一个终端跑 `npm run dev`。
+
+```sh
+npm run shots   # 生成 assets/atlas-globe.png 与 assets/atlas-node-relations.png
+npm run smoke   # 连续切换节点、核对详情卡、验证基线双向跳转与双视图入口
+```
+
+`npm run smoke` 会按 JetSpec → JetSpec++ → DSpark → JetSpec 的顺序连点，逐次断言标题、卡片数量与选中态，最后验证卡片内的方法互跳。局部视图会隐藏非邻域节点，脚本会先点「返回全图」再定位，这条路径本身也在验收范围内。
+
+浏览器路径可用 `CHROME_PATH` 覆盖，站点地址用 `ATLAS_URL`，输出目录用 `ATLAS_OUT`，截图聚焦的节点用 `ATLAS_FOCUS`，冒烟测试的节点链用 `ATLAS_CHAIN`。测专题时四个都要改：
+
+```sh
+ATLAS_URL=http://127.0.0.1:5174/Awesome-Parallel-Speculative-Decoding/ \
+ATLAS_OUT=.tmp ATLAS_FOCUS=TAPS \
+ATLAS_CHAIN=TreeSpark,D3Tree,DForkTree,TreeSpark \
+npm run smoke
+```
+
+
 ## 发布到 GitHub Pages
 
 1. 将代码提交、推送到本仓库的 `main`。

@@ -6,10 +6,15 @@ export function comparePublication(a, b) {
   return key(a.date).localeCompare(key(b.date)) || a.id.localeCompare(b.id);
 }
 
-/** @param {import('../types').Method[]} methods @param {import('../types').Category[]} categories */
-export function buildTimeline(methods, categories) {
-  const root = methods.find(method => method.id === 'dflash');
-  if (!root) throw new Error('The timeline requires the DFlash starting point.');
+/**
+ * @param {import('../types').Method[]} methods
+ * @param {import('../types').Category[]} categories
+ * @param {string} rootId 起始节点。专题不同则根不同，所以不能写死。
+ * @param {Set<string>} latestIds 带 NEW 标记的方法，节点宽度要留出徽标位置。
+ */
+export function buildTimeline(methods, categories, rootId = 'dflash', latestIds = new Set()) {
+  const root = methods.find(method => method.id === rootId);
+  if (!root) throw new Error(`The timeline requires the starting point "${rootId}".`);
   const nodeHeight = 72, laneHeight = 80, firstLaneY = 58;
   const methodGap = 14, monthPadding = 18;
 
@@ -18,7 +23,7 @@ export function buildTimeline(methods, categories) {
   const widthOf = method => {
     const name = method.name.replace(/\s+/g, ' ').trim();
     const ascii = [...name].reduce((total, char) => total + (/^[\x00-\x7F]$/.test(char) ? 7.45 : 13), 0);
-    return Math.max(82, Math.ceil(ascii) + 22);
+    return Math.max(82, Math.ceil(ascii) + 22) + (latestIds.has(method.id) ? 26 : 0);
   };
   const laneTop = index => firstLaneY + index * laneHeight;
   const monthOf = method => method.date?.slice(0, 7) ?? 'undated';
@@ -30,12 +35,19 @@ export function buildTimeline(methods, categories) {
     methods: successors.filter(method => method.category === category.id).sort(comparePublication),
   }));
   let cursor = 304;
+  let previousYear = '';
   const months = monthKeys.map(key => {
     const width = Math.max(112, ...lanes.map(lane => {
       const group = lane.methods.filter(method => monthOf(method) === key);
       return group.reduce((total, method) => total + widthOf(method), 0) + Math.max(0, group.length - 1) * methodGap;
     })) + monthPadding * 2;
-    const month = { id: key, x: cursor, width, label: key === 'undated' ? '待定' : `${Number(key.slice(5))}月` };
+    // 跨年的专题里只写「7月」会让人分不清是哪一年，所以在年份切换的那个月补上年份。
+    const year = key.slice(0, 4);
+    const shifted = year !== previousYear;
+    previousYear = year;
+    const label = key === 'undated' ? '待定'
+      : shifted ? `${key.slice(2, 4)}年${Number(key.slice(5))}月` : `${Number(key.slice(5))}月`;
+    const month = { id: key, x: cursor, width, label };
     cursor += width;
     return month;
   });
