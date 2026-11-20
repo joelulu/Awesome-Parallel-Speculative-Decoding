@@ -245,7 +245,7 @@ export default function ResearchGlobe({ methods, categories, relations, focusId,
           select(id);
           stage.current?.scrollIntoView({ block: 'nearest' });
         }}/>}
-      {local && (direct.length ? <details key={layer}><summary>连线证据（{direct.length}）</summary>
+      {local && (direct.length ? <details key={layer} className="globe-link-evidence"><summary>连线证据（{direct.length}）</summary>
         {([{ title: leftTitle, group: upstream }, { title: rightTitle, group: downstream }, { title: '相关方法', group: related }]).map(({ title, group }) =>
           group.length > 0 && <section key={title}><h4>{title}</h4><ul>
             {group.map((edge, index) => <li key={index}>

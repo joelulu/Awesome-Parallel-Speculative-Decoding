@@ -112,15 +112,16 @@ try {
   const rootPosition = await rootNode.getAttribute('style');
   await page.getByRole('button', { name: '放大星球视图' }).click();
   assert.notEqual(await rootNode.getAttribute('style'), rootPosition);
-  await page.locator('.globe-selection summary').filter({ hasText: '连线证据' }).click();
-  assert.ok(await page.locator('.globe-selection details a[href="https://arxiv.org/abs/2604.12989"]').first().isVisible());
+  const linkEvidence = page.locator('.globe-selection .globe-link-evidence');
+  await linkEvidence.locator('summary').click();
+  await linkEvidence.getByRole('link', { name: '原始来源' }).and(linkEvidence.locator('a[href="https://arxiv.org/abs/2604.12989"]')).waitFor();
   await page.locator('.globe-frame').screenshot({ path: path.join(output, 'research-globe.png') });
   await page.getByRole('button', { name: '论文引用', exact: true }).click();
   const citation = page.locator('.globe-edges [data-source="ddtree"][data-target="dflash"][data-relation="cites"]');
   assert.equal(await citation.count(), 1);
   assert.ok(await citation.getAttribute('marker-end'));
-  await page.locator('.globe-selection summary').filter({ hasText: '连线证据' }).click();
-  assert.ok(await page.getByRole('link', { name: '§1，引文 [4]' }).isVisible());
+  await linkEvidence.locator('summary').click();
+  await linkEvidence.getByRole('link', { name: '§1，引文 [4]' }).waitFor();
   await page.locator('.globe-selection summary').filter({ hasText: '同方向方法' }).click();
   assert.ok(await page.locator('.globe-peers button').count() > 0);
   await page.getByRole('link', { name: '阅读方法卡片', exact: true }).click();
@@ -130,12 +131,17 @@ try {
   assert.ok(await page.locator('#method-ddtree').getByRole('article', { name: 'DDTree 研究详情' }).isVisible());
   await methodNotes.click();
   await page.getByRole('button', { name: '技术演进', exact: true }).click();
-  for (const methodName of ['JetSpec', 'JetSpec++', 'DSpark', 'DDTree', 'JetSpec']) {
+  for (const methodName of ['JetSpec', 'JetSpec++', 'DSpark', 'DDTree', 'JetSpec', 'SpecOPD']) {
     await searchMap.fill(methodName);
     await searchMap.press('Enter');
     await page.locator('.globe-selection').getByRole('article', { name: methodName + ' 研究详情', exact: true }).waitFor();
     assert.equal(await page.locator('.globe-selection .globe-research-card').count(), 1);
   }
+  const specopdDetails = page.locator('.globe-selection').getByRole('article', { name: 'SpecOPD 研究详情' });
+  await specopdDetails.getByRole('button', { name: 'Draft-OPD', exact: true }).click();
+  const draftOpdDetails = page.locator('.globe-selection').getByRole('article', { name: 'Draft-OPD 研究详情' });
+  await draftOpdDetails.getByRole('button', { name: 'SpecOPD', exact: true }).waitFor();
+  assert.equal(await page.locator('.globe-selection .globe-research-card').count(), 1);
   await page.getByRole('button', { name: '平行时间线', exact: true }).click();
   await page.locator('.react-flow__node[data-id="ddtree"]').waitFor();
 
