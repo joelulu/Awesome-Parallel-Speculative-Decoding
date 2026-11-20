@@ -140,7 +140,10 @@ try {
   const specopdDetails = page.locator('.globe-selection').getByRole('article', { name: 'SpecOPD 研究详情' });
   await specopdDetails.getByRole('button', { name: 'Draft-OPD', exact: true }).click();
   const draftOpdDetails = page.locator('.globe-selection').getByRole('article', { name: 'Draft-OPD 研究详情' });
-  await draftOpdDetails.getByRole('button', { name: 'SpecOPD', exact: true }).waitFor();
+  const usedAsBaseline = draftOpdDetails.locator('.globe-research-block').filter({
+    has: page.getByRole('heading', { name: /^后续被用作基线/ }),
+  });
+  await usedAsBaseline.getByRole('button', { name: 'SpecOPD', exact: true }).waitFor();
   assert.equal(await page.locator('.globe-selection .globe-research-card').count(), 1);
   await page.getByRole('button', { name: '平行时间线', exact: true }).click();
   await page.locator('.react-flow__node[data-id="ddtree"]').waitFor();
