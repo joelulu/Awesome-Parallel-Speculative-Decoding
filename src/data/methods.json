@@ -104,7 +104,7 @@
   },
   {
     "id": "test-time-speculation",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Test-Time Speculation",
     "title": "Test-Time Speculation",
     "date": "2026-05",
@@ -126,7 +126,7 @@
   },
   {
     "id": "d-pace",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "D-PACE",
     "title": "D-PACE — Dynamic Position-Aware Cross-Entropy for Parallel Speculative Drafting",
     "date": "2026-05-12",
@@ -157,7 +157,7 @@
   },
   {
     "id": "fast-ddrive",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Fast-dDrive",
     "title": "Fast-dDrive: Efficient Block-Diffusion VLM for Autonomous Driving",
     "date": "2026-05-22",
@@ -567,7 +567,7 @@
   },
   {
     "id": "speculative-correction",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Speculative Correction",
     "title": "Speculative Correction — Draft-then-Refine Decoding for Diffusion LMs",
     "date": "2026-07",
@@ -589,7 +589,7 @@
   },
   {
     "id": "spec-auf",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Spec-AUF",
     "title": "Spec-AUF — Accept-Until-Fail Training",
     "date": "2026-07-02",
@@ -777,7 +777,7 @@
   },
   {
     "id": "angelspec",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "AngelSpec / DFly",
     "title": "AngelSpec: Towards Real-World High Performance Inference with Speculative Decoding",
     "date": "2026-07-28",
@@ -845,7 +845,7 @@
   },
   {
     "id": "asd",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "ASD",
     "title": "Approximate Speculative Decoding",
     "date": "2026-08-04",
@@ -880,7 +880,7 @@
   },
   {
     "id": "dblast",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DBLAST",
     "title": "DBLAST — Dependent Block Drafting for Stochastic Speculative Decoding",
     "date": "2026-08-05",
@@ -936,7 +936,7 @@
   },
   {
     "id": "dflash-2",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DFlash 2",
     "title": "DFlash 2 — Keep Drafting Parallel",
     "date": "2026-08-18",
@@ -1015,7 +1015,7 @@
   },
   {
     "id": "dbloom",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DBloom",
     "title": "Ceiling-Clipped Acceptance Histograms / DBloom",
     "date": "2026-08-31",
@@ -1037,7 +1037,7 @@
   },
   {
     "id": "glance",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "GLANCE",
     "title": "Vision Is Not Overhead: One-Pass Block Drafting for Lossless Speculative Decoding in Vision-Language Models",
     "date": "2026-08-31",
@@ -1074,7 +1074,7 @@
   },
   {
     "id": "vat",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "VAT",
     "title": "Verification-Aware Training (VAT)",
     "date": "2026-08-31",
@@ -1224,7 +1224,7 @@
   },
   {
     "id": "loopspec",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "LoopSpec",
     "title": "LoopSpec: Pipelined Self-Speculative Decoding for Looped Transformers",
     "date": "2026-09-15",
@@ -1475,7 +1475,7 @@
   },
   {
     "id": "ubtree",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "UBTree",
     "title": "UBTree: Parallel Tree Drafting via Unigram and Bigram Models for Speculative Decoding",
     "date": "2026-09-30",
@@ -1532,7 +1532,7 @@
   },
   {
     "id": "sharpdraft",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "SharpDraft",
     "title": "SharpDraft: Accelerating Long-Context Speculative Decoding with Cardinality-Aware Query Scaling",
     "date": "2026-10-04",
@@ -1561,7 +1561,7 @@
   },
   {
     "id": "d-loop",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "D-Loop",
     "title": "D-Loop: Looped Diffusion Drafting for Speculative Decoding",
     "date": "2026-10-05",
@@ -1589,7 +1589,7 @@
   },
   {
     "id": "dloop",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DLoop",
     "title": "DLoop: Looped Speculative Decoding",
     "date": "2026-10-06",
@@ -1652,7 +1652,7 @@
   },
   {
     "id": "fold",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "FOLD",
     "title": "FOLD: Position-Free Far Memory with Local Order for Long-Context Speculative Decoding",
     "date": "2026-10-14",
@@ -1764,7 +1764,7 @@
   },
   {
     "id": "short-context-long-drafting",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Frozen Short Drafter",
     "title": "Long-Context Drafting Does Not Require Long-Context Drafters",
     "date": "2026-10-14",
@@ -1819,7 +1819,7 @@
   },
   {
     "id": "loopahead",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "LoopAhead",
     "title": "LoopAhead: Speculating Ahead for Faster Decoding in Looped Language Models",
     "date": "2026-10-15",
@@ -1921,7 +1921,7 @@
   },
   {
     "id": "dstill",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DStill",
     "title": "DStill: Trajectory Consistency Distillation for Accelerated One-Step Drafting in Block Diffusion Speculative Decoding",
     "date": "2026-10-19",
@@ -1977,7 +1977,7 @@
   },
   {
     "id": "tabletune",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "TableTune",
     "title": "Measured, Self-Correcting Draft-Length Tables for Dynamic Speculative Decoding",
     "date": "2026-10-28",
@@ -2014,7 +2014,7 @@
   },
   {
     "id": "only-accepted-tokens-count",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Only Accepted Tokens Count",
     "title": "Only Accepted Tokens Count: An Energy Accounting of Speculative Decoding Under Latency Targets",
     "date": "2026-10-29",
@@ -2043,7 +2043,7 @@
   },
   {
     "id": "specopd",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "SpecOPD",
     "title": "SpecOPD: Branch-Parallel On-Policy Distillation for Speculative Decoding",
     "date": "2026-11-02",
@@ -2069,7 +2069,7 @@
   },
   {
     "id": "hybridspec",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "HybridSpec",
     "title": "HybridSpec: Throughput-Aware Speculative Decoding for Hybrid GDN-MoE Models",
     "date": "2026-11-02",
@@ -2130,7 +2130,7 @@
   },
   {
     "id": "mdraft",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "MDraft",
     "title": "Multi-Draft On-Policy Distillation for Diffusion Drafters",
     "date": "2026-10-27",
@@ -2157,7 +2157,7 @@
   },
   {
     "id": "chainflow",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "ChainFlow",
     "title": "Few-Step Latent Flow Matching for Speculative Decoding",
     "date": "2026-11-05",
@@ -2312,7 +2312,7 @@
   },
   {
     "id": "dynadflash",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "DynaDFlash",
     "title": "DynaDFlash: Dynamic Feature Projection for Block Diffusion Speculators",
     "date": "2026-11-14",
@@ -2349,7 +2349,7 @@
   },
   {
     "id": "taps",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "TAPS",
     "title": "TAPS: Target-Aware Prefix Tree Selection for Diffusion-Drafted Speculative Decoding",
     "date": "2026-05-30",
@@ -2377,7 +2377,7 @@
   },
   {
     "id": "edr",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "EDR",
     "title": "Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds",
     "date": "2026-10-07",
@@ -2404,7 +2404,7 @@
   },
   {
     "id": "alr-ira",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "ALR + IRA",
     "title": "Recovering Off-Policy Supervision for Speculative Decoding",
     "date": "2026-09-30",
@@ -2549,7 +2549,7 @@
   },
   {
     "id": "target-regeneration",
-    "benchmarkReview": "pending",
+    "benchmarkReview": "verified",
     "name": "Target Regeneration",
     "title": "Target Regeneration Shrinks the Gains of Draft-Training Objectives in Speculative Decoding",
     "date": "2026-10-21",
