@@ -1377,5 +1377,54 @@
     "pdfUrl": "https://arxiv.org/pdf/2610.29013",
     "fetchedAt": "2026-10-28T09:18:00+08:00",
     "thumbnail": "papers/target-regeneration.jpg"
+  },
+  "narrowspec": {
+    "sourceUrl": "https://arxiv.org/abs/2611.23835",
+    "status": "fetched",
+    "title": "NarrowSpec: Draft Hidden Width Need Not Match the Target in Speculative Decoding",
+    "authors": [
+      "Alagappan Valliappan",
+      "Ankit More",
+      "Dheevatsa Mudigere",
+      "Jatin Mitra"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.23835",
+    "fetchedAt": "2026-11-22T00:00:00Z",
+    "thumbnail": "papers/narrowspec.jpg"
+  },
+  "dneo": {
+    "sourceUrl": "https://arxiv.org/abs/2611.21925",
+    "status": "fetched",
+    "title": "DNeo: Your Parallel Draft Model Needs Better Target Feature Encoding",
+    "authors": [
+      "Jameson Sandler",
+      "Shane Bergsma",
+      "Mostafa Elhoushi",
+      "Bin Claire Zhang",
+      "Gavia Gray",
+      "Joel Hestness",
+      "Nolan Dey",
+      "Ferdinando Fioretto"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.21925",
+    "fetchedAt": "2026-11-22T00:00:00Z",
+    "thumbnail": "papers/dneo.jpg"
+  },
+  "reanchor": {
+    "sourceUrl": "https://arxiv.org/abs/2610.26531",
+    "status": "fetched",
+    "title": "ReAnchor: Reusing Rejected Verifier States for Diffusion Drafting",
+    "authors": [
+      "Sanghyun Lee",
+      "Wonjin Nam",
+      "Seungho Jang",
+      "Jaeho Lee",
+      "Jiho Park",
+      "Jaewoon Lee",
+      "Seungryong Kim"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2610.26531",
+    "fetchedAt": "2026-11-22T00:00:00Z",
+    "thumbnail": "papers/reanchor.jpg"
   }
 }

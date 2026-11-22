@@ -496,5 +496,23 @@
     "sourceUrl": "https://arxiv.org/abs/2610.29013",
     "translatedAt": "2026-10-28",
     "kind": "translated-summary"
+  },
+  "narrowspec": {
+    "text": "条件草稿器通常沿用 target hidden 宽度。DFlash 每轮虽并行起草，仍需花时间读写和计算全宽草稿层与词表投影。重训半宽或四分之一宽草稿器，保留深度、MLP 中间维度与注意力头几何；将 DFlash 的输出适配器折叠进冻结词表头。直接修改并对照 DFlash；B200 上 DFlash 子集的解码 TPOT 加速为 1.06–1.09×（T=0、B=1），未计每轮对话首步。值得纳入长期路线，重点测硬件带宽和宽度对接受长度的影响。",
+    "sourceUrl": "https://arxiv.org/abs/2611.23835",
+    "translatedAt": "2026-11-22",
+    "kind": "translated-summary"
+  },
+  "dneo": {
+    "text": "DFlash 的密集投影可能混合 target hidden 的坐标结构，等距抽层也未必取到最有用的层。MoFA 对选定目标层做学习加权，保持坐标结构；结合非均匀选层、拒绝记忆、仅前缀注意力、两抽头卷积与因果头。原文以 DFlash、DFlash 2 和 DSpark 为架构与实验对照。值得纳入 Draft Quality 长期路线；Qwen3-4B 的优势在采样下更明显，贪心时 GPQA 与 MT-Bench 的速度低于 DFlash。",
+    "sourceUrl": "https://arxiv.org/abs/2611.21925",
+    "translatedAt": "2026-11-22",
+    "kind": "translated-summary"
+  },
+  "reanchor": {
+    "text": "DFlash 固定草稿块限制可提议范围，首次拒绝以后的验证隐状态通常被丢弃。用上一轮被拒位置的 verifier hidden 作为条件并行起草移位块；按起始 token 将续段接到普通草稿上，再由 target 按新前缀验证。直接扩展已训练的 DFlash，也在 Domino、DSpark 和 Draft-OPD 上测试。四个目标、八项基准、T=0 时平均接受长度 +15.2%、解码速度 +13.4%；单 H100、batch 1。值得作为跨轮复用的免训练对照。",
+    "sourceUrl": "https://arxiv.org/abs/2610.26531",
+    "translatedAt": "2026-11-22",
+    "kind": "translated-summary"
   }
 }

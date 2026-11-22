@@ -630,5 +630,29 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/html/2610.29013",
     "note": "论文直接续训 DFlash drafter 并使用公开 decoder，比较数据来源对训练目标增益的影响；属于评估研究。"
+  },
+  {
+    "source": "dflash",
+    "target": "narrowspec",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.23835v1",
+    "note": "§2.1–2.3、§3。直接修改并对照 DFlash；B200 上 DFlash 子集的解码 TPOT 加速为 1.06–1.09×（T=0、B=1），未计每轮对话首步。值得纳入长期路线，重点测硬件带宽和宽度对接受长度的影响。"
+  },
+  {
+    "source": "dflash",
+    "target": "dneo",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/html/2611.21925v1",
+    "note": "§3–5。原文以 DFlash、DFlash 2 和 DSpark 为架构与实验对照。值得纳入 Draft Quality 长期路线；Qwen3-4B 的优势在采样下更明显，贪心时 GPQA 与 MT-Bench 的速度低于 DFlash。"
+  },
+  {
+    "source": "dflash",
+    "target": "reanchor",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2610.26531#page=2",
+    "note": "§1、§3、表 2–3。直接扩展已训练的 DFlash，也在 Domino、DSpark 和 Draft-OPD 上测试。四个目标、八项基准、T=0 时平均接受长度 +15.2%、解码速度 +13.4%；单 H100、batch 1。值得作为跨轮复用的免训练对照。"
   }
 ]

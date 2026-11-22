@@ -1,5 +1,42 @@
 [
   {
+    "date": "2026-11-22",
+    "title": "补录 NarrowSpec、DNeo、ReAnchor，并跟踪 SGLang 草案",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-22.md",
+    "items": [
+      {
+        "title": "NarrowSpec · Draft Hidden Width Need Not Match the Target in Speculative Decoding",
+        "summary": "缩窄整个草稿残差流，降低每轮草拟成本，同时大体保留接受长度。",
+        "sourceUrl": "https://arxiv.org/abs/2611.23835",
+        "methodIds": [
+          "narrowspec"
+        ]
+      },
+      {
+        "title": "DNeo · Your Parallel Draft Model Needs Better Target Feature Encoding",
+        "summary": "用逐坐标跨层融合和拒绝记忆强化并行草稿的条件特征。",
+        "sourceUrl": "https://arxiv.org/abs/2611.21925",
+        "methodIds": [
+          "dneo"
+        ]
+      },
+      {
+        "title": "ReAnchor · Reusing Rejected Verifier States for Diffusion Drafting",
+        "summary": "将被拒后缀的 verifier hidden 用作移位锚点，免训练地重新起草和延长候选。",
+        "sourceUrl": "https://arxiv.org/abs/2610.26531",
+        "methodIds": [
+          "reanchor"
+        ]
+      },
+      {
+        "title": "SGLang 草案 #51698 · 分离式推理的 DFlash 草稿 KV 传输",
+        "summary": "尝试将 TP2 prefill 生成的草稿 KV 重分片至 TP2 或 TP4 decode。仍为草案，真实 DMA 和 GPU 等价性待核。",
+        "sourceUrl": "https://github.com/sgl-project/sglang/pull/51698",
+        "methodIds": []
+      }
+    ]
+  },
+  {
     "date": "2026-11-19",
     "title": "补录 DynaDFlash：动态 target 特征融合",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-19.md",

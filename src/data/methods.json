@@ -2666,5 +2666,96 @@
     "importanceBasis": "1 组可核验实验",
     "pinned": false,
     "updatedAt": "2026-10-28"
+  },
+  {
+    "id": "narrowspec",
+    "benchmarkReview": "verified",
+    "name": "NarrowSpec",
+    "title": "NarrowSpec: Draft Hidden Width Need Not Match the Target in Speculative Decoding",
+    "date": "2026-11-18",
+    "dateLabel": "2026-11-18",
+    "category": "architecture",
+    "tags": [
+      "DFlash",
+      "草稿宽度",
+      "SGLang",
+      "草稿成本"
+    ],
+    "summary": "缩窄整个草稿残差流，降低每轮草拟成本，同时大体保留接受长度。",
+    "problem": "条件草稿器通常沿用 target hidden 宽度。DFlash 每轮虽并行起草，仍需花时间读写和计算全宽草稿层与词表投影。",
+    "solution": "重训半宽或四分之一宽草稿器，保留深度、MLP 中间维度与注意力头几何；将 DFlash 的输出适配器折叠进冻结词表头。",
+    "reason": "直接修改并对照 DFlash；B200 上 DFlash 子集的解码 TPOT 加速为 1.06–1.09×（T=0、B=1），未计每轮对话首步。值得纳入长期路线，重点测硬件带宽和宽度对接受长度的影响。",
+    "paperUrl": "https://arxiv.org/abs/2611.23835",
+    "sourceUrl": "https://arxiv.org/abs/2611.23835",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "pinned": false,
+    "updatedAt": "2026-11-22"
+  },
+  {
+    "id": "dneo",
+    "benchmarkReview": "verified",
+    "name": "DNeo",
+    "title": "DNeo: Your Parallel Draft Model Needs Better Target Feature Encoding",
+    "date": "2026-11-16",
+    "dateLabel": "2026-11-16",
+    "category": "architecture",
+    "tags": [
+      "target hidden",
+      "MoFA",
+      "拒绝记忆",
+      "因果修正",
+      "层选择"
+    ],
+    "summary": "用逐坐标跨层融合和拒绝记忆强化并行草稿的条件特征。",
+    "problem": "DFlash 的密集投影可能混合 target hidden 的坐标结构，等距抽层也未必取到最有用的层。",
+    "solution": "MoFA 对选定目标层做学习加权，保持坐标结构；结合非均匀选层、拒绝记忆、仅前缀注意力、两抽头卷积与因果头。",
+    "reason": "原文以 DFlash、DFlash 2 和 DSpark 为架构与实验对照。值得纳入 Draft Quality 长期路线；Qwen3-4B 的优势在采样下更明显，贪心时 GPQA 与 MT-Bench 的速度低于 DFlash。",
+    "paperUrl": "https://arxiv.org/abs/2611.21925",
+    "sourceUrl": "https://arxiv.org/abs/2611.21925",
+    "code": [
+      {
+        "url": "https://github.com/J-sandler/DNeo",
+        "repo": "J-sandler/DNeo",
+        "kind": "official",
+        "evidenceUrl": "https://arxiv.org/pdf/2611.21925",
+        "checkedAt": "2026-11-22",
+        "availability": "available"
+      }
+    ],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "pinned": false,
+    "updatedAt": "2026-11-22"
+  },
+  {
+    "id": "reanchor",
+    "benchmarkReview": "verified",
+    "name": "ReAnchor",
+    "title": "ReAnchor: Reusing Rejected Verifier States for Diffusion Drafting",
+    "date": "2026-10-19",
+    "dateLabel": "2026-10-19",
+    "category": "reuse",
+    "tags": [
+      "跨轮复用",
+      "verifier hidden states",
+      "rejected suffix",
+      "免训练"
+    ],
+    "summary": "将被拒后缀的 verifier hidden 用作移位锚点，免训练地重新起草和延长候选。",
+    "problem": "DFlash 固定草稿块限制可提议范围，首次拒绝以后的验证隐状态通常被丢弃。",
+    "solution": "用上一轮被拒位置的 verifier hidden 作为条件并行起草移位块；按起始 token 将续段接到普通草稿上，再由 target 按新前缀验证。",
+    "reason": "直接扩展已训练的 DFlash，也在 Domino、DSpark 和 Draft-OPD 上测试。四个目标、八项基准、T=0 时平均接受长度 +15.2%、解码速度 +13.4%；单 H100、batch 1。值得作为跨轮复用的免训练对照。",
+    "paperUrl": "https://arxiv.org/abs/2610.26531",
+    "sourceUrl": "https://arxiv.org/abs/2610.26531",
+    "code": [],
+    "status": "verified",
+    "citationStatus": "confirmed",
+    "importance": 3,
+    "pinned": false,
+    "updatedAt": "2026-11-22"
   }
 ]

@@ -10,24 +10,35 @@ DFlash（Block Diffusion for Flash Speculative Decoding）之后，并行投机�
 ### [→ 打开交互地图](https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/)
 
 <a href="https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/">
-<img src="assets/atlas-globe.png" width="880" alt="DFlash Atlas 星际图：83 个后续方法围绕 DFlash 中心，按七条研究主线着色，虚线表示已核验的研究关系">
+<img src="assets/atlas-globe.png" width="880" alt="DFlash Atlas 星际图：按研究主线组织的方法围绕 DFlash 中心，按七条研究主线着色，虚线表示已核验的研究关系">
 </a>
 
-83 个方法 · 79 条已核验关系 · 90 组基准对照 · 7 条研究主线 · 数据更新至 2026-11-19
+86 个方法 · 77 条已核验关系 · 94 组基准对照 · 7 条研究主线 · 数据更新至 2026-11-22
 
 每个节点都带证据等级：**实心 = 已核验，空心 = 论文身份或实验数字尚未二次核对**。不确定的条目不藏起来，但也不假装确定。
 
 </div>
 
-## 最近更新
+<details>
+<summary>DFlash 研究路线图</summary>
+
+![DFlash 方法路线图](assets/dflash-method-roadmap.svg)
+
+</details>
+
+## DFlash timeline
+
+[在网站查看完整时间线](https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/#research-map) · [历史目录](archive/README-full-2026-11-19.md)
+
+## Daily Briefs
 
 | 日期 | 方法 | 它解决的问题 |
 |---|---|---|
+| 11-22 | [NarrowSpec、DNeo、ReAnchor](daily/2026-11-22.md) | 降低草稿宽度、改善目标特征编码、复用被拒验证状态 |
 | 11-19 | [DynaDFlash](daily/2026-11-19.md) | 固定投影无法按当前上下文调整各层 target hidden 的贡献，改为按 token 动态门控 |
 | 11-18 | [MMFlash](daily/2026-11-18.md) | 视觉依赖强的位置草稿质量差，按视觉依赖与草稿错误率重加权训练 |
 | 11-16 | [D3Tree](daily/2026-11-16.md) | 固定树预算无法适配并发负载，学习节点存活率并按全批预算裁剪验证 |
 | 11-13 | [DForkTree](daily/2026-11-13.md) / [Multi-Future Drafting](daily/2026-11-13.md) | 分叉后草稿分布失真、候选预算耗在拼接出来的假路径上 |
-| 11-10 | [ChainFlow](daily/2026-11-10.md) | 单请求要更快，用一步 latent flow 与 token feedback 生成候选树 |
 
 完整时间线、方法卡片与全部日报见[网站](https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/)。
 
@@ -44,7 +55,7 @@ DFlash（Block Diffusion for Flash Speculative Decoding）之后，并行投机�
 
 | 路径 | 内容 |
 |---|---|
-| `src/data/` | 唯一数据源：83 个方法、79 条关系、90 组基准对照、35 篇日报、工程雷达 |
+| `src/data/` | 唯一数据源：86 个方法、82 条关系、94 组基准对照、36 篇日报、工程雷达 |
 | `src/` | 站点实现（React 19 + Vite 7，星球图与平行时间线双视图） |
 | `daily/` | 每日简报原始记录，含当日的路线判断 |
 | `engineering/` | 工程雷达：vLLM、Speculators、SGLang、SpecForge、TensorRT-LLM 的 PR 与 Issue |
