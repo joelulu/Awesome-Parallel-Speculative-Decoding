@@ -1426,5 +1426,65 @@
     "pdfUrl": "https://arxiv.org/pdf/2610.26531",
     "fetchedAt": "2026-11-22T00:00:00Z",
     "thumbnail": "papers/reanchor.jpg"
+  },
+  "cpa": {
+    "sourceUrl": "https://arxiv.org/abs/2611.31112",
+    "status": "fetched",
+    "title": "Look Back, Draft Ahead: Corrective Prefix Attention for Parallel Speculative Decoding",
+    "authors": [
+      "Mohammad Mahdi Moradi",
+      "Ali Pourranjbar",
+      "Zongzuo Wang",
+      "Mingming Zhu",
+      "Ben Feng",
+      "Boxing Chen"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.31112",
+    "fetchedAt": "2026-11-25T00:00:00Z",
+    "thumbnail": "papers/cpa.jpg"
+  },
+  "copyro": {
+    "sourceUrl": "https://arxiv.org/abs/2611.27217",
+    "status": "fetched",
+    "title": "CoPyro: Feeding Copy Proposals to Parallel Drafters",
+    "authors": [
+      "Hong-Kai Zheng",
+      "Piji Li"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.27217",
+    "fetchedAt": "2026-11-25T00:00:00Z",
+    "thumbnail": "papers/copyro.jpg"
+  },
+  "gaad": {
+    "sourceUrl": "https://arxiv.org/abs/2611.28349",
+    "status": "fetched",
+    "title": "Grammar-as-a-Draft: More Tokens per Speculative Decoding Step on Grammar-Constrained Structured Outputs",
+    "authors": [
+      "John Zhang",
+      "Silky Arora"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.28349",
+    "fetchedAt": "2026-11-25T00:00:00Z",
+    "thumbnail": "papers/gaad.jpg"
+  },
+  "d-real": {
+    "sourceUrl": "https://arxiv.org/abs/2611.10432",
+    "status": "fetched",
+    "title": "D-REAL: Acceptance-Length Optimization with Unbiased Gradients for Speculative Decoding",
+    "authors": [
+      "Meng Wei",
+      "Yefei Chen",
+      "Antong Li",
+      "Yanan Gao",
+      "Xingliang Shi",
+      "Xin Gao",
+      "Zhiling Ye",
+      "Yun Yue",
+      "Chunxiao Guo",
+      "Peng Wei"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.10432",
+    "fetchedAt": "2026-11-25T00:00:00Z",
+    "thumbnail": "papers/d-real.jpg"
   }
 }

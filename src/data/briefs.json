@@ -1,5 +1,50 @@
 [
   {
+    "date": "2026-11-25",
+    "title": "CPA 块内校正、CoPyro 检索草稿、GaaD 结构化验证与 D-REAL 后训练",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-25.md",
+    "items": [
+      {
+        "title": "Look Back, Draft Ahead: Corrective Prefix Attention for Parallel Speculative Decoding",
+        "summary": "并行预计算块内候选对相互作用，以查表和累加进行全前缀校正。",
+        "sourceUrl": "https://arxiv.org/abs/2611.31112",
+        "methodIds": [
+          "cpa"
+        ]
+      },
+      {
+        "title": "CoPyro: Feeding Copy Proposals to Parallel Drafters",
+        "summary": "用 n-gram 检索出的续写替代部分 mask，由并行草稿模型筛改候选。",
+        "sourceUrl": "https://arxiv.org/abs/2611.27217",
+        "methodIds": [
+          "copyro"
+        ]
+      },
+      {
+        "title": "Grammar-as-a-Draft: More Tokens per Speculative Decoding Step on Grammar-Constrained Structured Outputs",
+        "summary": "把语法唯一确定的 token 加进草稿行，验证时不为这些位置计算 logits。",
+        "sourceUrl": "https://arxiv.org/abs/2611.28349",
+        "methodIds": [
+          "gaad"
+        ]
+      },
+      {
+        "title": "D-REAL: Acceptance-Length Optimization with Unbiased Gradients for Speculative Decoding",
+        "summary": "在草稿自采样前缀上直接优化固定上下文的一轮期望接受长度。",
+        "sourceUrl": "https://arxiv.org/abs/2611.10432",
+        "methodIds": [
+          "d-real"
+        ]
+      },
+      {
+        "title": "vLLM #69606 · ROCm 打包验证与窗口草稿（草案）",
+        "summary": "在 ROCm 上为 DSpark 提议 UltraQuant 打包验证和带 sink 的窗口草稿，并提供可选 DFlash 兼容后端。",
+        "sourceUrl": "https://github.com/vllm-project/vllm/pull/69606",
+        "methodIds": []
+      }
+    ]
+  },
+  {
     "date": "2026-11-22",
     "title": "补录 NarrowSpec、DNeo、ReAnchor，并跟踪 SGLang 草案",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-22.md",

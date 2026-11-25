@@ -514,5 +514,29 @@
     "sourceUrl": "https://arxiv.org/abs/2610.26531",
     "translatedAt": "2026-11-22",
     "kind": "translated-summary"
+  },
+  "cpa": {
+    "text": "针对并行草稿在首次错误后被整段截断的问题，CPA 保留各位置的候选短名单，预计算任意候选与较早位置候选的配对交互，再沿已选前缀通过查表、累加和轻量打分完成选择。共享骨干在训练中增加自回归监督，推理不增加骨干前向。论文在两款 Qwen3 和八项 Ascend 基准上报告相较 DSpark 多提交 13–15% token、相较 DFlash 多 25–26%。容量扫描表明更长接受前缀未必带来更快解码。",
+    "sourceUrl": "https://arxiv.org/abs/2611.31112",
+    "translatedAt": "2026-11-25",
+    "kind": "translated-summary"
+  },
+  "copyro": {
+    "text": "CoPyro 从请求自身上下文检索 n-gram 后缀匹配得到的续写，再将候选 token 嵌入送入并行草稿器，辅以匹配长度及其他匹配对该候选的一致性。草稿器在正常的一次前向中保留或修正候选，目标模型按常规验证。100K 数据设置下四种草稿器总体接受长度提升 2.19–5.08%；710K 的 DFlash 设置中提升 1.08–2.00%。论文另在 Qwen3-8B Transformers 实现中报告提议处理平均每轮增加 0.24 ms。",
+    "sourceUrl": "https://arxiv.org/abs/2611.27217",
+    "translatedAt": "2026-11-25",
+    "kind": "translated-summary"
+  },
+  "gaad": {
+    "text": "语法约束解码会为结构确定的位置重复使用模型推理，而语法引擎已经知道下一段文本。GaaD 把语法生成的 token 与模型草稿放进同一验证行，匹配的 token 保留，偏离强制路径则裁掉，再由语法补足。验证无需计算语法槽位的 logits。vLLM TorchTPU 实验包含 DFlash、MTP 与 n-gram；在 Qwen3-4B JSON 基准中，单批 DFlash 方案报告 2.66 倍加速。固定文本的规范分词可能不同于仅按语法 mask 的解码，改变分布。",
+    "sourceUrl": "https://arxiv.org/abs/2611.28349",
+    "translatedAt": "2026-11-25",
+    "kind": "translated-summary"
+  },
+  "d-real": {
+    "text": "D-REAL 在固定已提交上下文中，用草稿自采样序列估计随机拒绝采样下的单轮期望接受长度。方法沿草稿前缀将目标与草稿的分布重叠按存活概率加权，用带停止梯度分母的比率计入提议分布随参数变化的影响。论文在 Qwen3-8B 的 DFlash 2 和 DSpark 草稿上分别对照继续原训练及 D-PACE。后训练一轮后，十项基准平均接受长度相较原基线最多提升 0.23 token，作者在一项并发服务设置中报告吞吐最高提升 9.4%。",
+    "sourceUrl": "https://arxiv.org/abs/2611.10432",
+    "translatedAt": "2026-11-25",
+    "kind": "translated-summary"
   }
 }

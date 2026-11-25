@@ -654,5 +654,53 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/pdf/2610.26531#page=2",
     "note": "§1、§3、表 2–3。直接扩展已训练的 DFlash，也在 Domino、DSpark 和 Draft-OPD 上测试。四个目标、八项基准、T=0 时平均接受长度 +15.2%、解码速度 +13.4%；单 H100、batch 1。值得作为跨轮复用的免训练对照。"
+  },
+  {
+    "source": "dflash",
+    "target": "cpa",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.31112v1#page=2",
+    "note": "引言与图 1：保留 DFlash 块并行骨干，在固定候选列表上添加前缀校正及辅助自回归监督。"
+  },
+  {
+    "source": "dflash",
+    "target": "copyro",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.27217v1#page=2",
+    "note": "方法将可检索到的 token 替换 DFlash 并行起草的 mask 输入，保留一次前向和目标验证。"
+  },
+  {
+    "source": "dflash",
+    "target": "gaad",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.28349v1#page=7",
+    "note": "原文表 1 直接组合并对比 DFlash。语法槽位的强制提交可改变 token 序列与输出分布。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "d-real",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.10432v1#page=8",
+    "note": "表 1–2：在 DFlash 2 草稿上新增一轮接受长度后训练，保留推理架构。"
+  },
+  {
+    "source": "dspark",
+    "target": "d-real",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.10432v1#page=8",
+    "note": "表 1–2：同一目标应用于 DSpark 并报告分温度、分负载对照。"
+  },
+  {
+    "source": "d-pace",
+    "target": "d-real",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.10432v1#page=2",
+    "note": "§2 对比参考前缀的 D-PACE 代理量与 D-REAL 草稿采样前缀的一轮期望；表 1 有同轮数对照。"
   }
 ]
