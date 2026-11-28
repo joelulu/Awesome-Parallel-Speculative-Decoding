@@ -12,5 +12,12 @@
   {"source":"copyro","target":"dflash","role":"方法背景与对照","location":"§1，引文 Chen et al. 2026","evidenceUrl":"https://arxiv.org/pdf/2611.27217v1#page=1","note":"在 DFlash 的 mask 位置引入检索提议。"},
   {"source":"gaad","target":"dflash","role":"方法背景与对照","location":"§1，引文 [4]","evidenceUrl":"https://arxiv.org/pdf/2611.28349v1#page=1","note":"将 DFlash 作为块扩散草稿器，在验证阶段组合语法草稿。"},
   {"source":"d-real","target":"dflash","role":"方法背景与对照","location":"§2，引文 Chen et al. 2026","evidenceUrl":"https://arxiv.org/pdf/2611.10432v1#page=2","note":"讨论 DFlash 的静态指数位置权重。"},
-  {"source":"d-real","target":"d-pace","role":"方法背景与对照","location":"§2，引文 Wu et al. 2026b","evidenceUrl":"https://arxiv.org/pdf/2611.10432v1#page=2","note":"对比参考前缀上的接受长度代理与在线草稿轨迹。"}
+  {"source":"d-real","target":"d-pace","role":"方法背景与对照","location":"§2，引文 Wu et al. 2026b","evidenceUrl":"https://arxiv.org/pdf/2611.10432v1#page=2","note":"对比参考前缀上的接受长度代理与在线草稿轨迹。"},
+  {"source":"wavefront","target":"dspark","role":"方法基础","location":"原文 PDF 第 2 页","evidenceUrl":"https://arxiv.org/pdf/2611.31638v1#page=2","note":"从 DSpark 的块草稿校正出发，以全块前缀并行 Jacobi 更新替换逐位 Markov 修正，使用低秩 base。"},
+  {"source":"wavefront","target":"dflash","role":"实验对照","location":"原文 PDF 第 8 页","evidenceUrl":"https://arxiv.org/pdf/2611.31638v1#page=8","note":"DFlash 为同套吞吐评估的并行基线。"},
+  {"source":"forespark","target":"dflash-2","role":"方法基础","location":"原文 PDF 第 8 页","evidenceUrl":"https://arxiv.org/pdf/2611.13442v2#page=8","note":"在 DFlash 2 草稿骨干上联合调度草稿长度和验证长度，增加 pre-draft estimator。"},
+  {"source":"forespark","target":"dspark","role":"实验对照","location":"原文 PDF 第 8 页","evidenceUrl":"https://arxiv.org/pdf/2611.13442v2#page=8","note":"论文直接比较 DSpark 的验证长度调度与 ForeSpark 的联合预算。"},
+  {"source":"libraspec","target":"dflash","role":"实验对照","location":"原文 PDF 第 6 页","evidenceUrl":"https://arxiv.org/pdf/2608.08721v1#page=6","note":"表 2 对照 DFlash 及叠加边际收益验证预算后的结果。"},
+  {"source":"libraspec","target":"ddtree","role":"实验对照","location":"原文 PDF 第 6 页","evidenceUrl":"https://arxiv.org/pdf/2608.08721v1#page=6","note":"表 2 单列 DDTree 及接入 LibraSpec 的配对实验。"},
+  {"source":"blockpilot","target":"dflash","role":"方法基础","location":"原文 PDF 第 7 页","evidenceUrl":"https://arxiv.org/pdf/2606.31315v1#page=7","note":"用 prefill 预测块大小，将 DFlash 固定推理块长替换为按请求选择。"}
 ]

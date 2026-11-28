@@ -702,5 +702,61 @@
     "status": "verified",
     "evidenceUrl": "https://arxiv.org/pdf/2611.10432v1#page=2",
     "note": "§2 对比参考前缀的 D-PACE 代理量与 D-REAL 草稿采样前缀的一轮期望；表 1 有同轮数对照。"
+  },
+  {
+    "source": "dspark",
+    "target": "wavefront",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.31638v1#page=2",
+    "note": "从 DSpark 的块草稿校正出发，以全块前缀并行 Jacobi 更新替换逐位 Markov 修正，使用低秩 base。"
+  },
+  {
+    "source": "dflash",
+    "target": "wavefront",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.31638v1#page=8",
+    "note": "DFlash 为同套吞吐评估的并行基线。"
+  },
+  {
+    "source": "dflash-2",
+    "target": "forespark",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.13442v2#page=8",
+    "note": "在 DFlash 2 草稿骨干上联合调度草稿长度和验证长度，增加 pre-draft estimator。"
+  },
+  {
+    "source": "dspark",
+    "target": "forespark",
+    "type": "related",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2611.13442v2#page=8",
+    "note": "论文直接比较 DSpark 的验证长度调度与 ForeSpark 的联合预算。"
+  },
+  {
+    "source": "dflash",
+    "target": "libraspec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2608.08721v1#page=6",
+    "note": "表 2 对照 DFlash 及叠加边际收益验证预算后的结果。"
+  },
+  {
+    "source": "ddtree",
+    "target": "libraspec",
+    "type": "combines",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2608.08721v1#page=6",
+    "note": "表 2 单列 DDTree 及接入 LibraSpec 的配对实验。"
+  },
+  {
+    "source": "dflash",
+    "target": "blockpilot",
+    "type": "extends",
+    "status": "verified",
+    "evidenceUrl": "https://arxiv.org/pdf/2606.31315v1#page=7",
+    "note": "用 prefill 预测块大小，将 DFlash 固定推理块长替换为按请求选择。"
   }
 ]

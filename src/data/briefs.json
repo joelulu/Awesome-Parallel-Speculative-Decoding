@@ -1,5 +1,44 @@
 [
   {
+    "date": "2026-11-28",
+    "title": "Wavefront 块内校正与三项自适应预算补录",
+    "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-28.md",
+    "items": [
+      {
+        "title": "Wavefront: Low-Rank Drafting with Parallel Causal Refinement for Speculative Decoding",
+        "summary": "用低秩读出给草稿提供初值，再按固定轮数并行修正整个块。",
+        "sourceUrl": "https://arxiv.org/abs/2611.31638",
+        "methodIds": [
+          "wavefront"
+        ]
+      },
+      {
+        "title": "ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding",
+        "summary": "在草拟前预测接受收益，再按请求联合分配草稿长度和验证长度。",
+        "sourceUrl": "https://arxiv.org/abs/2611.13442",
+        "methodIds": [
+          "forespark"
+        ]
+      },
+      {
+        "title": "LibraSpec: Dynamic Diffusion-Based Speculative Decoding via Marginal-Gain-Driven Optimization",
+        "summary": "用边际接受收益与验证成本确定每轮值得验证的候选范围。",
+        "sourceUrl": "https://arxiv.org/abs/2608.08721",
+        "methodIds": [
+          "libraspec"
+        ]
+      },
+      {
+        "title": "BlockPilot: Instance-Adaptive Policy Learning for Diffusion-based Speculative Decoding",
+        "summary": "在 prefill 后为每个请求选一次 DFlash 草稿块长。",
+        "sourceUrl": "https://arxiv.org/abs/2606.31315",
+        "methodIds": [
+          "blockpilot"
+        ]
+      }
+    ]
+  },
+  {
     "date": "2026-11-25",
     "title": "CPA 块内校正、CoPyro 检索草稿、GaaD 结构化验证与 D-REAL 后训练",
     "archiveUrl": "https://github.com/joelulu/Awesome-Parallel-Speculative-Decoding/blob/main/daily/2026-11-25.md",

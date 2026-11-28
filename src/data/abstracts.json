@@ -538,5 +538,29 @@
     "sourceUrl": "https://arxiv.org/abs/2611.10432",
     "translatedAt": "2026-11-25",
     "kind": "translated-summary"
+  },
+  "wavefront": {
+    "text": "DFlash 的块内候选缺少因果依赖，DSpark 的 Markov 头又需逐位修正；完整词表读出在很多位置只提供会被覆盖的初值。学习低秩词表读出，让修正头读取整个块内前缀，用固定次数 Jacobi 更新并融合内核，整步可纳入 vLLM CUDA Graph。借鉴 DSpark 的块级校正并替换其逐位修正和全秩读出。Qwen3-8B 的贪心并发 32 下，DeepSpec 平均 TPS 较 DSpark 高 2.9%、较 DFlash 高 15.3%；其中 Chat 较 DSpark 低 1.3%。值得纳入块内因果路线，复测 pass 数和吞吐的权衡。",
+    "sourceUrl": "https://arxiv.org/abs/2611.31638",
+    "translatedAt": "2026-11-28",
+    "kind": "translated-summary"
+  },
+  "forespark": {
+    "text": "只缩短验证会让不少全块草稿从未进入验证，高负载时仍消耗草拟算力。从 target 上下文特征预测每种候选长度的收益，按全批预算做轻量联合调度，草稿生成后再把验证预算分给更有希望的 token。复用 DFlash 2 风格草稿骨干并与 DSpark 对照。vLLM 实验在匹配每请求生成速率时，总吞吐最高为 DSpark 的 1.77×。值得纳入高并发路线，重点区分联合调度和单独缩减验证。",
+    "sourceUrl": "https://arxiv.org/abs/2611.13442",
+    "translatedAt": "2026-11-28",
+    "kind": "translated-summary"
+  },
+  "libraspec": {
+    "text": "DFlash 已经并行生成候选，继续验证低置信度 token 可能使 target 付出更多计算，却很少增加提交长度。按草稿置信度估算扩大验证范围的收益，仅在估计收益抵过边际验证开销时扩张。策略无需重训草稿器，可接 DFlash 或 DDTree。在原文分别接入 DFlash 和 DDTree。Qwen3-4B 的四项贪心基准中，DFlash 平均相对 AR 加速由 4.52× 到 5.01×。值得作为动态验证的免训练基线，评估高并发时成本模型是否仍适用。",
+    "sourceUrl": "https://arxiv.org/abs/2608.08721",
+    "translatedAt": "2026-11-28",
+    "kind": "translated-summary"
+  },
+  "blockpilot": {
+    "text": "最佳块长因输入而异，整个服务统一使用固定块长会错过请求间差异。先离线评估离散块长，再用 prefill 表征训练轻量分类策略；推理仅在 prefill 之后预测一次，解码过程中复用。直接比较 DFlash 固定块长。表 2 中 Qwen3-4B、T=1 平均接受长度 5.92，相对 AR 加速 4.20×，固定块长 16 为 5.35 和 3.80×。值得作为请求级自适应基线，与逐轮调度分别比较。",
+    "sourceUrl": "https://arxiv.org/abs/2606.31315",
+    "translatedAt": "2026-11-28",
+    "kind": "translated-summary"
   }
 }

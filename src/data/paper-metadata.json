@@ -1486,5 +1486,64 @@
     "pdfUrl": "https://arxiv.org/pdf/2611.10432",
     "fetchedAt": "2026-11-25T00:00:00Z",
     "thumbnail": "papers/d-real.jpg"
+  },
+  "wavefront": {
+    "sourceUrl": "https://arxiv.org/abs/2611.31638",
+    "status": "fetched",
+    "title": "Wavefront: Low-Rank Drafting with Parallel Causal Refinement for Speculative Decoding",
+    "authors": [
+      "Huy Huu Nguyen",
+      "Xin Huang"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.31638v1",
+    "fetchedAt": "2026-11-28T00:00:00Z",
+    "thumbnail": "papers/wavefront.jpg"
+  },
+  "forespark": {
+    "sourceUrl": "https://arxiv.org/abs/2611.13442",
+    "status": "fetched",
+    "title": "ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding",
+    "authors": [
+      "Jaeyong Song",
+      "Daniel Wang",
+      "Pratyush Patel",
+      "Jonny Kong",
+      "Preyas Shah",
+      "Shobhit Kanaujia"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2611.13442v2",
+    "fetchedAt": "2026-11-28T00:00:00Z",
+    "thumbnail": "papers/forespark.jpg"
+  },
+  "libraspec": {
+    "sourceUrl": "https://arxiv.org/abs/2608.08721",
+    "status": "fetched",
+    "title": "LibraSpec: Dynamic Diffusion-Based Speculative Decoding via Marginal-Gain-Driven Optimization",
+    "authors": [
+      "Zexun Lin",
+      "Yuan Feng",
+      "Junlin Lv",
+      "Kevin S. Zhou",
+      "Xike Xie"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2608.08721v1",
+    "fetchedAt": "2026-11-28T00:00:00Z",
+    "thumbnail": "papers/libraspec.jpg"
+  },
+  "blockpilot": {
+    "sourceUrl": "https://arxiv.org/abs/2606.31315",
+    "status": "fetched",
+    "title": "BlockPilot: Instance-Adaptive Policy Learning for Diffusion-based Speculative Decoding",
+    "authors": [
+      "Hao Zhang",
+      "Yiming Hu",
+      "Yong Wang",
+      "Mingqiao Mo",
+      "Xin Xiao",
+      "Xiangxiang Chu"
+    ],
+    "pdfUrl": "https://arxiv.org/pdf/2606.31315v1",
+    "fetchedAt": "2026-11-28T00:00:00Z",
+    "thumbnail": "papers/blockpilot.jpg"
   }
 }

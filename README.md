@@ -13,7 +13,7 @@ DFlash（Block Diffusion for Flash Speculative Decoding）之后，并行投机�
 <img src="assets/atlas-globe.png" width="880" alt="DFlash Atlas 星际图：按研究主线组织的方法围绕 DFlash 中心，按七条研究主线着色，虚线表示已核验的研究关系">
 </a>
 
-90 个方法 · 83 条已核验关系 · 101 组基准对照 · 7 条研究主线 · 数据更新至 2026-11-25
+94 个方法 · 90 条已核验关系 · 106 组基准对照 · 7 条研究主线 · 数据更新至 2026-11-28
 
 每个节点都带证据等级：**实心 = 已核验，空心 = 论文身份或实验数字尚未二次核对**。不确定的条目不藏起来，但也不假装确定。
 
@@ -34,11 +34,11 @@ DFlash（Block Diffusion for Flash Speculative Decoding）之后，并行投机�
 
 | 日期 | 方法 | 它解决的问题 |
 |---|---|---|
+| 11-28 | [Wavefront、ForeSpark、LibraSpec、BlockPilot](daily/2026-11-28.md) | 并行块内校正、联合预算、免训练验证及请求级选块 |
 | 11-25 | [CPA、CoPyro、GaaD、D-REAL](daily/2026-11-25.md) | 块内前缀校正、检索候选注入、语法验证、直接优化期望接受长度 |
 | 11-22 | [NarrowSpec、DNeo、ReAnchor](daily/2026-11-22.md) | 降低草稿宽度、改善目标特征编码、复用被拒验证状态 |
 | 11-19 | [DynaDFlash](daily/2026-11-19.md) | 固定投影无法按当前上下文调整各层 target hidden 的贡献，改为按 token 动态门控 |
 | 11-18 | [MMFlash](daily/2026-11-18.md) | 视觉依赖强的位置草稿质量差，按视觉依赖与草稿错误率重加权训练 |
-| 11-16 | [D3Tree](daily/2026-11-16.md) | 固定树预算无法适配并发负载，学习节点存活率并按全批预算裁剪验证 |
 
 完整时间线、方法卡片与全部日报见[网站](https://joelulu.github.io/Awesome-Parallel-Speculative-Decoding/)。
 
@@ -55,7 +55,7 @@ DFlash（Block Diffusion for Flash Speculative Decoding）之后，并行投机�
 
 | 路径 | 内容 |
 |---|---|
-| `src/data/` | 唯一数据源：90 个方法、88 条关系、101 组基准对照、37 篇日报、工程雷达 |
+| `src/data/` | 唯一数据源：94 个方法、95 条关系、106 组基准对照、38 篇日报、工程雷达 |
 | `src/` | 站点实现（React 19 + Vite 7，星球图与平行时间线双视图） |
 | `daily/` | 每日简报原始记录，含当日的路线判断 |
 | `engineering/` | 工程雷达：vLLM、Speculators、SGLang、SpecForge、TensorRT-LLM 的 PR 与 Issue |
